@@ -41,7 +41,7 @@ public class StatusRouteControllerFindNextStatusTest extends BaseTest{
 		
 		mockMvc.perform(post("/task/machine/status/next").param("business_type", "hello")
 				.param("current_status", "1000")
-				.param("event", "create")).andDo(print())
+				.param("event", "test")).andDo(print())
 				.andExpect(status().isOk());
 		
 		verify(routeService).getRouteNextStatusByTypeLastStatusEvent("hello", 1000, "test");
