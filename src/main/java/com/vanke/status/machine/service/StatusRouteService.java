@@ -1,4 +1,4 @@
-package com.vanke.status.machine;
+package com.vanke.status.machine.service;
 
 import org.springframework.stereotype.Service;
 

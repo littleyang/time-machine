@@ -1,6 +1,6 @@
-package com.vanke.status.machine;
+package com.vanke.status.machine.service.test;
 
-import static org.hamcrest.core.Is.*;
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
@@ -9,8 +9,7 @@ import org.mockito.InjectMocks;
 import com.vanke.status.machine.service.StatusRouteService;
 import com.vanke.test.base.BaseTest;
 
-
-public class MockTest extends BaseTest{
+public class RouteServiceGetNextStatusMethodTest extends BaseTest{
 	
 	@InjectMocks
 	private StatusRouteService routeService;
@@ -34,5 +33,6 @@ public class MockTest extends BaseTest{
 	public void shouldReturnThreeWhenNoEvent(){
 		assertThat(routeService.getRouteNextStatusByTypeLastStatusEvent("hello", 1000, ""), is(3));
 	}
+
 
 }
