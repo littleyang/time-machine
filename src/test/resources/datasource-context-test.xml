@@ -11,6 +11,7 @@
     
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close"> 
       <!-- 基本属性 url、user、password -->
+      <property name="driverClassName" value="${jdbc.driverclass}" />
       <property name="url" value="${jdbc.url}" />
       <property name="username" value="${jdbc.username}" />
       <property name="password" value="${jdbc.password}" />
@@ -41,5 +42,7 @@
       <!-- 配置监控统计拦截的filters -->
       <property name="filters" value="stat" /> 
   </bean>
+ 
+ 
  
 </beans>
