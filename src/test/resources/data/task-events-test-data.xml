@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dataset>
-    <task_events id="1" code="E1001" name="init" type="1" created="2015-10-10" updated="2015-10-11"/>
-    <task_events id="2" code="E1001" name="init-2" type="1" created="2015-10-10" updated="2015-10-11"/>
+    <task_events id="1" code="E1001" name="init" msg="test msg" type="1" created="2015-10-10" updated="2015-10-11"/>
+    <task_events id="2" code="E1002" name="init-2" msg="test msg" type="1" created="2015-10-10" updated="2015-10-11"/>
 </dataset>
 
