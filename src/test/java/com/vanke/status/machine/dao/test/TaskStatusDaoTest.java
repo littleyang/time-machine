@@ -1,18 +1,13 @@
 package com.vanke.status.machine.dao.test;
 
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.unitils.UnitilsJUnit4;
 import org.unitils.dbunit.annotation.DataSet;
-import org.unitils.spring.annotation.SpringApplicationContext;
 import org.unitils.spring.annotation.SpringBeanByType;
 
 import com.vanke.status.machine.dao.StatusEventsDao;
+import com.vanke.test.base.BaseDaoTestBeans;
 
-public class TaskStatusDaoTest extends UnitilsJUnit4 {
-	
-	@SpringApplicationContext({ "classpath:application-contex-test.xml"})  
-	protected ApplicationContext applicationContext;  
+public class TaskStatusDaoTest extends BaseDaoTestBeans {
 	
 	@SpringBeanByType  
 	private StatusEventsDao eventsDao;
