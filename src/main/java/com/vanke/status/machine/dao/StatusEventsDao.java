@@ -9,8 +9,9 @@ public class StatusEventsDao extends BaseDao {
 	
 	public int getAllStatusEventsCount(){
 		
-		return 0;
+		return jdbcTemplate.queryForList("select * from task_events").size();
 		
 	}
+
 
 }

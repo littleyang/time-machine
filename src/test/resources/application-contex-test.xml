@@ -26,8 +26,11 @@
 		<!-- Scan for spring beans in this package and all sub-packages -->
 	<context:component-scan base-package="com.vanke" />
 	
+	 
 	<import resource="datasource-context-test.xml"/>
-	
+	 
 	<import resource="beans-dao-test.xml"/>
+	
+	<import resource="test-data-source.xml"/>
 
 </beans>
