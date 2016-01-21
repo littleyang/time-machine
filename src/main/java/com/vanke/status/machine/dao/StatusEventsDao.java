@@ -7,7 +7,7 @@ import com.vanke.status.machine.dao.base.BaseDao;
 @Repository
 public class StatusEventsDao extends BaseDao {
 	
-	public int getAllStatusEvents(){
+	public int getAllStatusEventsCount(){
 		
 		return 0;
 		

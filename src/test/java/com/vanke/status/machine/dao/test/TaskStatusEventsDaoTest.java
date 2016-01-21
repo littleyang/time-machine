@@ -16,7 +16,7 @@ public class TaskStatusEventsDaoTest extends BaseTest{
 	
 	@Test
 	public void testGetAllStatusEventsShouldBeZero(){
-		assertThat(eventsDao.getAllStatusEvents(), is(0));
+		assertThat(eventsDao.getAllStatusEventsCount(), is(0));
 	}
 
 }
