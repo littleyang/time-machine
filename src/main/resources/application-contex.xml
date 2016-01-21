@@ -28,6 +28,8 @@
 	
 	<import resource="datasource-context.xml"/>
 	
+	<import resource="beans-dao.xml"/>
+	
 	
 
 </beans>
