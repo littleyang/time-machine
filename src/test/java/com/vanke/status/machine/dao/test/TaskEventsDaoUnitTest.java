@@ -8,20 +8,20 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.vanke.status.machine.dao.StatusEventsDao;
+import com.vanke.status.machine.dao.TaskEventsDao;
 import com.vanke.test.base.BaseTestUnit;
 
-public class TaskStatusEventsDaoTest extends BaseTestUnit{
+public class TaskEventsDaoUnitTest extends BaseTestUnit{
 	
 	@Mock
 	private JdbcTemplate jdbcTemplate;
 	
 	@InjectMocks
-	private StatusEventsDao eventsDao;
+	private TaskEventsDao eventsDao;
 	
 	@Test
 	public void testGetAllStatusEventsShouldBeZero(){
-		assertThat(eventsDao.getAllStatusEventsCount(), is(0));
+		assertThat(eventsDao.getAllEventsCount(), is(0));
 	}
 
 

@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <task_status id="1" status="1000" name="status-1" outer_status="1001" outer_name="已经接受" 
+    	type="1" created="2015-10-10" updated="2015-10-11"/>
+    <task_status id="2" status="1001" name="status-2" outer_status="1001" outer_name="已经接受" 
+    	type="1" created="2015-10-10" updated="2015-10-11"/>
+</dataset>
+
