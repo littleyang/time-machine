@@ -15,10 +15,10 @@ import static org.mockito.Mockito.*;
 
 import com.vanke.status.machine.controller.StatusRouteController;
 import com.vanke.status.machine.service.StatusRouteService;
-import com.vanke.test.base.BaseTest;
+import com.vanke.test.base.BaseTestUnit;
 
 
-public class StatusRouteControllerFindNextStatusTest extends BaseTest{
+public class StatusRouteControllerFindNextStatusTest extends BaseTestUnit{
 	
 	private MockMvc mockMvc;
 	

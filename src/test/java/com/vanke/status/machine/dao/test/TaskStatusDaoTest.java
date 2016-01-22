@@ -13,7 +13,7 @@ public class TaskStatusDaoTest extends BaseDaoTestBeans {
 	private StatusEventsDao eventsDao;
 	
 	@Test
-	@DataSet("/data/task-events-test-data.xml")
+	//@DataSet("/data/task-events-test-data.xml")
 	public void testExportData(){
 		System.out.println(eventsDao.getAllStatusEventsCount());
 	}

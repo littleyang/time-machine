@@ -7,9 +7,9 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 
 import com.vanke.status.machine.service.StatusRouteService;
-import com.vanke.test.base.BaseTest;
+import com.vanke.test.base.BaseTestUnit;
 
-public class RouteServiceGetNextStatusMethodTest extends BaseTest{
+public class RouteServiceGetNextStatusMethodTest extends BaseTestUnit{
 	
 	@InjectMocks
 	private StatusRouteService routeService;

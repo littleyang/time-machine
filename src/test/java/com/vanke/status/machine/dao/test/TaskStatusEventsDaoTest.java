@@ -9,9 +9,9 @@ import org.mockito.Mock;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.vanke.status.machine.dao.StatusEventsDao;
-import com.vanke.test.base.BaseTest;
+import com.vanke.test.base.BaseTestUnit;
 
-public class TaskStatusEventsDaoTest extends BaseTest{
+public class TaskStatusEventsDaoTest extends BaseTestUnit{
 	
 	@Mock
 	private JdbcTemplate jdbcTemplate;
