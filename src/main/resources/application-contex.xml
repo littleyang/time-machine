@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:cache="http://www.springframework.org/schema/cache"
-	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:cache="http://www.springframework.org/schema/cache" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jee="http://www.springframework.org/schema/jee"
-	xmlns:jms="http://www.springframework.org/schema/jms" xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:jms="http://www.springframework.org/schema/jms"  xmlns:lang="http://www.springframework.org/schema/lang"
 	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:oxm="http://www.springframework.org/schema/oxm"
 	xmlns:p="http://www.springframework.org/schema/p" xmlns:task="http://www.springframework.org/schema/task"
 	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd    
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd    
         http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.2.xsd    
@@ -20,16 +20,91 @@
         http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-4.2.xsd  
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.2.xsd   
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
-        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd"
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd
+        http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd   
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.2.xsd  
+        http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd"
 		default-autowire="byName">
-		
-		<!-- Scan for spring beans in this package and all sub-packages -->
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<description>application data source configuration </description>
+			<list>
+				<value>classpath:context-db.properties</value>
+				<value>classpath:context-redis.properties</value>
+				<value>classpath:log4j.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Scan for spring beans in this package and all sub-packages -->
+
+
 	<context:component-scan base-package="com.vanke" />
+
+	<import resource="datasource-context.xml" />
 	
-	<import resource="datasource-context.xml"/>
+	<import resource="redis-context.xml"/>
+
+	<import resource="beans-dao.xml" />
 	
-	<import resource="beans-dao.xml"/>
+	<import resource="data-entity-context.xml" />
 	
+	<!-- JPA实体管理工厂的配置 -->  
+    <bean id="entityManagerFactory"  
+        class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">  
+        <property name="dataSource" ref="dataSource" />  
+        <property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter" />  
+        <property name="packagesToScan" ref="packagesToScan" /><!--待扫描的实体类包，不再需要persistence.xml了 -->  
+        <property name="jpaProperties">  
+            <props>  
+                <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>  
+                <prop key="hibernate.show_sql">true</prop>  
+                <prop key="hibernate.hbm2ddl.auto">update</prop>  
+            </props>  
+        </property>  
+    </bean>  
 	
+	<!-- 事务配置 -->  
+    <bean id="transactionEntityManager" class="org.springframework.orm.jpa.JpaTransactionManager">  
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>  
+    </bean> 
+	
+	<!--指定实现JPA的适配器 -->  
+    <bean id="hibernateJpaVendorAdapter"  
+        class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">  
+        <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />  
+    </bean>  
+    
+     <!-- 注解式事务 -->
+    <jpa:repositories base-package="com.vanke" transaction-manager-ref="transactionEntityManager" 
+    	entity-manager-factory-ref="entityManagerFactory" />
+   
+    <tx:annotation-driven transaction-manager="transactionEntityManager" />  
+     	 
+  
+    <!-- 实体映射 -->  
+    <bean id="packagesToScan"  
+        class="org.springframework.beans.factory.config.ListFactoryBean">  
+        <property name="sourceList">  
+            <list>  
+                <value>com.vanke.status.model</value>  
+            </list>  
+        </property>  
+    </bean>
+	
+	<bean id="taskExecutor"  
+        class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">  
+        <property name="corePoolSize" value="2" />  
+        <property name="maxPoolSize" value="5" />  
+        <property name="queueCapacity" value="6" />  
+        <property name="keepAliveSeconds" value="2000" />  
+        <property name="rejectedExecutionHandler">  
+            <bean class="java.util.concurrent.ThreadPoolExecutor$AbortPolicy" />  
+        </property>  
+    </bean> 
+
+
 
 </beans>

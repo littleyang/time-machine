@@ -2,8 +2,13 @@ package com.vanke.status.machine.model;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class TaskEvents {
 	
+	@Id
 	private int id;
 	private String code;
 	private String name;
