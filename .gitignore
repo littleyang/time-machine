@@ -3,6 +3,8 @@
 /classes
 bin/
 
+*.idea
+*.iml
 *.class
 *.apk
 *.swap
