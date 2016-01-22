@@ -4,9 +4,9 @@ import org.junit.Test;
 import org.unitils.spring.annotation.SpringBeanByType;
 
 import com.vanke.status.machine.dao.TaskEventsDao;
-import com.vanke.test.base.BaseTestUnit;
+import com.vanke.test.base.BaseDaoTestBeans;
 
-public class TaskEventsDaoTest extends BaseTestUnit{
+public class TaskEventsDaoTest extends BaseDaoTestBeans{
 	
 	@SpringBeanByType  
 	private TaskEventsDao eventsDao;
