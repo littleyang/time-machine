@@ -8,6 +8,7 @@ bin/
 *.swap
 *.xsl
 
+.idea
 *.war
 .settings/
 *.pyc
