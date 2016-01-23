@@ -2,19 +2,36 @@ package com.vanke.status.machine.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
+
+import com.vanke.status.machine.model.base.BaseModel;
 
 @Entity
-public class TaskEvents {
+@Table(name="task_events") 
+public class TaskEvents extends BaseModel{
 	
 	@Id
 	private int id;
+	
+	@Column(name="code") 
 	private String code;
+	
+	@Column(name="name")
 	private String name;
+	
+	@Column(name="msg")
 	private String msg;
+	
+	@Column(name="type")
 	private int type;
+	
+	@Column(name="created")
 	private Date created;
+	
+	@Column(name="updated")
 	private Date updated;
 	
 	public int getId() {
