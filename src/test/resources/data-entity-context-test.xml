@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
@@ -14,12 +13,14 @@
     <bean id="entityManagerFactory"  
         class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">  
         <property name="dataSource" ref="dataSource" />  
-        <property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter" />  
-        <property name="packagesToScan" ref="packagesToScan" /><!--待扫描的实体类包，不再需要persistence.xml了 -->  
+        <property name="persistenceUnitName" value="myPersistenceUnit" />
+        <property name="packagesToScan" ref="packagesToScan" />
+        <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/> 
         <property name="jpaProperties">  
             <props>  
-                <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>  
+            	<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop> 
                 <prop key="hibernate.show_sql">true</prop>  
+                <prop key="hibernate.format_sql">true</prop>
                 <prop key="hibernate.hbm2ddl.auto">update</prop>  
             </props>  
         </property>  
@@ -31,8 +32,9 @@
     </bean> 
 	
 	<!--指定实现JPA的适配器 -->  
-    <bean id="hibernateJpaVendorAdapter"  
-        class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">  
+    <bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="showSql" value="true"/>
+  		<property name="generateDdl" value="true"/>
         <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />  
     </bean>  
     
@@ -48,7 +50,7 @@
         class="org.springframework.beans.factory.config.ListFactoryBean">  
         <property name="sourceList">  
             <list>  
-                <value>com.vanke.status.model</value>  
+                <value>com.vanke</value>  
             </list>  
         </property>  
     </bean>

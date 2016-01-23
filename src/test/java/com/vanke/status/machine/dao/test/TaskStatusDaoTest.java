@@ -1,14 +1,14 @@
 package com.vanke.status.machine.dao.test;
 
 import org.junit.Test;
-import org.unitils.spring.annotation.SpringBeanByType;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vanke.status.machine.dao.TaskStatusDao;
-import com.vanke.test.base.BaseDaoTestBeans;
+import com.vanke.test.base.BaseTestUnit;
 
-public class TaskStatusDaoTest extends BaseDaoTestBeans {
+public class TaskStatusDaoTest extends BaseTestUnit {
 	
-	@SpringBeanByType  
+	@Autowired 
 	private TaskStatusDao statusDao;
 	
 	@Test

@@ -7,12 +7,12 @@ import org.springframework.stereotype.Repository;
 
 import com.vanke.status.machine.model.TaskEvents;
 
-@Repository
+@Repository("taskEventsCrudDao")
 public interface TaskEventsCrudDao extends CrudRepository<TaskEvents,Integer>{
 	
-	@Query("select * from TaskEvent where id = :id")
+	@Query("from TaskEvents where id = :id")
 	public TaskEvents findById(@Param("id")int id);
 	
-	@Query("select count(1) from TaskEvent")
+	@Query("from TaskEvents")
 	public int getAllTaskEventsCount();
 }

@@ -48,7 +48,7 @@
         class="org.springframework.beans.factory.config.ListFactoryBean">  
         <property name="sourceList">  
             <list>  
-                <value>com.vanke.status.model</value>  
+                <value>com.vanke</value>   
             </list>  
         </property>  
     </bean>
