@@ -2,8 +2,10 @@ package com.vanke.status.machine.dao.base;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
-public class BaseDao {
+@Repository
+public class JdbcBaseDao {
 	
 	@Autowired
 	public JdbcTemplate jdbcTemplate;
@@ -14,6 +16,5 @@ public class BaseDao {
 
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
-	} 
-
+	}
 }
