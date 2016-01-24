@@ -14,5 +14,5 @@ public interface TaskRoutesCrudDao extends CrudRepository<TaskRoutes,Integer>{
 	public TaskRoutes findById(@Param("id")int id);
 	
 	@Query("from TaskRoutes")
-	public int getAllTaskRoutsCount();
+	public int getAllTaskRoutesCount();
 }

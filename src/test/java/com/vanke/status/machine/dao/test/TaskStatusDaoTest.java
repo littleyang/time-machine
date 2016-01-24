@@ -13,7 +13,7 @@ public class TaskStatusDaoTest extends BaseTestUnit {
 	
 	@Test
 	public void testGetAllStatusCount(){
-		System.out.println(statusDao.getAllStatusCount());
+		System.out.println(statusDao.getAllStatusCountByJdbc());
 	}
 
 }

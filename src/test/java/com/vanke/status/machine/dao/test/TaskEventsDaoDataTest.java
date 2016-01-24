@@ -14,7 +14,7 @@ public class TaskEventsDaoDataTest extends BaseDaoTestBeans{
 	@Test
 	//@DataSet("/data/task-events-test-data.xml")
 	public void testGetAllEventsCount(){
-		System.out.println(eventsDao.getAllEventsCount());
+		System.out.println(eventsDao.getAllEventsCountByJdbc());
 	}
 
 

@@ -21,7 +21,7 @@ public class TaskEventsDaoUnitTest extends BaseTestUnit{
 	
 	@Test
 	public void testGetAllStatusEventsShouldBeZero(){
-		assertThat(eventsDao.getAllEventsCount(), is(0));
+		assertThat(eventsDao.getAllEventsCountByJdbc(), is(0));
 	}
 
 
