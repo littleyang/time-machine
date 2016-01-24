@@ -1,12 +1,30 @@
 package com.vanke.status.machine.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="task_routes") 
 public class TaskRoutes {
 	
+	@Id
 	private int id;
+	
+	@Column(name="bussiness_code")
 	private String bussinessCode;
+	
+	@Column(name="current_event")
 	private String currentEvent;
+	
+	@Column(name="current_status")
 	private int currentStatus;
+	
+	@Column(name="next_event")
 	private String nextEvent;
+	
+	@Column(name="next_status")
 	private int nextStatus;
 	
 	public int getId() {

@@ -2,17 +2,43 @@ package com.vanke.status.machine.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="business_type")
 public class BussinessType {
 	
+	@Id
 	private int id;
+	
+	@Column(name="code")
 	private String code;
+	
+	@Column(name="name")
 	private String name;
+	
+	@Column(name="parent_code")
 	private String parentCode;
+	
+	@Column(name="url")
 	private String url;
+	
+	@Column(name="related_address_type")
 	private int relatedAddressType;
+	
+	@Column(name="standard_work_time_in_minute")
 	private int standardWorkTimeInMinute;
+	
+	@Column(name="created_by")
 	private String createdBy;
+	
+	@Column(name="created")
 	private Date created;
+	
+	@Column(name="updated")
 	private Date updated;
 	
 	
