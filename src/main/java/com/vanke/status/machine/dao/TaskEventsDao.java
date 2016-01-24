@@ -1,6 +1,7 @@
 package com.vanke.status.machine.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.vanke.status.machine.dao.base.JdbcBaseDao;
@@ -10,14 +11,15 @@ import com.vanke.status.machine.dao.crud.TaskEventsCrudDao;
 public class TaskEventsDao extends JdbcBaseDao {
 	
 	@Autowired
-	private TaskEventsCrudDao eventsCrudDao;
+	@Qualifier("taskEventsCrudDao")
+	private TaskEventsCrudDao taskEventsCrudDao;
 	
-	public int getAllEventsCount(){
+	public int getAllEventsCountByJdbc(){
 		
 		return jdbcTemplate.queryForList("select * from task_events").size();
 	}
 	
-	public int getAllCount(){
-		return eventsCrudDao.getAllTaskEventsCount();
+	public int getAllEventsCountByCrud(){
+		return taskEventsCrudDao.getAllTaskEventsCount();
 	}
 }

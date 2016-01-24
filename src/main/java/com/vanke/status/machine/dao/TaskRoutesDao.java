@@ -5,18 +5,18 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.vanke.status.machine.dao.base.JdbcBaseDao;
-import com.vanke.status.machine.dao.crud.TaskStatusCrudDao;
+import com.vanke.status.machine.dao.crud.TaskRoutesCrudDao;
 
 @Repository
-public class TaskStatusDao extends JdbcBaseDao {
+public class TaskRoutesDao extends JdbcBaseDao {
 	
 	@Autowired
-	@Qualifier("taskStatusCrudDao")
-	private TaskStatusCrudDao taskStatusCrudDao;
+	@Qualifier("taskRoutesCrudDao")
+	private TaskRoutesCrudDao taskRoutesCrudDao;
 	
-	public int getAllStatusCountByJdbc(){
+	public int getAllRoutesCountByJdbc(){
 		
-		return jdbcTemplate.queryForList("select * from task_status").size();
+		return jdbcTemplate.queryForList("select * from task_routes").size();
 		
 	}
 

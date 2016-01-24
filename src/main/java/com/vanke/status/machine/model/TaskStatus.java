@@ -2,15 +2,37 @@ package com.vanke.status.machine.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="task_status")
 public class TaskStatus {
 	
+	@Id
 	private int id;
+	
+	@Column(name="status")
 	private int status;
+	
+	@Column(name="name")
 	private String name;
+	
+	@Column(name="outer_status")
 	private int outerStatus;
+	
+	@Column(name="outer_name")
 	private String outerName;
+	
+	@Column(name="type")
 	private int type;
+	
+	@Column(name="created")
 	private Date created;
+	
+	@Column(name="updated")
 	private Date updated;
 	
 	
