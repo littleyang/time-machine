@@ -1,5 +1,6 @@
 package com.vanke.test.base;
 
+import org.junit.After;
 import org.junit.Before;
 import org.springframework.context.ApplicationContext;
 import org.unitils.UnitilsJUnit4;
@@ -21,8 +22,13 @@ public class BaseDaoTestBeans extends UnitilsJUnit4 {
 	
 	
 	@Before
-	public void setUp(){
-		System.out.println("before test settings");
+	public void beforeSetUp(){
+		System.out.println("\n========before test settings=========\n");
+	}
+	
+	@After
+	public void afterSetUp(){
+		System.out.println("\n========after test settings===========\n");
 	}
 
 }

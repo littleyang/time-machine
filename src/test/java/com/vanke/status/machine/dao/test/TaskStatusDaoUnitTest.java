@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.vanke.status.machine.dao.TaskStatusDao;
 import com.vanke.test.base.BaseTestUnit;
 
-public class TaskStatusDaoTest extends BaseTestUnit {
+public class TaskStatusDaoUnitTest extends BaseTestUnit {
 	
 	@Autowired 
 	private TaskStatusDao statusDao;
