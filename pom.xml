@@ -214,11 +214,10 @@
 				<directory>src/main/resources</directory>
 				<includes>
 					<!-- 打包的时候包含配置文件 -->
+					<include>**/config/*.properties</include>
 					<include>**/*.properties</include>
 					<include>**/*.xml</include>
 				</includes>
-				<!-- 目前所有配置文件都要打包进来 <excludes> <exclude>log4j.xml</exclude> <exclude>context-msgcenter.properties</exclude> 
-					<exclude>systemConfig.properties</exclude> </excludes> -->
 			</resource>
 		</resources>
 		<testSourceDirectory>src/test/java</testSourceDirectory>
@@ -228,6 +227,7 @@
 				<directory>src/test/resources</directory>
 				<includes>
 					<include>**/*.properties</include>
+					<include>**/config/*.properties</include>
 					<include>**/*.xml</include>
 				</includes>
 			</testResource>
