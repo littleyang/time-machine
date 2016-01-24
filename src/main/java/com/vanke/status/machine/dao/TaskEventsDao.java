@@ -2,13 +2,14 @@ package com.vanke.status.machine.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.vanke.status.machine.dao.base.JdbcBaseDao;
 import com.vanke.status.machine.dao.crud.TaskEventsCrudDao;
 import com.vanke.status.machine.model.TaskEvents;
 
-@Component("taskEventsDao")
+@Repository
+@Qualifier("taskEventsDao")
 public class TaskEventsDao extends JdbcBaseDao {
 	
 	@Autowired
