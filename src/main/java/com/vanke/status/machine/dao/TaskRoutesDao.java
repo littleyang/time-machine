@@ -8,6 +8,7 @@ import com.vanke.status.machine.dao.base.JdbcBaseDao;
 import com.vanke.status.machine.dao.crud.TaskRoutesCrudDao;
 
 @Repository
+@Qualifier("taskRoutesDao")
 public class TaskRoutesDao extends JdbcBaseDao {
 	
 	@Autowired

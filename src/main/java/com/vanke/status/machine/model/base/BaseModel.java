@@ -1,6 +1,14 @@
 package com.vanke.status.machine.model.base;
 
-public class BaseModel {
+import java.io.Serializable;
+
+public class BaseModel implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	
 	public String baseType;
 
