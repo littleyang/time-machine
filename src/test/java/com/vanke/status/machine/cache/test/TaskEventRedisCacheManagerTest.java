@@ -4,6 +4,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
 import org.junit.Before;
@@ -53,5 +54,23 @@ public class TaskEventRedisCacheManagerTest extends BaseTestUnit{
 		
 		assertThat("task event id should be equal",event.getId(), is(eventTemp.getId()));
 		
+	}
+	
+	@Test
+	public void testRedisCacheTimeOut() throws InterruptedException{
+		long time = 3L;
+		TimeUnit unit = null;
+		taskEventRedisCacheManager.addBoundValueBykeyAndExpire(eventKey, event, time, unit);
+		Thread.sleep(4*1000);
+		assertThat("task event id should be equal",null, is(taskEventRedisCacheManager.getValueByKey(eventKey)));
+	}
+	
+	@Test
+	public void testRedisTemplateExpireTime() throws InterruptedException{
+		long time = 3L;
+		TimeUnit unit = TimeUnit.SECONDS;
+		taskEventRedisCacheManager.addValueBykeyAndExpire(eventKey, event, time, unit);
+		Thread.sleep(4*1000);
+		assertThat("task event id should be equal",null, is(taskEventRedisCacheManager.getValueByKey(eventKey)));
 	}
 }

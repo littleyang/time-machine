@@ -3,8 +3,11 @@ package com.vanke.common.cache.redis;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundValueOperations;
+import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 
 @SuppressWarnings("unchecked")
@@ -20,6 +23,9 @@ public abstract class RedisCacheCommonManager {
 	@SuppressWarnings("rawtypes")
 	@Autowired
 	private RedisTemplate redisTemplate;
+	
+	@Resource(name="redisTemplate")
+	private ListOperations<String, String> listOps;
 	
 	/**
 	 * 增加某一个值
@@ -115,6 +121,13 @@ public abstract class RedisCacheCommonManager {
 			end = -1;
 		}
 		return redisTemplate.opsForList().range(key, start, end);
+	}
+	
+	
+	public List<Object> getValuesByListsKeys(List<Object> keys){
+		
+
+		return keys;
 	}
 
 }
