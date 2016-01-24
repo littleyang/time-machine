@@ -9,6 +9,7 @@ import com.vanke.common.cache.redis.RedisCacheCommonManager;
 @Qualifier("taskEventRedisCacheManager")
 public class TaskEventRedisCacheManager extends RedisCacheCommonManager{
 	
-	
 
 }
+
+

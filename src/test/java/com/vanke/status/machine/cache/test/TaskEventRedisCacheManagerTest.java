@@ -34,7 +34,7 @@ public class TaskEventRedisCacheManagerTest extends BaseTestUnit{
 		event.setMsg("test-task-event-msg");
 		event.setCreated(new Date());
 		event.setUpdated(new Date());
-			eventKey = "task:event:"+event.getId();
+		eventKey = "task:event:"+event.getId();
 		System.out.println(eventKey);
 	}
 	
