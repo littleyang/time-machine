@@ -47,6 +47,7 @@ public class TaskEventsDaoDataTest extends BaseDaoTestBeans{
 		taskEvent.setCreated(new Date());
 		taskEvent.setUpdated(new Date());
 		TaskEvents taskEventTemp = taskEventsDao.createTaskEvent(taskEvent);
+		System.out.println(taskEventTemp.getId());
 		assertThat("task event code should be equal ",taskEvent.getCode(), is(taskEventTemp.getCode()));
 		assertThat("task event name should be equal ",taskEvent.getName(), is(taskEventTemp.getName()));
 	}

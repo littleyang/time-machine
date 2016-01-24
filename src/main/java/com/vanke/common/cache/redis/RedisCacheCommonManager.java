@@ -3,8 +3,11 @@ package com.vanke.common.cache.redis;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundValueOperations;
+import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 
 @SuppressWarnings("unchecked")
@@ -20,6 +23,27 @@ public abstract class RedisCacheCommonManager {
 	@SuppressWarnings("rawtypes")
 	@Autowired
 	private RedisTemplate redisTemplate;
+	
+	public RedisTemplate getRedisTemplate() {
+		return redisTemplate;
+	}
+
+	public void setRedisTemplate(RedisTemplate redisTemplate) {
+		this.redisTemplate = redisTemplate;
+	}
+
+
+	@Resource(name="redisTemplate")
+	private ListOperations<Object, Object> listOps;
+	
+	/**
+	 * 判断某个值是否存在
+	 * @param key
+	 * @return
+	 */
+	public boolean existKey(String key){
+		return redisTemplate.hasKey(key);
+	}
 	
 	/**
 	 * 增加某一个值
@@ -115,6 +139,23 @@ public abstract class RedisCacheCommonManager {
 			end = -1;
 		}
 		return redisTemplate.opsForList().range(key, start, end);
+	}
+	
+	/**
+	 * 获取一些列keys的值
+	 * @param keys
+	 * @return
+	 */
+	public List<Object> getValuesByListsKeys(List<Object> keys){ 
+		return redisTemplate.opsForValue().multiGet(keys);
+	}
+	
+	/**
+	 * 删除一些列的keys值
+	 * @param keys
+	 */
+	public void deltedValuesByKeys(List<Object> keys){
+		redisTemplate.delete(keys);
 	}
 
 }

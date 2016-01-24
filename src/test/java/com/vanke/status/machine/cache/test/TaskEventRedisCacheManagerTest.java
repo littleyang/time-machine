@@ -4,11 +4,14 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.core.RedisCallback;
 
 import com.vanke.status.machine.cache.TaskEventRedisCacheManager;
 import com.vanke.status.machine.model.TaskEvents;
@@ -38,10 +41,16 @@ public class TaskEventRedisCacheManagerTest extends BaseTestUnit{
 		System.out.println(eventKey);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@After
 	public void clean(){
 		System.out.println("====clean all test data=====");
-		taskEventRedisCacheManager.deleteValueBykey(eventKey);
+		taskEventRedisCacheManager.getRedisTemplate().execute(new RedisCallback<Object>() {
+			public Object doInRedis(RedisConnection connection) {
+				connection.flushDb();
+				return null;
+			}
+		});
 	}
 	
 	@Test
@@ -53,5 +62,23 @@ public class TaskEventRedisCacheManagerTest extends BaseTestUnit{
 		
 		assertThat("task event id should be equal",event.getId(), is(eventTemp.getId()));
 		
+	}
+	
+	@Test
+	public void testRedisCacheTimeOut() throws InterruptedException{
+		long time = 3L;
+		TimeUnit unit = null;
+		taskEventRedisCacheManager.addBoundValueBykeyAndExpire(eventKey, event, time, unit);
+		Thread.sleep(4*1000);
+		assertThat("task event id should be equal",null, is(taskEventRedisCacheManager.getValueByKey(eventKey)));
+	}
+	
+	@Test
+	public void testRedisTemplateExpireTime() throws InterruptedException{
+		long time = 3L;
+		TimeUnit unit = TimeUnit.SECONDS;
+		taskEventRedisCacheManager.addValueBykeyAndExpire(eventKey, event, time, unit);
+		Thread.sleep(4*1000);
+		assertThat("task event id should be equal",null, is(taskEventRedisCacheManager.getValueByKey(eventKey)));
 	}
 }
