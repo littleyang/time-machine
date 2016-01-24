@@ -24,8 +24,26 @@ public abstract class RedisCacheCommonManager {
 	@Autowired
 	private RedisTemplate redisTemplate;
 	
+	public RedisTemplate getRedisTemplate() {
+		return redisTemplate;
+	}
+
+	public void setRedisTemplate(RedisTemplate redisTemplate) {
+		this.redisTemplate = redisTemplate;
+	}
+
+
 	@Resource(name="redisTemplate")
-	private ListOperations<String, String> listOps;
+	private ListOperations<Object, Object> listOps;
+	
+	/**
+	 * 判断某个值是否存在
+	 * @param key
+	 * @return
+	 */
+	public boolean existKey(String key){
+		return redisTemplate.hasKey(key);
+	}
 	
 	/**
 	 * 增加某一个值
@@ -123,11 +141,21 @@ public abstract class RedisCacheCommonManager {
 		return redisTemplate.opsForList().range(key, start, end);
 	}
 	
+	/**
+	 * 获取一些列keys的值
+	 * @param keys
+	 * @return
+	 */
+	public List<Object> getValuesByListsKeys(List<Object> keys){ 
+		return redisTemplate.opsForValue().multiGet(keys);
+	}
 	
-	public List<Object> getValuesByListsKeys(List<Object> keys){
-		
-
-		return keys;
+	/**
+	 * 删除一些列的keys值
+	 * @param keys
+	 */
+	public void deltedValuesByKeys(List<Object> keys){
+		redisTemplate.delete(keys);
 	}
 
 }

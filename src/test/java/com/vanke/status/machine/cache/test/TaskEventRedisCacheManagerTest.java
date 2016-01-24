@@ -10,6 +10,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.core.RedisCallback;
 
 import com.vanke.status.machine.cache.TaskEventRedisCacheManager;
 import com.vanke.status.machine.model.TaskEvents;
@@ -39,10 +41,16 @@ public class TaskEventRedisCacheManagerTest extends BaseTestUnit{
 		System.out.println(eventKey);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@After
 	public void clean(){
 		System.out.println("====clean all test data=====");
-		taskEventRedisCacheManager.deleteValueBykey(eventKey);
+		taskEventRedisCacheManager.getRedisTemplate().execute(new RedisCallback<Object>() {
+			public Object doInRedis(RedisConnection connection) {
+				connection.flushDb();
+				return null;
+			}
+		});
 	}
 	
 	@Test
