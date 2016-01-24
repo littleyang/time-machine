@@ -3,6 +3,8 @@ package com.vanke.status.machine.dao.test;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
+import java.util.Date;
+
 import org.junit.Test;
 import org.unitils.spring.annotation.SpringBeanByType;
 
@@ -33,6 +35,20 @@ public class TaskEventsDaoDataTest extends BaseDaoTestBeans{
 		TaskEvents taskEvent = taskEventsDao.getTaskByCrudDaoByCode("E1001");
 		assertThat("task event id should be equal",taskEvent.getId(), is(1));
 		assertThat("task event name should be equal init ",taskEvent.getName(), is("init"));
+	}
+	
+	@Test
+	public void testCreatTaskEventByCrudDao(){
+		TaskEvents taskEvent = new TaskEvents();
+		taskEvent.setCode("E10010");
+		taskEvent.setName("test-create");
+		taskEvent.setMsg("test 发布了任务");
+		taskEvent.setType(0);
+		taskEvent.setCreated(new Date());
+		taskEvent.setUpdated(new Date());
+		TaskEvents taskEventTemp = taskEventsDao.createTaskEvent(taskEvent);
+		assertThat("task event code should be equal ",taskEvent.getCode(), is(taskEventTemp.getCode()));
+		assertThat("task event name should be equal ",taskEvent.getName(), is(taskEventTemp.getName()));
 	}
 
 

@@ -31,9 +31,9 @@
 		<property name="location">
 			<description>application data source configuration </description>
 			<list>
-				<value>classpath:context-db.properties</value>
-				<value>classpath:context-redis.properties</value>
-				<value>classpath:log4j.properties</value>
+				<value>classpath:config/context-db.properties</value>
+				<value>classpath:config/context-redis.properties</value>
+				<value>classpath:config/log4j.properties</value>
 			</list>
 		</property>
 	</bean>
@@ -46,8 +46,6 @@
 	<import resource="datasource-context.xml" />
 	
 	<import resource="redis-context.xml"/>
-
-	<import resource="beans-dao.xml" />
 	
 	<import resource="data-entity-context.xml" />
 	

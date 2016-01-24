@@ -33,5 +33,10 @@ public class TaskEventsDao extends JdbcBaseDao {
 		// TODO Auto-generated method stub
 		return taskEventsCrudDao.findByCode(code);
 	}
+
+	public TaskEvents createTaskEvent(TaskEvents taskEvent) {
+		// TODO Auto-generated method stub
+		return taskEventsCrudDao.save(taskEvent);
+	}
 	
 }
