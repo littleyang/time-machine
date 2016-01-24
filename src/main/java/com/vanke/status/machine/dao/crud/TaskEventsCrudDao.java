@@ -14,7 +14,7 @@ public interface TaskEventsCrudDao extends CrudRepository<TaskEvents,Integer>{
 	public TaskEvents findById(@Param("id")int id);
 	
 	@Query("from TaskEvents where code = :code")
-	public TaskEvents findByCode(@Param("code")String id);
+	public TaskEvents findByCode(@Param("code")String code);
 	
 	@Query("from TaskEvents")
 	public int getAllTaskEventsCount();
