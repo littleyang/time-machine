@@ -5,7 +5,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.vanke.status.machine.model.BussinessType;
+import com.vanke.common.model.task.BussinessType;
+
 
 @Repository("taskBusinessCrudDao")
 public interface TaskBusinessCrudDao extends CrudRepository<BussinessType,Integer>{

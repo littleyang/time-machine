@@ -1,4 +1,4 @@
-package com.vanke.status.machine.model;
+package com.vanke.common.model.task;
 
 import java.util.Date;
 
@@ -11,10 +11,17 @@ import javax.persistence.Table;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import com.vanke.common.model.base.BaseModel;
+
 @Entity
 @Table(name="business_type")
-public class BussinessType {
+public class BussinessType extends BaseModel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6144634436150487392L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	//为了使得mongo认得这个是Id而不是ObjectId

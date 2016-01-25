@@ -15,4 +15,16 @@ public interface TaskStatusCrudDao extends CrudRepository<TaskStatus,Integer>{
 	
 	@Query("from TaskStatus")
 	public int getAllTaskStatusCount();
+	
+	@Query("from TaskStatus where status = ?1")
+	public TaskStatus findByStatus(int status);
+	
+	@Query("delete from TaskStatus where status = ?1")
+	public TaskStatus deletdByStatus(int status);
+	
+	@Query("delete from TaskStatus where id = ?1")
+	public TaskStatus deletdById(int id);
+	
+	
+	
 }

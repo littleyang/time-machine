@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import com.vanke.status.machine.model.base.BaseModel;
+import com.vanke.common.model.base.BaseModel;
 
 @Entity
 @Table(name="task_events") 

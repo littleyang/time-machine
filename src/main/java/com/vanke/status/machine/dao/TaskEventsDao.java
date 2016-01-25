@@ -5,12 +5,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections.IteratorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import com.vanke.status.machine.dao.base.JdbcBaseDao;
+import com.vanke.common.dao.base.JdbcBaseDao;
 import com.vanke.status.machine.dao.crud.TaskEventsCrudDao;
 import com.vanke.status.machine.model.TaskEvents;
 
@@ -84,6 +85,15 @@ public class TaskEventsDao extends JdbcBaseDao {
 	}
 	
 	/**
+	 * 
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<TaskEvents> findAllByCrudDao(){
+		return IteratorUtils.toList(taskEventsCrudDao.findAll().iterator());
+	}
+	
+	/**
 	 * 使用JDBC的方法返回所有任务的事件状态总数
 	 * @return
 	 */
@@ -98,7 +108,7 @@ public class TaskEventsDao extends JdbcBaseDao {
 	 * @param id
 	 * @return
 	 */
-	public TaskEvents getTaskByIdByJdbc(int id){
+	public TaskEvents getTaskEventByIdByJdbc(int id){
 		StringBuilder sqlBuilder = new StringBuilder("select * from task_events where id = ?");
 		List<Object> params = new ArrayList<Object>();
 		params.add(id);
@@ -115,6 +125,16 @@ public class TaskEventsDao extends JdbcBaseDao {
 		List<Object> params = new ArrayList<Object>();
 		params.add(code);
 		return jdbcTemplate.queryForObject(sqlBuilder.toString(), taskEventsRowMapper, params);
+	}
+	
+	/**
+	 * 使用JDBC方法根据某个任务状态status返回状态的对象
+	 * @param code
+	 * @return
+	 */
+	public List<TaskEvents> getAllTaskStatusByJdbc(){
+		StringBuilder sqlBuilder = new StringBuilder("select * from task_events");
+		return jdbcTemplate.queryForList(sqlBuilder.toString(), null, TaskEvents.class);
 	}
 	
 }

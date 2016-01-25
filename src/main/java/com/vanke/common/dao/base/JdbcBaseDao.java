@@ -1,14 +1,14 @@
-package com.vanke.status.machine.dao.base;
+package com.vanke.common.dao.base;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class JdbcBaseDao {
+public abstract class JdbcBaseDao {
 	
 	@Autowired
-	public JdbcTemplate jdbcTemplate;
+	protected JdbcTemplate jdbcTemplate;
 
 	public JdbcTemplate getJdbcTemplate() {
 		return jdbcTemplate;
