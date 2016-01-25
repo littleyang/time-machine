@@ -9,12 +9,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.data.mongodb.core.mapping.Field;
+
 @Entity
 @Table(name="task_status")
 public class TaskStatus {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	//为了使得mongo认得这个是Id而不是ObjectId
+	@Field("id")
 	private int id;
 	
 	@Column(name="status")

@@ -4,14 +4,21 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Entity
 @Table(name="business_type")
 public class BussinessType {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	//为了使得mongo认得这个是Id而不是ObjectId
+	@Field("id")
 	private int id;
 	
 	@Column(name="code")

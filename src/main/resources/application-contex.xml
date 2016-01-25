@@ -48,6 +48,8 @@
 	
 	<import resource="redis-context.xml"/>
 	
+	<import resource="mongo-context.xml"/>
+	
 	<import resource="data-entity-context.xml" />
 	
 
