@@ -77,6 +77,16 @@ public class TaskEventsDao extends JdbcBaseDao {
 		return jdbcTemplate.queryForObject(sqlBuilder.toString(), taskEventsRowMapper, params);
 	}
 	
-	
+	/**
+	 * 使用JDBC方法根据某个任务事件Code返回事件的对象
+	 * @param code
+	 * @return
+	 */
+	public TaskEvents getTaskEventByCodeByJdbc(String code){
+		StringBuilder sqlBuilder = new StringBuilder("select * from task_events where code = ?");
+		List<Object> params = new ArrayList<Object>();
+		params.add(code);
+		return jdbcTemplate.queryForObject(sqlBuilder.toString(), taskEventsRowMapper, params);
+	}
 	
 }
