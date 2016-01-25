@@ -18,4 +18,7 @@ public interface TaskEventsCrudDao extends CrudRepository<TaskEvents,Integer>{
 	
 	@Query("from TaskEvents")
 	public int getAllTaskEventsCount();
+	
+	@Query("delete from TaskEvents where id = ?1")
+	public void deletedTaskEvent(@Param("id")int id);
 }

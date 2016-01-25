@@ -1,7 +1,8 @@
 package com.vanke.status.machine.dao.test;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.*;
 
 import java.util.Date;
 
@@ -47,10 +48,23 @@ public class TaskEventsDaoDataTest extends BaseDaoTestBeans{
 		taskEvent.setCreated(new Date());
 		taskEvent.setUpdated(new Date());
 		TaskEvents taskEventTemp = taskEventsDao.createTaskEvent(taskEvent);
-		System.out.println(taskEventTemp.getId());
 		assertThat("task event code should be equal ",taskEvent.getCode(), is(taskEventTemp.getCode()));
 		assertThat("task event name should be equal ",taskEvent.getName(), is(taskEventTemp.getName()));
 	}
-
-
+	
+	@Test
+	public void testDeleteTaskEventByCrudDao(){
+		TaskEvents taskEvent = new TaskEvents();
+		taskEvent.setCode("E10010");
+		taskEvent.setName("test-create");
+		taskEvent.setMsg("test 发布了任务");
+		taskEvent.setType(0);
+		taskEvent.setCreated(new Date());
+		taskEvent.setUpdated(new Date());
+		TaskEvents taskEventTemp = taskEventsDao.createTaskEvent(taskEvent);
+		taskEventsDao.deleteTaskEvents(taskEventTemp);
+		TaskEvents deletedEvent = taskEventsDao.getTaskByCrudDaoByCode(taskEvent.getCode());
+		assertNull(deletedEvent);
+		assertThat("task event code should be equal ",deletedEvent, is(nullValue()));
+	}
 }

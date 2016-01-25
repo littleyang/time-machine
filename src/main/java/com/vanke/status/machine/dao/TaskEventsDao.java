@@ -37,23 +37,50 @@ public class TaskEventsDao extends JdbcBaseDao {
 	@Qualifier("taskEventsCrudDao")
 	private TaskEventsCrudDao taskEventsCrudDao;
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public int getAllEventsCountByCrud(){
 		return taskEventsCrudDao.getAllTaskEventsCount();
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public TaskEvents getTaskByCrudDaoById(int id) {
 		// TODO Auto-generated method stub
 		return taskEventsCrudDao.findById(id);
 	}
 	
+	/**
+	 * 
+	 * @param code
+	 * @return
+	 */
 	public TaskEvents getTaskByCrudDaoByCode(String code) {
 		// TODO Auto-generated method stub
 		return taskEventsCrudDao.findByCode(code);
 	}
 
+	/**
+	 * 
+	 * @param taskEvent
+	 * @return
+	 */
 	public TaskEvents createTaskEvent(TaskEvents taskEvent) {
 		// TODO Auto-generated method stub
 		return taskEventsCrudDao.save(taskEvent);
+	}
+	
+	/**
+	 * 删除TaskEvent
+	 * @param taskEvent
+	 */
+	public void deleteTaskEvents(TaskEvents taskEvent){
+		taskEventsCrudDao.delete(taskEvent);
 	}
 	
 	/**
@@ -87,6 +114,17 @@ public class TaskEventsDao extends JdbcBaseDao {
 		List<Object> params = new ArrayList<Object>();
 		params.add(code);
 		return jdbcTemplate.queryForObject(sqlBuilder.toString(), taskEventsRowMapper, params);
+	}
+	
+	/**
+	 * 用JDBC删除某个TaskEvent
+	 * @param taskEvent
+	 */
+	public int deleteTaskEventByJdbc(TaskEvents taskEvent){
+		StringBuilder sqlBuilder = new StringBuilder("delete from task_events where id = ?");
+		List<Object> params = new ArrayList<Object>();
+		params.add(taskEvent.getId());
+		return jdbcTemplate.update(sqlBuilder.toString(), params);
 	}
 	
 }
