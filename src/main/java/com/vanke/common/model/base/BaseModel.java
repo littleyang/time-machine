@@ -1,4 +1,4 @@
-package com.vanke.status.machine.model.base;
+package com.vanke.common.model.base;
 
 import java.io.Serializable;
 
