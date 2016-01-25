@@ -6,7 +6,9 @@ import static org.junit.Assert.assertThat;
 import java.util.Date;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,9 +25,23 @@ public class TaskEventMongoCacheManagerTest extends BaseTestUnit{
 	
 	private String eventKey;
 	
+//	@BeforeClass
+//	public static void setUp(){
+//		System.out.println("====setup all test data=====");
+//		event = new TaskEvents();
+//		event.setId(10000);
+//		event.setCode("E100000");
+//		event.setName("test-task-event");
+//		event.setType(1);
+//		event.setMsg("test-task-event-msg");
+//		event.setCreated(new Date());
+//		event.setUpdated(new Date());
+//		eventKey = "task_events";
+//	}
+	
 	@Before
-	public void setUp(){
-		System.out.println("====setup data=====");
+	public void setEachTest(){
+		System.out.println("\n======setup each test case=======\n");
 		event = new TaskEvents();
 		event.setId(10000);
 		event.setCode("E100000");
@@ -35,15 +51,19 @@ public class TaskEventMongoCacheManagerTest extends BaseTestUnit{
 		event.setCreated(new Date());
 		event.setUpdated(new Date());
 		eventKey = "task_events";
-		System.out.println(eventKey);
 	}
-	
 	
 	@After
-	public void clean(){
-		System.out.println("====clean all test data=====");
+	public void cleanEachTest(){
+		System.out.println("\n====clean each test data=====\n");
 		taskEventMongoCacheManager.getMongoTemplate().dropCollection(eventKey);
 	}
+	
+//	@AfterClass
+//	public static void clean(){
+//		System.out.println("====clean all test data=====");
+//		taskEventMongoCacheManager.getMongoTemplate().dropCollection(eventKey);
+//	}
 	
 	@Test
 	public void testCreateTaskEventsToMongo(){
@@ -59,10 +79,6 @@ public class TaskEventMongoCacheManagerTest extends BaseTestUnit{
 		taskEventMongoCacheManager.insertValue(event, eventKey);
 		
 		TaskEvents eventTemp = (TaskEvents) taskEventMongoCacheManager.findOneById(event.getId(), eventKey);
-		
-		System.out.println("event.getId() " + event.getId());
-		
-		System.out.println("eventTemp.getId() " + eventTemp.getId());
 		
 		assertThat("task event id should be equal",event.getId(), is(eventTemp.getId()));
 		
