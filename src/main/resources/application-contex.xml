@@ -34,6 +34,7 @@
 				<value>classpath:config/context-db.properties</value>
 				<value>classpath:config/context-redis.properties</value>
 				<value>classpath:config/log4j.properties</value>
+				<value>classpath:config/context-mongo.properties</value>
 			</list>
 		</property>
 	</bean>
