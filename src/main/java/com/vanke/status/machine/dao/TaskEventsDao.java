@@ -89,7 +89,7 @@ public class TaskEventsDao extends JdbcBaseDao {
 	 */
 	public int getAllEventsCountByJdbc(){
 		StringBuilder sqlBuilder = new StringBuilder("select count(1) from task_events");
-		return jdbcTemplate.queryForList(sqlBuilder.toString()).size();
+		return jdbcTemplate.queryForObject(sqlBuilder.toString(), null, Integer.class);
 	}
 	
 	/**
@@ -114,17 +114,6 @@ public class TaskEventsDao extends JdbcBaseDao {
 		List<Object> params = new ArrayList<Object>();
 		params.add(code);
 		return jdbcTemplate.queryForObject(sqlBuilder.toString(), taskEventsRowMapper, params);
-	}
-	
-	/**
-	 * 用JDBC删除某个TaskEvent
-	 * @param taskEvent
-	 */
-	public int deleteTaskEventByJdbc(TaskEvents taskEvent){
-		StringBuilder sqlBuilder = new StringBuilder("delete from task_events where id = ?");
-		List<Object> params = new ArrayList<Object>();
-		params.add(taskEvent.getId());
-		return jdbcTemplate.update(sqlBuilder.toString(), params);
 	}
 	
 }
