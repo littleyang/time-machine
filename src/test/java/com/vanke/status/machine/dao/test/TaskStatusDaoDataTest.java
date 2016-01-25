@@ -1,41 +1,33 @@
 package com.vanke.status.machine.dao.test;
 
-import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 import java.util.Date;
 
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.unitils.spring.annotation.SpringBeanByType;
 
 import com.vanke.status.machine.dao.TaskStatusDao;
-import com.vanke.status.machine.dao.crud.TaskStatusCrudDao;
 import com.vanke.status.machine.model.TaskStatus;
-import com.vanke.test.base.BaseTestUnit;
+import com.vanke.test.base.BaseDaoTestBeans;
 
-public class TaskStatusDaoUnitTest extends BaseTestUnit {
+public class TaskStatusDaoDataTest extends BaseDaoTestBeans {
 	
-	@Mock
-	private JdbcTemplate jdbcTemplate;
-	
-	@Mock
-	private TaskStatusCrudDao taskStatusCrudDao;
-	
-	@InjectMocks
+	@SpringBeanByType  
 	private TaskStatusDao taskStatusDao;
 	
 	@Test
 	public void testGetAllStatusCount(){
-		assertThat(taskStatusDao.getAllTaskStatusCountByJdbc(), is(0));
+		System.out.println(taskStatusDao.getAllTaskStatusCountByJdbc());
 	}
 	
 	@Test
 	public void testCreateTaskStatus(){
 		TaskStatus status = new TaskStatus();
-		status.setId(10000);
+		//status.setId(10000);
+		status.setStatus(1005);
 		status.setName("test-status");
 		status.setOuterStatus(10000);
 		status.setOuterName("test-out-name");
@@ -44,7 +36,10 @@ public class TaskStatusDaoUnitTest extends BaseTestUnit {
 		status.setUpdated(new Date());
 		
 		TaskStatus created = taskStatusDao.createTaskStatus(status);
-		assertThat("should be null",created, is(nullValue()));
+		
+		assertThat("should be not null",created, is(notNullValue()));
+		assertThat("should be not null",created.getId(), is(notNullValue()));
+		assertThat("should be equal",status.getStatus(), is(created.getStatus()));
 	}
 
 }
