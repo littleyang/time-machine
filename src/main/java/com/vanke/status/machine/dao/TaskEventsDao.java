@@ -89,7 +89,8 @@ public class TaskEventsDao extends JdbcBaseDao {
 	 */
 	public int getAllEventsCountByJdbc(){
 		StringBuilder sqlBuilder = new StringBuilder("select count(1) from task_events");
-		return jdbcTemplate.queryForObject(sqlBuilder.toString(), null, Integer.class);
+		Integer result = jdbcTemplate.queryForObject(sqlBuilder.toString(), null, Integer.class);
+		return null==result?0:result;
 	}
 	
 	/**
