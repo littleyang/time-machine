@@ -17,7 +17,8 @@ import com.vanke.status.machine.service.StatusRouteService;
 public class StatusRouteController {
 	
 	private static final Log log = LogFactory.getLog(StatusRouteController.class);
-    private final ObjectMapper mapper = new ObjectMapper();
+    @SuppressWarnings("unused")
+	private final ObjectMapper mapper = new ObjectMapper();
     
     @Autowired
     private StatusRouteService routeService;

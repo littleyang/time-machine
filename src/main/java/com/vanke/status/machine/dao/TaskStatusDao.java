@@ -2,7 +2,6 @@ package com.vanke.status.machine.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections.IteratorUtils;
@@ -11,7 +10,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.vanke.common.constant.ResponesCodeConst;
 import com.vanke.common.dao.base.JdbcBaseDao;
+import com.vanke.common.exceptions.BaseDaoException;
 import com.vanke.status.machine.dao.crud.TaskStatusCrudDao;
 import com.vanke.status.machine.model.TaskStatus;
 
@@ -48,6 +49,25 @@ public class TaskStatusDao extends JdbcBaseDao {
 	
 	/**
 	 * 
+	 * @param id
+	 * @return
+	 */
+	public TaskStatus findOneById(int id){
+		return taskStatusCrudDao.findById(id);
+	}
+	
+	/**
+	 * 
+	 * @param status
+	 * @return
+	 */
+	public TaskStatus findOneByStatus(int status){
+		return taskStatusCrudDao.findByStatus(status);
+	}
+	
+	
+	/**
+	 * 
 	 * @param status
 	 */
 	public void deleteTaskStatus(TaskStatus status){
@@ -58,10 +78,27 @@ public class TaskStatusDao extends JdbcBaseDao {
 	 * 
 	 * @return
 	 */
+	public long countAllTaskStatus(){
+		return taskStatusCrudDao.count();
+	}
+	
+	/**
+	 * 
+	 */
+	public void deleteAllTaskStatus(){
+		taskStatusCrudDao.deleteAll();
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public List<TaskStatus> findAllByCrudDao(){
 		return IteratorUtils.toList(taskStatusCrudDao.findAll().iterator());
 	}
+	
+	
 	
 	/**
 	 * 查询当前所有的任务状态总数
@@ -77,24 +114,32 @@ public class TaskStatusDao extends JdbcBaseDao {
 	 * 使用JDBC方法根据某个任务状态ID返回状态的对象
 	 * @param id
 	 * @return
+	 * @throws BaseDaoException 
 	 */
-	public TaskStatus getTaskStatusByIdByJdbc(int id){
+	public TaskStatus getTaskStatusByIdByJdbc(int id) throws BaseDaoException{
+		if(id==0){
+			throw new BaseDaoException(ResponesCodeConst.QUERY_PARAMS_ERROR_CODE,"查询状态参数错误，缺少状态值");
+		}
 		StringBuilder sqlBuilder = new StringBuilder("select * from task_status where id = ?");
-		List<Object> params = new ArrayList<Object>();
-		params.add(id);
-		return jdbcTemplate.queryForObject(sqlBuilder.toString(), taskStatusRowMapper, params);
+		Object[] params = new Object[]{id};
+		return jdbcTemplate.queryForObject(sqlBuilder.toString(), params ,taskStatusRowMapper);
 	}
 	
 	/**
 	 * 使用JDBC方法根据某个任务状态status返回状态的对象
 	 * @param code
 	 * @return
+	 * @throws BaseDaoException 
 	 */
-	public TaskStatus getTaskStatusByStatusByJdbc(int status){
+	public TaskStatus getTaskStatusByStatusByJdbc(int status) throws BaseDaoException{
+		
+		if(status==0){
+			throw new BaseDaoException(ResponesCodeConst.QUERY_PARAMS_ERROR_CODE,"查询状态参数错误，缺少状态值");
+		}
+		
 		StringBuilder sqlBuilder = new StringBuilder("select * from task_status where status = ?");
-		List<Object> params = new ArrayList<Object>();
-		params.add(status);
-		return jdbcTemplate.queryForObject(sqlBuilder.toString(), taskStatusRowMapper, params);
+		Object[] params = new Object[]{status};
+		return jdbcTemplate.queryForObject(sqlBuilder.toString(), params ,taskStatusRowMapper);
 	}
 	
 	/**

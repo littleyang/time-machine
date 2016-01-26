@@ -2,7 +2,6 @@ package com.vanke.status.machine.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections.IteratorUtils;
@@ -110,9 +109,8 @@ public class TaskEventsDao extends JdbcBaseDao {
 	 */
 	public TaskEvents getTaskEventByIdByJdbc(int id){
 		StringBuilder sqlBuilder = new StringBuilder("select * from task_events where id = ?");
-		List<Object> params = new ArrayList<Object>();
-		params.add(id);
-		return jdbcTemplate.queryForObject(sqlBuilder.toString(), taskEventsRowMapper, params);
+		Object[] params = new Object[]{id};
+		return jdbcTemplate.queryForObject(sqlBuilder.toString(), params, taskEventsRowMapper);
 	}
 	
 	/**
@@ -122,9 +120,8 @@ public class TaskEventsDao extends JdbcBaseDao {
 	 */
 	public TaskEvents getTaskEventByCodeByJdbc(String code){
 		StringBuilder sqlBuilder = new StringBuilder("select * from task_events where code = ?");
-		List<Object> params = new ArrayList<Object>();
-		params.add(code);
-		return jdbcTemplate.queryForObject(sqlBuilder.toString(), taskEventsRowMapper, params);
+		Object[] params = new Object[]{code};
+		return jdbcTemplate.queryForObject(sqlBuilder.toString(), params, taskEventsRowMapper);
 	}
 	
 	/**
