@@ -126,7 +126,7 @@ public class TaskRoutesDao extends JdbcBaseDao {
 	 * @return
 	 */
 	public int getAllRoutesCountByJdbc(){
-		StringBuilder sqlBuilder = new StringBuilder("select count(1) from task_status");
+		StringBuilder sqlBuilder = new StringBuilder("select count(1) from task_routes");
 		Integer result = jdbcTemplate.queryForObject(sqlBuilder.toString(), null, Integer.class);
 		return null==result?0:result;
 	}
