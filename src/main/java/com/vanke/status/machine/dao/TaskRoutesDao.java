@@ -143,7 +143,7 @@ public class TaskRoutesDao extends JdbcBaseDao {
 		}
 		Object[] params = new Object[]{id};
 		StringBuilder sqlBuilder = new StringBuilder("select * from task_routes where id = ? ");
-		 return jdbcTemplate.queryForObject(sqlBuilder.toString(), params, taskRouteRowMapper);
+		return jdbcTemplate.queryForObject(sqlBuilder.toString(), params, taskRouteRowMapper);
 	}
 	
 	/**
