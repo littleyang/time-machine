@@ -126,9 +126,24 @@ public class TaskRoutesDao extends JdbcBaseDao {
 	 * @return
 	 */
 	public int getAllRoutesCountByJdbc(){
-		StringBuilder sqlBuilder = new StringBuilder("select count(1) from task_status");
+		StringBuilder sqlBuilder = new StringBuilder("select count(1) from task_routes");
 		Integer result = jdbcTemplate.queryForObject(sqlBuilder.toString(), null, Integer.class);
 		return null==result?0:result;
+	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 * @throws BaseDaoException
+	 */
+	public TaskRoutes getTaskRoutesByIdByJdbc(int id) throws BaseDaoException{
+		if(id==0){
+			throw new BaseDaoException(ResponesCodeConst.QUERY_PARAMS_ERROR_CODE,"查询任务调度参数错误，缺少参数值");
+		}
+		Object[] params = new Object[]{id};
+		StringBuilder sqlBuilder = new StringBuilder("select * from task_routes where id = ? ");
+		 return jdbcTemplate.queryForObject(sqlBuilder.toString(), params, taskRouteRowMapper);
 	}
 	
 	/**
