@@ -5,8 +5,6 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-import java.util.Date;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,9 +12,7 @@ import org.unitils.spring.annotation.SpringBeanByType;
 
 import com.vanke.common.exceptions.BaseDaoException;
 import com.vanke.status.machine.dao.TaskRoutesDao;
-import com.vanke.status.machine.dao.TaskStatusDao;
 import com.vanke.status.machine.model.TaskRoutes;
-import com.vanke.status.machine.model.TaskStatus;
 import com.vanke.test.base.BaseDaoTestBeans;
 
 public class TaskRouteDaoDataTest extends BaseDaoTestBeans {
@@ -62,18 +58,17 @@ public class TaskRouteDaoDataTest extends BaseDaoTestBeans {
 		assertThat("should be null",deleted, is(nullValue()));
 	}
 	
-//	@Test
-//	public void testTaskStatusByJdbc() throws BaseDaoException{
-//		
-//		TaskStatus created = taskStatusDao.createTaskStatus(status);
-//		
-//		TaskStatus findOne = taskStatusDao.getTaskStatusByStatusByJdbc(created.getStatus());
-//		
-//		assertThat("should be not null",findOne, is(notNullValue()));
-//		assertThat("should be equal",created.getId(), is(created.getId()));
-//		assertThat("should be equal",created.getStatus(), is(created.getStatus()));
-//		
-//	}
+	@Test
+	public void testTaskStatusByJdbc() throws BaseDaoException{
+		
+		TaskRoutes created = taskRoutesDao.create(route);
+		TaskRoutes findOne = taskRoutesDao.getTaskRoutesByIdByJdbc(created.getId());
+		
+		assertThat("should be not null",findOne, is(notNullValue()));
+		assertThat("should be equal",created.getId(), is(findOne.getId()));
+		assertThat("should be equal",created.getBussinessCode(), is(findOne.getBussinessCode()));
+		
+	}
 
 }
 

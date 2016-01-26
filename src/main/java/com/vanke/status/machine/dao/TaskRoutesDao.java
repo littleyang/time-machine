@@ -133,6 +133,21 @@ public class TaskRoutesDao extends JdbcBaseDao {
 	
 	/**
 	 * 
+	 * @param id
+	 * @return
+	 * @throws BaseDaoException
+	 */
+	public TaskRoutes getTaskRoutesByIdByJdbc(int id) throws BaseDaoException{
+		if(id==0){
+			throw new BaseDaoException(ResponesCodeConst.QUERY_PARAMS_ERROR_CODE,"查询任务调度参数错误，缺少参数值");
+		}
+		Object[] params = new Object[]{id};
+		StringBuilder sqlBuilder = new StringBuilder("select * from task_routes where id = ? ");
+		 return jdbcTemplate.queryForObject(sqlBuilder.toString(), params, taskRouteRowMapper);
+	}
+	
+	/**
+	 * 
 	 * @param bussinessCode
 	 * @param currentEvent
 	 * @param currentStatus
