@@ -51,8 +51,12 @@ public class TaskRoutesDao extends JdbcBaseDao {
 	 * 
 	 * @param id
 	 * @return
+	 * @throws BaseDaoException 
 	 */
-	public TaskRoutes getTaskRouteById(int id){
+	public TaskRoutes getTaskRouteById(int id) throws BaseDaoException{
+		if(id==0){
+			throw new BaseDaoException(ResponesCodeConst.QUERY_PARAMS_ERROR_CODE,"查询任务调度参数错误，缺少参数值");
+		}
 		return taskRoutesCrudDao.findById(id);
 	}
 	
@@ -75,10 +79,22 @@ public class TaskRoutesDao extends JdbcBaseDao {
 	
 	/**
 	 * 
+	 * @param route
+	 */
+	public void deleteAllTaskRoutes(){
+		taskRoutesCrudDao.deleteAll();
+	}
+	
+	/**
+	 * 
 	 * @param bussinessCode
 	 * @return
+	 * @throws BaseDaoException 
 	 */
-	public List<TaskRoutes> findBussinessTaskRoutes(String bussinessCode){
+	public List<TaskRoutes> findBussinessTaskRoutes(String bussinessCode) throws BaseDaoException{
+		if(bussinessCode.equals("")){
+			throw new BaseDaoException(ResponesCodeConst.QUERY_PARAMS_ERROR_CODE,"查询任务调度参数错误，缺少参数值");
+		}
 		return taskRoutesCrudDao.findByBusinessCode(bussinessCode);
 	}
 	
@@ -87,8 +103,12 @@ public class TaskRoutesDao extends JdbcBaseDao {
 	 * @param bussinessCode
 	 * @param currentStatus
 	 * @return
+	 * @throws BaseDaoException 
 	 */
-	public List<TaskRoutes> findNextTaskRouteEvents(String bussinessCode,int currentStatus){
+	public List<TaskRoutes> findNextTaskRouteEvents(String bussinessCode,int currentStatus) throws BaseDaoException{
+		if(currentStatus==0||bussinessCode.equals("")){
+			throw new BaseDaoException(ResponesCodeConst.QUERY_PARAMS_ERROR_CODE,"查询任务调度参数错误，缺少参数值");
+		}
 		return taskRoutesCrudDao.getNextRouteEvents(bussinessCode, currentStatus);
 	}
 	
