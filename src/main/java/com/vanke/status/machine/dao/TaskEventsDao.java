@@ -85,6 +85,15 @@ public class TaskEventsDao extends JdbcBaseDao {
 	
 	/**
 	 * 
+	 */
+	public void deleteAllEvents() {
+		// TODO Auto-generated method stub
+		taskEventsCrudDao.deleteAll();
+		
+	}
+	
+	/**
+	 * 
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
@@ -133,5 +142,6 @@ public class TaskEventsDao extends JdbcBaseDao {
 		StringBuilder sqlBuilder = new StringBuilder("select * from task_events");
 		return jdbcTemplate.queryForList(sqlBuilder.toString(), null, TaskEvents.class);
 	}
+
 	
 }

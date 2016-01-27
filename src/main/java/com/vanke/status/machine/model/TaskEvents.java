@@ -28,6 +28,9 @@ public class TaskEvents extends BaseModel{
 	@Column(name="code") 
 	private String code;
 	
+	@Column(name="event") 
+	private String event;
+	
 	@Column(name="name")
 	private String name;
 	
@@ -54,6 +57,12 @@ public class TaskEvents extends BaseModel{
 	}
 	public void setCode(String code) {
 		this.code = code;
+	}
+	public String getEvent() {
+		return event;
+	}
+	public void setEvent(String event) {
+		this.event = event;
 	}
 	public String getName() {
 		return name;
