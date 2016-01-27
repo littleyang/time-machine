@@ -1,10 +1,12 @@
 package com.vanke.status.machine.dao.test;
 
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.*;
 
 import java.util.Date;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -76,5 +78,21 @@ public class TaskEventsDaoDataTest extends BaseDaoTestBeans{
 		TaskEvents deletedEvent = taskEventsDao.getTaskByCrudDaoByCode(taskEvent.getCode());
 		assertNull(deletedEvent);
 		assertThat("task event code should be equal ",deletedEvent, is(nullValue()));
+	}
+	
+	
+	@Test
+	public void testGetAllTaskEventsByJdbc(){
+		List<TaskEvents> list = taskEventsDao.getAllTaskStatusByJdbc();
+		assertThat("should be null", list, is(notNullValue()));
+		assertThat("should be equal", list.size(), is(11));
+	}
+	
+	
+	@Test
+	public void testGetAllTaskEventsByCrud(){
+		List<TaskEvents> list = taskEventsDao.findAllByCrudDao();
+		assertThat("should be null", list, is(notNullValue()));
+		assertThat("should be equal", list.size(), is(11));
 	}
 }

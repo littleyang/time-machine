@@ -140,7 +140,7 @@ public class TaskEventsDao extends JdbcBaseDao {
 	 */
 	public List<TaskEvents> getAllTaskStatusByJdbc(){
 		StringBuilder sqlBuilder = new StringBuilder("select * from task_events");
-		return jdbcTemplate.queryForList(sqlBuilder.toString(), null, TaskEvents.class);
+		return jdbcTemplate.query(sqlBuilder.toString(), taskEventsRowMapper);
 	}
 
 	
