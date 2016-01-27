@@ -6,6 +6,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 import java.util.Date;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -44,7 +45,7 @@ public class TaskStatusDaoDataTest extends BaseDaoTestBeans {
 	@After
 	public void cleanAll(){
 		System.out.println("======clean all test data ======");
-		//taskStatusDao.deleteAllTaskStatus();
+		taskStatusDao.deleteAllTaskStatus();
 	}
 	
 	
@@ -74,6 +75,20 @@ public class TaskStatusDaoDataTest extends BaseDaoTestBeans {
 		assertThat("should be equal",created.getId(), is(created.getId()));
 		assertThat("should be equal",created.getStatus(), is(created.getStatus()));
 		
+	}
+	
+	@Test
+	public void testGetAllTaskStatusByCrud(){
+		List<TaskStatus> list = taskStatusDao.findAllByCrudDao();
+		assertThat("should be null", list, is(notNullValue()));
+		assertThat("should be equal", list.size(), is(14));
+	}
+	
+	@Test
+	public void testGetAllTaskStatusByJdbc(){
+		List<TaskStatus> list = taskStatusDao.getAllTaskStatusByJdbc();
+		assertThat("should be null", list, is(notNullValue()));
+		assertThat("should be equal", list.size(), is(14));
 	}
 
 }
