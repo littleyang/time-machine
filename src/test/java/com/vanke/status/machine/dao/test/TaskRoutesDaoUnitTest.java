@@ -12,6 +12,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.vanke.common.constant.ResponesCodeConst;
+import com.vanke.common.exceptions.BaseDaoException;
 import com.vanke.status.machine.dao.TaskRoutesDao;
 import com.vanke.status.machine.dao.crud.TaskRoutesCrudDao;
 import com.vanke.status.machine.model.TaskRoutes;
@@ -44,7 +46,7 @@ public class TaskRoutesDaoUnitTest extends BaseTestUnit {
 	@After
 	public void cleanAll(){
 		System.out.println("======clean all test data ======");
-		//taskRoutesDao.deleteAllTaskRoutes();
+		taskRoutesDao.deleteAllTaskRoutes();
 	}
 	
 	
@@ -62,35 +64,33 @@ public class TaskRoutesDaoUnitTest extends BaseTestUnit {
 		
 	}
 	
-//	@Test
-//	public void testGetTaskStatusByIdByJdbc() throws BaseDaoException{
-//		int statusId = 1000;
-//		TaskStatus one = taskStatusDao.getTaskStatusByIdByJdbc(statusId);
-//		assertThat("should be null",one, is(nullValue()));
-//	}
-//	
-//	
-//	@Test
-//	public void testGetTaskStatusByStatusByJdbc(){
-//		int status = 0;
-//		TaskStatus one;
-//		try {
-//			one = taskStatusDao.getTaskStatusByStatusByJdbc(status);
-//			assertThat("should be null",one, is(nullValue()));
-//		} catch (BaseDaoException e) {
-//			// TODO Auto-generated catch block
-//			assertThat("should be null",e.getCode(), is(ResponesCodeConst.QUERY_PARAMS_ERROR_CODE));
-//		}
-//	}
-//	
-//	
-//	@Test(expected=BaseDaoException.class)
-//	public void testByAnotherWayGetTaskStatusByStatusByJdbc() throws BaseDaoException{
-//		int status = 0;
-//		TaskStatus one;
-//		one = taskStatusDao.getTaskStatusByStatusByJdbc(status);
-//		assertThat("should be null",one, is(nullValue()));
-//	}
+	@Test
+	public void testGetTaskStatusByIdByJdbc() throws BaseDaoException{
+		TaskRoutes one = taskRoutesDao.getTaskRoutesByIdByJdbc(1000000);
+		assertThat("should be null",one, is(nullValue()));
+	}
+	
+	
+	@Test
+	public void testGetTaskStatusByStatusByJdbc(){
+		TaskRoutes one;
+		try {
+			one = taskRoutesDao.getTaskRoutesByIdByJdbc(0);
+			assertThat("should be null",one, is(nullValue()));
+		} catch (BaseDaoException e) {
+			// TODO Auto-generated catch block
+			assertThat("should be null",e.getCode(), is(ResponesCodeConst.QUERY_PARAMS_ERROR_CODE));
+		}
+	}
+	
+	
+	@Test(expected=BaseDaoException.class)
+	public void testByAnotherWayGetTaskStatusByStatusByJdbc() throws BaseDaoException{
+		TaskRoutes one = taskRoutesDao.getTaskRoutesByIdByJdbc(0);
+		assertThat("should be null",one, is(nullValue()));
+	}
+	
+	
 	
 }
 
