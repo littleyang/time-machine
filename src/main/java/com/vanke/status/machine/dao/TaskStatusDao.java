@@ -149,7 +149,7 @@ public class TaskStatusDao extends JdbcBaseDao {
 	 */
 	public List<TaskStatus> getAllTaskStatusByJdbc(){
 		StringBuilder sqlBuilder = new StringBuilder("select * from task_status");
-		return jdbcTemplate.queryForList(sqlBuilder.toString(), null, TaskStatus.class);
+		return jdbcTemplate.query(sqlBuilder.toString(), taskStatusRowMapper);
 	}
 
 }

@@ -5,6 +5,8 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,7 +44,7 @@ public class TaskRouteDaoDataTest extends BaseDaoTestBeans {
 	
 	@Test
 	public void testGetAllTaskRoutesCount(){
-		assertThat(taskRoutesDao.getAllRoutesCountByJdbc(), is(0));
+		assertThat(taskRoutesDao.getAllRoutesCountByJdbc(), is(7));
 	}
 	
 	@Test
@@ -68,6 +70,20 @@ public class TaskRouteDaoDataTest extends BaseDaoTestBeans {
 		assertThat("should be equal",created.getId(), is(findOne.getId()));
 		assertThat("should be equal",created.getBussinessCode(), is(findOne.getBussinessCode()));
 		
+	}
+	
+	@Test
+	public void testGetAllTaskRoutes(){
+		List<TaskRoutes> list = taskRoutesDao.findAllByCrudDao();
+		assertThat("should be null", list, is(notNullValue()));
+		assertThat("should be equal", list.size(), is(7));
+	}
+	
+	@Test
+	public void testGetAllTaskRoutesByJdbc() throws BaseDaoException{
+		List<TaskRoutes> list = taskRoutesDao.getAllTaskRoutesByJdbc();
+		assertThat("should be null", list, is(notNullValue()));
+		assertThat("should be equal", list.size(), is(7));
 	}
 
 }

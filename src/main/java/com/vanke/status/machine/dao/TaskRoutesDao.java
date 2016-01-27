@@ -182,7 +182,7 @@ public class TaskRoutesDao extends JdbcBaseDao {
 		Object[] params = new Object[]{bussinessCode,currentStatus};
 		StringBuilder sqlBuilder = new StringBuilder("select * from task_routes where bussiness_code = ? "
 				+ "and current_status = ?");
-		 return jdbcTemplate.queryForList(sqlBuilder.toString(), params, TaskRoutes.class);
+		 return jdbcTemplate.query(sqlBuilder.toString(), params, taskRouteRowMapper);
 	}
 
 	/**
@@ -198,7 +198,8 @@ public class TaskRoutesDao extends JdbcBaseDao {
 		
 		Object[] params = new Object[]{bussinessCode};
 		StringBuilder sqlBuilder = new StringBuilder("select * from task_routes where bussiness_code = ?");
-		return jdbcTemplate.queryForList(sqlBuilder.toString(), params, TaskRoutes.class);
+		
+		return jdbcTemplate.query(sqlBuilder.toString(), params, taskRouteRowMapper);
 	}
 	
 	/**
@@ -209,7 +210,7 @@ public class TaskRoutesDao extends JdbcBaseDao {
 	 */
 	public List<TaskRoutes> getAllTaskRoutesByJdbc() throws BaseDaoException{
 		StringBuilder sqlBuilder = new StringBuilder("select * from task_routes");
-		return jdbcTemplate.queryForList(sqlBuilder.toString(), null, TaskRoutes.class);
+		return jdbcTemplate.query(sqlBuilder.toString(), taskRouteRowMapper);
 	}
 
 }
