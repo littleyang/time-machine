@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+	<!-- 创建任务 -->
+    <task_routes id="1" bussiness_code="BUCR020103" current_event="E100001" current_status="1000" next_event="E100002" next_status="1001" />
+    <!-- 发布任务 -->
+    <task_routes id="2" bussiness_code="BUCR020103" current_event="E100002" current_status="1001" next_event="E100003" next_status="1004" />
+    <!-- 抢单 -->
+    <task_routes id="3" bussiness_code="BUCR020103" current_event="E100003" current_status="1004" next_event="E100010" next_status="1014" />
+    <!-- 接受 -->
+    <task_routes id="4" bussiness_code="BUCR020103" current_event="E100010" current_status="1014" next_event="E100004" next_status="1006" />
+    <!-- 开始任务 -->
+    <task_routes id="5" bussiness_code="BUCR020103" current_event="E100004" current_status="1006" next_event="E100007" next_status="1009" />
+    <!-- 完成任务 -->
+    <task_routes id="6" bussiness_code="BUCR020103" current_event="E100007" current_status="1009" next_event="E100008" next_status="1011" />
+    <!-- 评价任务 -->
+    <task_routes id="7" bussiness_code="BUCR020103" current_event="E100008" current_status="1011" next_event="E100008" next_status="1011" />
+</dataset>
+

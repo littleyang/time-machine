@@ -32,7 +32,7 @@ public class TaskStatusDaoDataTest extends BaseDaoTestBeans {
 	@Before
 	public void setUp(){
 		System.out.println("======set up all test data ======");
-		status.setStatus(1005);
+		status.setStatus(10050);
 		status.setName("test-status");
 		status.setOuterStatus(10000);
 		status.setOuterName("test-out-name");

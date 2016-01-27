@@ -37,27 +37,27 @@ public class TaskEventsDaoDataTest extends BaseDaoTestBeans{
 	@After
 	public void clean(){
 		System.out.println("======clean all test data ======");
-		//taskEventsDao.deleteAllEvents();
+		taskEventsDao.deleteAllEvents();
 	}
 	
 	@Test
 	//@DataSet("/data/task-events-test-data.xml")
 	public void testGetAllEventsCount(){
-		assertThat("all task events count should be 2",taskEventsDao.getAllEventsCountByJdbc(), is(12));
+		assertThat("all task events count should be 2",taskEventsDao.getAllEventsCountByJdbc(), is(11));
 	}
 	
 	@Test
 	public void testGetTaskEventByIdByCrudDao(){
 		TaskEvents taskEvent = taskEventsDao.getTaskByCrudDaoById(1);
 		assertThat("task event id should be equal",taskEvent.getId(), is(1));
-		assertThat("task event name should be equal init ",taskEvent.getName(), is("init"));
+		assertThat("task event name should be equal init ",taskEvent.getEvent(), is("create"));
 	}
 	
 	@Test
 	public void testGetTaskEventByCodeByCrudDao(){
 		TaskEvents taskEvent = taskEventsDao.getTaskByCrudDaoByCode("E100001");
 		assertThat("task event id should be equal",taskEvent.getId(), is(1));
-		assertThat("task event name should be equal init ",taskEvent.getName(), is("init"));
+		assertThat("task event name should be equal init ",taskEvent.getEvent(), is("create"));
 	}
 	
 	@Test
