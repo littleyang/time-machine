@@ -13,8 +13,8 @@ import org.unitils.spring.annotation.SpringApplicationContext;
  *
  */
 
-@DataSet({"/data/task-events-test-data.xml",
-	"/data/task-status-test-data.xml"})
+@DataSet({"/data/task-events-test-data.xml","/data/task-status-test-data.xml"
+	,"/data/task-routes-test-data.xml"})
 public class BaseDaoTestBeans extends UnitilsJUnit4 {
 	
 	@SpringApplicationContext({ "classpath:application-contex-test.xml"})  

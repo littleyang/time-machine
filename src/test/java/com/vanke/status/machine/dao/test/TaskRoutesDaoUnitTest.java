@@ -5,6 +5,8 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -89,8 +91,6 @@ public class TaskRoutesDaoUnitTest extends BaseTestUnit {
 		TaskRoutes one = taskRoutesDao.getTaskRoutesByIdByJdbc(0);
 		assertThat("should be null",one, is(nullValue()));
 	}
-	
-	
 	
 }
 
