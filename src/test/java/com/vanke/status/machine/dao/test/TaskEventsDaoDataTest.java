@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.unitils.spring.annotation.SpringBeanByType;
 
+import com.vanke.common.exceptions.BaseDaoException;
 import com.vanke.status.machine.dao.TaskEventsDao;
 import com.vanke.status.machine.model.TaskEvents;
 import com.vanke.test.base.BaseDaoTestBeans;
@@ -95,4 +96,20 @@ public class TaskEventsDaoDataTest extends BaseDaoTestBeans{
 		assertThat("should be null", list, is(notNullValue()));
 		assertThat("should be equal", list.size(), is(11));
 	}
+	
+	@Test(expected=BaseDaoException.class)
+	public void testGetTaskEventsByCodeByJdbc() throws BaseDaoException{
+		String code = "";
+		TaskEvents event = taskEventsDao.getTaskEventByCodeByJdbc(code);
+		assertThat("task event code should be null ",event, is(nullValue()));
+	}
+	
+	@Test
+	public void testGetTaskEventsByCodeByJdbcNoException() throws BaseDaoException{
+		String code = "E100001";
+		TaskEvents event = taskEventsDao.getTaskEventByCodeByJdbc(code);
+		assertThat("task event code should be null ",event, is(notNullValue()));
+		assertThat("task event code should be null ",code, is(event.getCode()));
+	}
+	
 }
