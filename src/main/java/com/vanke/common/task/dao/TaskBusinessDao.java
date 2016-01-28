@@ -1,4 +1,4 @@
-package com.vanke.status.machine.dao;
+package com.vanke.common.task.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
