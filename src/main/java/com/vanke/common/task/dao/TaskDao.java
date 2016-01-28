@@ -61,6 +61,29 @@ public class TaskDao extends JdbcBaseDao{
 	/**
 	 * 
 	 * @param taskId
+	 */
+	public void deleteTaskById(int taskId){
+		taskCrudDao.deleteTaskById(taskId);
+	}
+	
+	/**
+	 * 
+	 * @param taskNo
+	 */
+	public void deleteTaskByTaskNo(String taskNo){
+		taskCrudDao.deleteTaskByTaskNo(taskNo);
+	}
+	
+	/**
+	 * 
+	 */
+	public void deleteAllTask(){
+		taskCrudDao.deleteAll();
+	}
+	
+	/**
+	 * 
+	 * @param taskId
 	 * @return
 	 * @throws BaseDaoException 
 	 */
@@ -84,14 +107,12 @@ public class TaskDao extends JdbcBaseDao{
 		return taskCrudDao.findByTaskNo(taskNo);
 	}
 	
-	
 	public int getAllTaskCountByJdbc(){
 		StringBuilder sqlBuilder = new StringBuilder("select count(1) from task");
 		Integer result = jdbcTemplate.queryForObject(sqlBuilder.toString(), null, Integer.class);
 		return null==result?0:result;
 	}
-	
-	
+
 	
 	/**
 	 * 
@@ -120,7 +141,7 @@ public class TaskDao extends JdbcBaseDao{
 		}
 		StringBuilder sqlBuilder = new StringBuilder("select * from task where task_no = ?");
 		Object[] params = new Object[]{taskNo};
-		return jdbcTemplate.queryForObject(sqlBuilder.toString(), params, Task.class);
+		return jdbcTemplate.queryForObject(sqlBuilder.toString(), params, taskRowMapper);
 	}
 	
 

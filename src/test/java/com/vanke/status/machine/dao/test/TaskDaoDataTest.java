@@ -1,12 +1,11 @@
 package com.vanke.status.machine.dao.test;
 
-import static org.hamcrest.core.Is.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.*;
-
-import java.util.Date;
-import java.util.List;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 
 import org.junit.After;
 import org.junit.Before;
@@ -14,102 +13,84 @@ import org.junit.Test;
 import org.unitils.spring.annotation.SpringBeanByType;
 
 import com.vanke.common.exceptions.BaseDaoException;
-import com.vanke.status.machine.dao.TaskEventsDao;
-import com.vanke.status.machine.model.TaskEvents;
+import com.vanke.common.model.task.Task;
+import com.vanke.common.task.dao.TaskDao;
 import com.vanke.test.base.BaseDaoTestBeans;
 
 public class TaskDaoDataTest extends BaseDaoTestBeans{
 	
 	@SpringBeanByType 
-	private TaskEventsDao taskEventsDao;
+	private TaskDao taskDao;
 	
-	TaskEvents taskEvent = new TaskEvents();
+	Task task = new Task();
 	
 	@Before
 	public void setUp(){
 		System.out.println("======set up all test data ======");
-		taskEvent.setCode("E100100");
-		taskEvent.setEvent("test-event");
-		taskEvent.setName("test-create");
-		taskEvent.setMsg("test 发布了任务");
-		taskEvent.setType(0);
-		taskEvent.setCreated(new Date());
-		taskEvent.setUpdated(new Date());
+		task.setTaskNo("1911101001");
+		task.setBusinessType("BUCR020103");
+		task.setStatus(1000);
 	}
 	
 	@After
 	public void clean(){
 		System.out.println("======clean all test data ======");
-		taskEventsDao.deleteAllEvents();
+		taskDao.deleteAllTask();;
 	}
 	
 	@Test
-	//@DataSet("/data/task-events-test-data.xml")
-	public void testGetAllEventsCount(){
-		assertThat("all task events count should be 2",taskEventsDao.getAllEventsCountByJdbc(), is(11));
+	public void testGetAllTaskCount(){
+		assertThat("all task events count should be 2",taskDao.getAllTaskCountByJdbc(), is(2));
 	}
 	
 	@Test
-	public void testGetTaskEventByIdByCrudDao(){
-		TaskEvents taskEvent = taskEventsDao.getTaskByCrudDaoById(1);
-		assertThat("task event id should be equal",taskEvent.getId(), is(1));
-		assertThat("task event name should be equal init ",taskEvent.getEvent(), is("create"));
+	public void testGetTaskByIdByCrudDao() throws BaseDaoException{
+		Task taskTemp = taskDao.findById(1);
+		assertThat("task task id should be equal",taskTemp.getId(), is(1));
+		assertThat("task task no should be equal ",taskTemp.getTaskNo(), is("201601290001"));
 	}
 	
 	@Test
-	public void testGetTaskEventByCodeByCrudDao(){
-		TaskEvents taskEvent = taskEventsDao.getTaskByCrudDaoByCode("E100001");
-		assertThat("task event id should be equal",taskEvent.getId(), is(1));
-		assertThat("task event name should be equal init ",taskEvent.getEvent(), is("create"));
+	public void testGetTaskByTaskNoByCrudDao() throws BaseDaoException{
+		String taskNo = "201601290001";
+		Task taskTemp = taskDao.findByTaskNo(taskNo);
+		assertThat("task id should be equal",taskTemp.getId(), is(1));
+		assertThat("task no should be equal init ",taskTemp.getTaskNo(), is(taskNo));
 	}
 	
 	@Test
-	public void testCreatTaskEventByCrudDao(){
-		
-		TaskEvents taskEventTemp = taskEventsDao.createTaskEvent(taskEvent);
-		assertThat("task event code should be equal ",taskEvent.getCode(), is(taskEventTemp.getCode()));
-		assertThat("task event name should be equal ",taskEvent.getName(), is(taskEventTemp.getName()));
+	public void testCreateTaskEventByCrudDao() throws BaseDaoException{
+		Task taskTemp = taskDao.createTask(task);
+		assertThat("task should be not null ",taskTemp, is(notNullValue()));
+		assertThat("task should be equal ",task.getTaskNo(), is(taskTemp.getTaskNo()));
 	}
 	
 	@Test
-	public void testDeleteTaskEventByCrudDao(){
-		
-		TaskEvents taskEventTemp = taskEventsDao.createTaskEvent(taskEvent);
-		taskEventsDao.deleteTaskEvents(taskEventTemp);
-		TaskEvents deletedEvent = taskEventsDao.getTaskByCrudDaoByCode(taskEvent.getCode());
-		assertNull(deletedEvent);
-		assertThat("task event code should be equal ",deletedEvent, is(nullValue()));
+	public void testDeleteTaskEventByCrudDao() throws BaseDaoException{
+		Task taskTemp = taskDao.createTask(task);
+		taskDao.deleteTask(taskTemp);
+		Task deletedTask = taskDao.findByTaskNo(task.getTaskNo());
+		assertNull(deletedTask);
+		assertThat("task should be equal ",deletedTask, is(nullValue()));
 	}
 	
-	
 	@Test
-	public void testGetAllTaskEventsByJdbc(){
-		List<TaskEvents> list = taskEventsDao.getAllTaskStatusByJdbc();
-		assertThat("should be null", list, is(notNullValue()));
-		assertThat("should be equal", list.size(), is(11));
+	public void testGetTaskByIdByJdbc() throws BaseDaoException{
+		Task create = taskDao.createTask(task);
+		Task findone = taskDao.getTaskByIdByJdbc(create.getId());
+		assertNotNull(findone);
+		assertThat("task should be equal ",create.getTaskNo(), is(findone.getTaskNo()));
 	}
 	
 	
 	@Test
-	public void testGetAllTaskEventsByCrud(){
-		List<TaskEvents> list = taskEventsDao.findAllByCrudDao();
-		assertThat("should be null", list, is(notNullValue()));
-		assertThat("should be equal", list.size(), is(11));
+	public void testGetTaskByTaskNoByJdbc() throws BaseDaoException{
+		Task create = taskDao.createTask(task);
+		Task findone = taskDao.getTaskByTaskNoByJdbc(create.getTaskNo());
+		assertNotNull(findone);
+		assertThat("task should be equal ",create.getId(), is(findone.getId()));
+		assertThat("task should be equal ",create.getTaskNo(), is(findone.getTaskNo()));
 	}
 	
-	@Test(expected=BaseDaoException.class)
-	public void testGetTaskEventsByCodeByJdbc() throws BaseDaoException{
-		String code = "";
-		TaskEvents event = taskEventsDao.getTaskEventByCodeByJdbc(code);
-		assertThat("task event code should be null ",event, is(nullValue()));
-	}
-	
-	@Test
-	public void testGetTaskEventsByCodeByJdbcNoException() throws BaseDaoException{
-		String code = "E100001";
-		TaskEvents event = taskEventsDao.getTaskEventByCodeByJdbc(code);
-		assertThat("task event code should be null ",event, is(notNullValue()));
-		assertThat("task event code should be null ",code, is(event.getCode()));
-	}
-	
+
 }
