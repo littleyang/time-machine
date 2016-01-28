@@ -27,7 +27,7 @@ public class Task extends BaseModel{
 	@Field("id")
 	private int id;
 	
-	@Column(name="task_no")
+	@Column(name="task_no",unique=true)
 	private String taskNo;
 	
 	@Column(name="business_type")
@@ -35,6 +35,38 @@ public class Task extends BaseModel{
 	
 	@Column(name="status")
 	private int status;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getTaskNo() {
+		return taskNo;
+	}
+
+	public void setTaskNo(String taskNo) {
+		this.taskNo = taskNo;
+	}
+
+	public String getBusinessType() {
+		return businessType;
+	}
+
+	public void setBusinessType(String businessType) {
+		this.businessType = businessType;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
 	
 	
 
