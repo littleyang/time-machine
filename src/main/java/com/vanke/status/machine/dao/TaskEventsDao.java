@@ -2,6 +2,7 @@ package com.vanke.status.machine.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections.IteratorUtils;
@@ -15,6 +16,7 @@ import com.vanke.common.dao.base.JdbcBaseDao;
 import com.vanke.common.exceptions.BaseDaoException;
 import com.vanke.status.machine.dao.crud.TaskEventsCrudDao;
 import com.vanke.status.machine.model.TaskEvents;
+import com.vanke.status.machine.model.TaskRoutes;
 
 @Repository
 @Qualifier("taskEventsDao")
@@ -65,6 +67,41 @@ public class TaskEventsDao extends JdbcBaseDao {
 	public TaskEvents getTaskByCrudDaoByCode(String code) {
 		// TODO Auto-generated method stub
 		return taskEventsCrudDao.findByCode(code);
+	}
+	
+	/**
+	 * 
+	 * @param route
+	 * @return
+	 */
+	public TaskEvents findNextEventByNextRoutes(TaskRoutes route){
+		return taskEventsCrudDao.findByCode(route.getNextEvent());
+	}
+	
+	/**
+	 * 
+	 * @param route
+	 * @return
+	 */
+	public TaskEvents findCurrentEventByCurrentRoutes(TaskRoutes route){
+		return taskEventsCrudDao.findByCode(route.getNextEvent());
+	}
+	
+	/**
+	 * 
+	 * @param list
+	 * @return
+	 */
+	public List<TaskEvents> findNextEventsByRoutes(List<TaskRoutes> list){
+		//查找下一个操作事件
+		List<TaskEvents> nextEvents = new ArrayList<TaskEvents>();
+
+		for (int i = 0; i < list.size(); i++) {
+			TaskRoutes temp = list.get(i);
+			TaskEvents eventTemp = taskEventsCrudDao.findByCode(temp.getNextEvent());
+			nextEvents.add(eventTemp);
+		}
+		return nextEvents;
 	}
 
 	/**
