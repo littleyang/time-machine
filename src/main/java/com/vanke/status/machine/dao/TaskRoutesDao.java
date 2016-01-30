@@ -105,11 +105,11 @@ public class TaskRoutesDao extends JdbcBaseDao {
 	 * @return
 	 * @throws BaseDaoException 
 	 */
-	public List<TaskRoutes> findNextTaskRouteEvents(String bussinessCode,int currentStatus) throws BaseDaoException{
+	public List<TaskRoutes> findNextTaskRouteEvents(String bussinessCode,int currentStatus,int operationType) throws BaseDaoException{
 		if(currentStatus==0||bussinessCode.equals("")){
 			throw new BaseDaoException(ResponesCodeConst.QUERY_PARAMS_ERROR_CODE,"查询任务调度参数错误，缺少参数值");
 		}
-		return taskRoutesCrudDao.getNextRouteEvents(bussinessCode, currentStatus);
+		return taskRoutesCrudDao.getNextRouteEvents(bussinessCode, currentStatus,operationType);
 	}
 	
 	/**
@@ -155,15 +155,15 @@ public class TaskRoutesDao extends JdbcBaseDao {
 	 * @throws BaseDaoException
 	 */
 	
-	public TaskRoutes getCurrentRoutesByJdbc(String bussinessCode,String currentEvent,int currentStatus) throws BaseDaoException{
+	public TaskRoutes getCurrentRoutesByJdbc(String bussinessCode,String currentEvent,int currentStatus, int operationType) throws BaseDaoException{
 		
 		if(currentStatus==0||bussinessCode.equals("")||currentEvent.equals("")){
 			throw new BaseDaoException(ResponesCodeConst.QUERY_PARAMS_ERROR_CODE,"查询任务调度参数错误，缺少参数值");
 		}
 		
-		Object[] params = new Object[]{bussinessCode,currentEvent,currentStatus};
+		Object[] params = new Object[]{bussinessCode,currentEvent,currentStatus,operationType};
 		StringBuilder sqlBuilder = new StringBuilder("select * from task_routes where bussiness_code = ? "
-				+ "and current_event = ? and current_status = ?");
+				+ "and current_event = ? and current_status = ? and type = ?");
 		 return jdbcTemplate.queryForObject(sqlBuilder.toString(), params, taskRouteRowMapper);
 	}
 	

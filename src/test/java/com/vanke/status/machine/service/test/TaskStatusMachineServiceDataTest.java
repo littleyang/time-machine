@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.unitils.spring.annotation.SpringBeanByType;
 
+import com.vanke.common.constant.ResponesCodeConst;
 import com.vanke.common.data.vo.TaskSnapshot;
 import com.vanke.common.exceptions.BaseDaoException;
 import com.vanke.common.exceptions.BaseServiceException;
@@ -38,7 +39,7 @@ public class TaskStatusMachineServiceDataTest extends BaseDaoTestBeans{
 	@After
 	public void clean(){
 		System.out.println("======clean all test data ======");
-		taskDao.deleteAllTask();;
+		//taskDao.deleteAllTask();;
 	}
 	
 	
@@ -54,7 +55,7 @@ public class TaskStatusMachineServiceDataTest extends BaseDaoTestBeans{
 		
 		Task createTemp = taskDao.createTask(task);
 	
-		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent);
+		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,ResponesCodeConst.TASK_EVENT_TYPE_LEBANG);
 		
 		assertThat("task should be not null ",createTemp, is(notNullValue()));
 		assertThat("task snapshot should be not null ",result, is(notNullValue()));
@@ -85,7 +86,7 @@ public class TaskStatusMachineServiceDataTest extends BaseDaoTestBeans{
 		
 		Task createTemp = taskDao.createTask(task);
 	
-		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent);
+		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,ResponesCodeConst.TASK_EVENT_TYPE_LEBANG);
 		
 		assertThat("task should be not null ",createTemp, is(notNullValue()));
 		assertThat("task snapshot should be not null ",result, is(notNullValue()));
@@ -103,7 +104,7 @@ public class TaskStatusMachineServiceDataTest extends BaseDaoTestBeans{
 		assertThat("task should be not null ",nextEventTemp.getCode(), is("E100003"));
 	}
 	
-
+	
 	
 
 }

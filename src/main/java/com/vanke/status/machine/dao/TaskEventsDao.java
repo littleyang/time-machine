@@ -74,8 +74,8 @@ public class TaskEventsDao extends JdbcBaseDao {
 	 * @param route
 	 * @return
 	 */
-	public TaskEvents findNextEventByNextRoutes(TaskRoutes route){
-		return taskEventsCrudDao.findByCode(route.getNextEvent());
+	public TaskEvents findNextEventByNextRoutes(TaskRoutes route,int eventType){
+		return taskEventsCrudDao.findByCodeAndType(route.getNextEvent(),eventType);
 	}
 	
 	/**

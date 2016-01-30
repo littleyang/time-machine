@@ -56,22 +56,22 @@ public class TaskStatusMachineServiceUnitTest extends BaseTestUnit{
 	
 	@Test(expected=BaseServiceException.class)
 	public void testShouldBeExceptionIfTaskIsNull() throws BaseServiceException, BaseDaoException{
-		taskStatusMachineService.operationTask(null,"test");
+		taskStatusMachineService.operationTask(null,"test",100);
 	}
 	
 	@Test(expected=BaseServiceException.class)
 	public void testShouldBeExceptionIfOperationIsNull() throws BaseServiceException, BaseDaoException{
-		taskStatusMachineService.operationTask(task, null);
+		taskStatusMachineService.operationTask(task, null,100);
 	}
 	
 	@Test(expected=BaseServiceException.class)
 	public void testShouldBeExceptionIfOperationAndTaskIsNull() throws BaseServiceException, BaseDaoException{
-		taskStatusMachineService.operationTask(null, null);
+		taskStatusMachineService.operationTask(null, null,100);
 	}
 	
 	@Test(expected=BaseServiceException.class)
 	public void testShouldBeExceptionIfTaskBussinessCodeIsNull() throws BaseServiceException, BaseDaoException{
-		taskStatusMachineService.operationTask(task, "test-test");
+		taskStatusMachineService.operationTask(task, "test-test",100);
 	}
 	
 

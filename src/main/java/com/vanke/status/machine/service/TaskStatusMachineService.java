@@ -1,6 +1,5 @@
 package com.vanke.status.machine.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,24 +46,22 @@ public class TaskStatusMachineService {
 	 * @throws BaseServiceException
 	 * @throws BaseDaoException
 	 */
-	public TaskSnapshot operationTask(Task task,String operation) throws BaseServiceException, BaseDaoException{
-		if(null==task){
-			throw new BaseServiceException(ResponesCodeConst.PROCESS_ERROR,"任务不能为空");
-		}
+	public TaskSnapshot operationTask(Task task,String operation,int operationType) throws BaseServiceException, BaseDaoException{
 		
-		if(null==operation||operation.equals("")){
-			throw new BaseServiceException(ResponesCodeConst.PROCESS_ERROR,"任务操作不能为空");
+		// 检查传递的参数是否有效
+		if(null==task||null==operation||operation.equals("")||0==operationType){
+			throw new BaseServiceException(ResponesCodeConst.PROCESS_ERROR,"任务操作参数有错误");
 		}
-		
+	
 		// 对任务执行某个事件过后，查找修改过后的Task的下一系列的操作事件
 		//List<TaskRoutes> taskNextEventRoutes = taskRoutesDao.findNextTaskRouteEvents(savedTask.getBusinessType(), savedTask.getStatus());
-		List<TaskRoutes> taskNextEventRoutes = taskRoutesDao.findNextTaskRouteEvents(task.getBusinessType(), task.getStatus());
+		List<TaskRoutes> taskNextEventRoutes = taskRoutesDao.findNextTaskRouteEvents(task.getBusinessType(), task.getStatus(), operationType);
 				
 		// 查找下一个操作事件
 		List<TaskEvents> nextEvents = taskEventsDao.findNextEventsByRoutes(taskNextEventRoutes);
 		
 		// 获取当前任务需要遵循的路由规则
-		TaskRoutes route = taskRoutesDao.getCurrentRoutesByJdbc(task.getBusinessType(), operation, task.getStatus());
+		TaskRoutes route = taskRoutesDao.getCurrentRoutesByJdbc(task.getBusinessType(), operation, task.getStatus(), operationType);
 		
 		if(null==route||route.getCurrentStatus()==0||route.getCurrentEvent().equals("")||null==taskNextEventRoutes
 				||taskNextEventRoutes.size()==0||null==nextEvents||nextEvents.size()==0){

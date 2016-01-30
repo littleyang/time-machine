@@ -44,7 +44,7 @@ public class TaskRouteDaoDataTest extends BaseDaoTestBeans {
 	
 	@Test
 	public void testGetAllTaskRoutesCount(){
-		assertThat(taskRoutesDao.getAllRoutesCountByJdbc(), is(7));
+		assertThat(taskRoutesDao.getAllRoutesCountByJdbc()>0, is(true));
 	}
 	
 	@Test
@@ -76,14 +76,14 @@ public class TaskRouteDaoDataTest extends BaseDaoTestBeans {
 	public void testGetAllTaskRoutes(){
 		List<TaskRoutes> list = taskRoutesDao.findAllByCrudDao();
 		assertThat("should be null", list, is(notNullValue()));
-		assertThat("should be equal", list.size(), is(7));
+		assertThat("should be equal", list.size()>0, is(true));
 	}
 	
 	@Test
 	public void testGetAllTaskRoutesByJdbc() throws BaseDaoException{
 		List<TaskRoutes> list = taskRoutesDao.getAllTaskRoutesByJdbc();
 		assertThat("should be null", list, is(notNullValue()));
-		assertThat("should be equal", list.size(), is(7));
+		assertThat("should be equal", list.size()>0, is(true));
 	}
 
 }
