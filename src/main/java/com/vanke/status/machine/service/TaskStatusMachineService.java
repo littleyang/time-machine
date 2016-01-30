@@ -39,6 +39,14 @@ public class TaskStatusMachineService {
 	private TaskStatusDao taskStatusDao;
 	
 	
+	/**
+	 * 根据当前任务的业务类型以及当前的状态查找并流转路由规则
+	 * @param task
+	 * @param operation
+	 * @return
+	 * @throws BaseServiceException
+	 * @throws BaseDaoException
+	 */
 	public TaskSnapshot operationTask(Task task,String operation) throws BaseServiceException, BaseDaoException{
 		if(null==task){
 			throw new BaseServiceException(ResponesCodeConst.PROCESS_ERROR,"任务不能为空");
@@ -55,17 +63,17 @@ public class TaskStatusMachineService {
 			throw new BaseServiceException(ResponesCodeConst.PROCESS_ERROR,"任务操作错了,无法找到对应状态的下一步操作");
 		}
 		
-		// 处理task业务逻辑,设置当前操作对任务改变的下一个状态并保存
-		task.setStatus(route.getNextStatus());
-		taskDao.updateTask(task);
-		Task savedTask = taskDao.createTask(task);
-		
 		// 对任务执行某个事件过后，查找修改过后的Task的下一系列的操作事件
-		List<TaskRoutes> taskNextEventRoutes = taskRoutesDao.findNextTaskRouteEvents(savedTask.getBusinessType(), savedTask.getStatus());
-		
+		//List<TaskRoutes> taskNextEventRoutes = taskRoutesDao.findNextTaskRouteEvents(savedTask.getBusinessType(), savedTask.getStatus());
+		List<TaskRoutes> taskNextEventRoutes = taskRoutesDao.findNextTaskRouteEvents(task.getBusinessType(), task.getStatus());
+				
 		if(null==taskNextEventRoutes||taskNextEventRoutes.size()==0){
 			throw new BaseServiceException(ResponesCodeConst.PROCESS_ERROR,"任务操作错了,无法找到对应状态的下一步操作");
 		}
+		
+		// 处理task业务逻辑,设置当前操作对任务改变的下一个状态并保存
+		task.setStatus(route.getNextStatus());
+		Task savedTask = taskDao.updateTask(task);
 		
 		//查找下一个操作事件
 		List<TaskEvents> nextEvents = new ArrayList<TaskEvents>();
