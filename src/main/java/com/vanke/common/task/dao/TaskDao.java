@@ -68,6 +68,15 @@ public class TaskDao extends JdbcBaseDao{
 	
 	/**
 	 * 
+	 * @param task
+	 * @return
+	 */
+	public Task updateTask(Task task){
+		return taskCrudDao.save(task);
+	}
+	
+	/**
+	 * 
 	 * @param taskNo
 	 */
 	public void deleteTaskByTaskNo(String taskNo){

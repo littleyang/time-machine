@@ -17,6 +17,7 @@ import com.vanke.status.machine.dao.crud.TaskStatusCrudDao;
 import com.vanke.status.machine.model.TaskStatus;
 
 @Repository
+@Qualifier("taskStatusDao")
 public class TaskStatusDao extends JdbcBaseDao {
 	
 	private static RowMapper<TaskStatus> taskStatusRowMapper = new RowMapper<TaskStatus>() {
