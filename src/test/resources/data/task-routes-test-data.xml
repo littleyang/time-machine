@@ -22,6 +22,8 @@
     <task_routes id="10" bussiness_code="BUCR020103" current_event="E100001" current_status="1010" next_status="1001" type="100"/>
     <!-- 开始工作之后可以是,完成任务,也可以是暂停工作。这里是暂停工作 -->
     <task_routes id="11" bussiness_code="BUCR020103" current_event="E100005" current_status="1007" next_status="1008" type="100"/>
+    <!-- 开始工作之后可以是,完成任务,也可以是暂停工作。这里是暂停工作 -->
+    <task_routes id="12" bussiness_code="BUCR020103" current_event="E100006" current_status="1008" next_status="1007" type="100"/>
     
 </dataset>
 

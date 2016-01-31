@@ -269,9 +269,92 @@ public class TaskStatusMachineServiceDataTest extends BaseDaoTestBeans{
 	}
 	
 	@Test
+	public void pauseTaskShouldGetNextRouteIsContinueTask() throws BaseServiceException, BaseDaoException{
+		// 测试暂停工作，初始的工单状态是：1007，处理中，操作之后的工单状态是：1008，暂停任务
+		// 对应的下一步操作是:继续任务
+		Task task = new Task();
+		task.setTaskNo("19111010010002");
+		task.setBusinessType("BUCR020103");
+		
+		// 操作之前的任务状态应该是：处理中
+		task.setStatus(1007);
+		
+		// 暂停处理任务操作
+		String currentEvent = "E100005";
+		
+		Task createTemp = taskDao.createTask(task);
+		
+		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,ResponesCodeConst.TASK_EVENT_TYPE_LEBANG);
+		
+		// 路由之后的结果应该是正常的
+		assertThat("task should be not null ",createTemp, is(notNullValue()));
+		assertThat("task snapshot should be not null ",result, is(notNullValue()));
+						
+		// 处理之后的任务状态是1008，完成
+		Task resultTaskTemp = result.getTask();
+		assertThat("task should be not null ",resultTaskTemp, is(notNullValue()));
+		assertThat("task should be not null ",resultTaskTemp.getStatus(), is(1008));
+		
+		// 下一步的操作应该是一个:
+		List<TaskEvents> operationsTemp = result.getOperations();
+		assertThat("task should be not null ",operationsTemp, is(notNullValue()));
+		assertThat("task should be not null ",operationsTemp.size(), is(1));
+		
+		// 下一步的操作分别是:继续工作
+		TaskEvents nextEventTempOne = operationsTemp.get(0);
+		assertThat("task should be not null ",nextEventTempOne, is(notNullValue()));
+		assertThat("task should be not null ",nextEventTempOne.getCode(), is("E100006"));
+		
+		// 下一步的操作分别是:完成工作，暂停工作两个操作.暂停工作
+		TaskEvents nextEventTempTwo = operationsTemp.get(1);
+		assertThat("task should be not null ",nextEventTempTwo, is(notNullValue()));
+		assertThat("task should be not null ",nextEventTempTwo.getCode(), is("E100005"));
+		
+	}
+	
+	@Test
+	public void continueTaskShouldGetNextRouteIsFinishTask() throws BaseServiceException, BaseDaoException{
+		// 暂停状态下继续工作，初始状态是：1008，暂停，处理之后的状态应该是：1007，处理中
+		// 下一步操作是完成工作
+		Task task = new Task();
+		task.setTaskNo("19111010010002");
+		task.setBusinessType("BUCR020103");
+		
+		// 操作之前的任务状态应该是：处理中
+		task.setStatus(1008);
+		
+		// 暂停处理任务操作
+		String currentEvent = "E100006";
+		
+		Task createTemp = taskDao.createTask(task);
+		
+		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,ResponesCodeConst.TASK_EVENT_TYPE_LEBANG);
+		
+		// 路由之后的结果应该是正常的
+		assertThat("task should be not null ",createTemp, is(notNullValue()));
+		assertThat("task snapshot should be not null ",result, is(notNullValue()));
+								
+		// 下一步的操作应该是两个:完成工作，暂停工作两个操作
+		List<TaskEvents> operationsTemp = result.getOperations();
+		assertThat("task should be not null ",operationsTemp, is(notNullValue()));
+		assertThat("task should be not null ",operationsTemp.size(), is(2));
+				
+		// 下一步的操作分别是:完成工作，暂停工作两个操作.完成工作
+		TaskEvents nextEventTempOne = operationsTemp.get(0);
+		assertThat("task should be not null ",nextEventTempOne, is(notNullValue()));
+		assertThat("task should be not null ",nextEventTempOne.getCode(), is("E100007"));
+				
+		// 下一步的操作分别是:完成工作，暂停工作两个操作.暂停工作
+		TaskEvents nextEventTempTwo = operationsTemp.get(1);
+		assertThat("task should be not null ",nextEventTempTwo, is(notNullValue()));
+		assertThat("task should be not null ",nextEventTempTwo.getCode(), is("E100005"));
+		
+	}
+	
+	@Test
 	public void testFinishTaskShouldGetNextRoutesIsEvalutionRoutes() throws BaseServiceException, BaseDaoException{
 		
-		// 测试测试完成工单，评价之前的状态是正在处理中状态：1007，操作之后的状态是完成带评价状态：1009
+		// 测试测试完成工单，完成之前的状态是正在处理中状态：1007，操作之后的状态是完成带评价状态：1009
 		Task task = new Task();
 		task.setTaskNo("19111010010002");
 		task.setBusinessType("BUCR020103");
