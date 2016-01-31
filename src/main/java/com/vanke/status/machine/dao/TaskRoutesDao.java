@@ -28,8 +28,8 @@ public class TaskRoutesDao extends JdbcBaseDao {
 			route.setBussinessCode(rs.getString("bussiness_code"));
 			route.setCurrentEvent(rs.getString("current_event"));
 			route.setCurrentStatus(rs.getInt("current_status"));
-			route.setNextEvent(rs.getString("next_event"));
 			route.setNextStatus(rs.getInt("next_status"));
+			route.setType(rs.getInt("type"));
 			return route;
 		}
 	};

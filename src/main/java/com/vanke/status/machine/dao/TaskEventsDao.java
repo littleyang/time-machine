@@ -75,7 +75,7 @@ public class TaskEventsDao extends JdbcBaseDao {
 	 * @return
 	 */
 	public TaskEvents findNextEventByNextRoutes(TaskRoutes route,int eventType){
-		return taskEventsCrudDao.findByCodeAndType(route.getNextEvent(),eventType);
+		return taskEventsCrudDao.findByCodeAndType(route.getCurrentEvent(),eventType);
 	}
 	
 	/**
@@ -84,7 +84,7 @@ public class TaskEventsDao extends JdbcBaseDao {
 	 * @return
 	 */
 	public TaskEvents findCurrentEventByCurrentRoutes(TaskRoutes route){
-		return taskEventsCrudDao.findByCode(route.getNextEvent());
+		return taskEventsCrudDao.findByCode(route.getCurrentEvent());
 	}
 	
 	/**
@@ -98,7 +98,7 @@ public class TaskEventsDao extends JdbcBaseDao {
 
 		for (int i = 0; i < list.size(); i++) {
 			TaskRoutes temp = list.get(i);
-			TaskEvents eventTemp = taskEventsCrudDao.findByCode(temp.getNextEvent());
+			TaskEvents eventTemp = taskEventsCrudDao.findByCode(temp.getCurrentEvent());
 			nextEvents.add(eventTemp);
 		}
 		return nextEvents;

@@ -52,16 +52,22 @@ public class TaskStatusMachineService {
 		if(null==task||null==operation||operation.equals("")||0==operationType){
 			throw new BaseServiceException(ResponesCodeConst.PROCESS_ERROR,"任务操作参数有错误");
 		}
-	
-		// 对任务执行某个事件过后，查找修改过后的Task的下一系列的操作事件
-		//List<TaskRoutes> taskNextEventRoutes = taskRoutesDao.findNextTaskRouteEvents(savedTask.getBusinessType(), savedTask.getStatus());
-		List<TaskRoutes> taskNextEventRoutes = taskRoutesDao.findNextTaskRouteEvents(task.getBusinessType(), task.getStatus(), operationType);
-				
-		// 查找下一个操作事件
-		List<TaskEvents> nextEvents = taskEventsDao.findNextEventsByRoutes(taskNextEventRoutes);
 		
 		// 获取当前任务需要遵循的路由规则
 		TaskRoutes route = taskRoutesDao.getCurrentRoutesByJdbc(task.getBusinessType(), operation, task.getStatus(), operationType);
+		
+		if(null==route||route.getCurrentStatus()==0||route.getCurrentEvent().equals("")){
+			// 如果上述查找任何一个失败或者是没有返回值，都表示任务的路由规则或者是对应的事件操作失败
+			throw new BaseServiceException(ResponesCodeConst.PROCESS_ERROR,"任务操作错了,无法找到对应状态的下一步操作");
+		}
+		
+		// 对任务执行某个事件过后，查找修改过后的Task的下一系列的操作事件
+		//List<TaskRoutes> taskNextEventRoutes = taskRoutesDao.findNextTaskRouteEvents(savedTask.getBusinessType(), savedTask.getStatus());
+		//List<TaskRoutes> taskNextEventRoutes = taskRoutesDao.findNextTaskRouteEvents(task.getBusinessType(), task.getStatus(), operationType);
+		List<TaskRoutes> taskNextEventRoutes = taskRoutesDao.findNextTaskRouteEvents(task.getBusinessType(), route.getNextStatus(), operationType);
+						
+		// 查找下一个操作事件
+		List<TaskEvents> nextEvents = taskEventsDao.findNextEventsByRoutes(taskNextEventRoutes);
 		
 		if(null==route||route.getCurrentStatus()==0||route.getCurrentEvent().equals("")||null==taskNextEventRoutes
 				||taskNextEventRoutes.size()==0||null==nextEvents||nextEvents.size()==0){

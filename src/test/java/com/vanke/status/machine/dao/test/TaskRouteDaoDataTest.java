@@ -31,8 +31,8 @@ public class TaskRouteDaoDataTest extends BaseDaoTestBeans {
 		route.setBussinessCode("test-business-code");
 		route.setCurrentEvent("current-test-event");
 		route.setCurrentStatus(10001);
-		route.setNextEvent("next-test-event");
 		route.setNextStatus(10002);
+		route.setType(100);
 	}
 	
 	@After

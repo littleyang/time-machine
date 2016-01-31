@@ -149,8 +149,82 @@ public class TaskStatusMachineServiceDataTest extends BaseDaoTestBeans{
 		TaskEvents nextEventTempTwo = operationsTemp.get(1);
 		assertThat("task should be not null ",nextEventTempTwo, is(notNullValue()));
 		assertThat("task should be not null ",nextEventTempTwo.getCode(), is("E100014"));
+	}
+	
+	@Test
+	public void testAcceptTaskShouldGetNextRoutesIsBegainTask() throws BaseServiceException, BaseDaoException{
+		
+		// 测试接受Task，路由应该是接受，变化之后的状态应该是开始工作：1006
+		Task task = new Task();
+		task.setTaskNo("19111010010002");
+		task.setBusinessType("BUCR020103");
+		
+		// 操作之前的任务状态应该是任务已接受状态
+		task.setStatus(1014);
+		
+		// 接受任务操作
+		String currentEvent = "E100010";
+		
+		Task createTemp = taskDao.createTask(task);
+		
+		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,ResponesCodeConst.TASK_EVENT_TYPE_LEBANG);
+		
+		assertThat("task should be not null ",createTemp, is(notNullValue()));
+		assertThat("task snapshot should be not null ",result, is(notNullValue()));
+		
+		Task resultTaskTemp = result.getTask();
+		assertThat("task should be not null ",resultTaskTemp, is(notNullValue()));
+		assertThat("task should be not null ",resultTaskTemp.getStatus(), is(1006));
+		
+		List<TaskEvents> operationsTemp = result.getOperations();
+		assertThat("task should be not null ",operationsTemp, is(notNullValue()));
+		assertThat("task should be not null ",operationsTemp.size(), is(1));
+		
+		// 下一步可进行的第1个操作是接受任务
+		TaskEvents nextEventTempOne = operationsTemp.get(0);
+		assertThat("task should be not null ",nextEventTempOne, is(notNullValue()));
+		assertThat("task should be not null ",nextEventTempOne.getCode(), is("E100004"));
 		
 	}
+	
+	@Test
+	public void testCannotAcceptTaskShouldGetNextRoutesIsPublishGrabTask() throws BaseServiceException, BaseDaoException{
+		
+		// 测试无法处理Task，路由应该是无法处理，变化之后的状态应该是关闭状态：1010,下一个操作应该是是重新发布抢单
+		Task task = new Task();
+		task.setTaskNo("19111010010002");
+		task.setBusinessType("BUCR020103");
+		
+		// 操作之前的任务状态应该是等待抢单状态
+		task.setStatus(1014);
+		
+		// 无法处理任务操作
+		String currentEvent = "E100014";
+		
+		Task createTemp = taskDao.createTask(task);
+		
+		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,ResponesCodeConst.TASK_EVENT_TYPE_LEBANG);
+		
+		assertThat("task should be not null ",createTemp, is(notNullValue()));
+		assertThat("task snapshot should be not null ",result, is(notNullValue()));
+		
+		Task resultTaskTemp = result.getTask();
+		assertThat("task should be not null ",resultTaskTemp, is(notNullValue()));
+		assertThat("task should be not null ",resultTaskTemp.getStatus(), is(1010));
+		
+		List<TaskEvents> operationsTemp = result.getOperations();
+		assertThat("task should be not null ",operationsTemp, is(notNullValue()));
+		assertThat("task should be not null ",operationsTemp.size(), is(1));
+		
+		// 下一步可进行的有且只有一个操作，是重新发布抢单操作
+		TaskEvents nextEventTempOne = operationsTemp.get(0);
+		assertThat("task should be not null ",nextEventTempOne, is(notNullValue()));
+		assertThat("task should be not null ",nextEventTempOne.getCode(), is("E100001"));
+		
+	}
+	
+	@Test
+	public void testStartTaskShouldBeGetNextRoutesIs
 	
 
 }

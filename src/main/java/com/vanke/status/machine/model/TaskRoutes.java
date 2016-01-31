@@ -28,9 +28,6 @@ public class TaskRoutes {
 	@Column(name = "current_status")
 	private int currentStatus;
 
-	@Column(name = "next_event")
-	private String nextEvent;
-
 	@Column(name = "next_status")
 	private int nextStatus;
 
@@ -67,14 +64,6 @@ public class TaskRoutes {
 
 	public void setCurrentStatus(int currentStatus) {
 		this.currentStatus = currentStatus;
-	}
-
-	public String getNextEvent() {
-		return nextEvent;
-	}
-
-	public void setNextEvent(String nextEvent) {
-		this.nextEvent = nextEvent;
 	}
 
 	public int getNextStatus() {
