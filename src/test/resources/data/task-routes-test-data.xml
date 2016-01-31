@@ -4,7 +4,7 @@
     <task_routes id="1" bussiness_code="BUCR020103" current_event="E100001" current_status="1000" next_event="E100002" next_status="1001" type="100"/>
     <!-- 发布任务 -->
     <task_routes id="2" bussiness_code="BUCR020103" current_event="E100002" current_status="1001" next_event="E100003" next_status="1004" type="100"/>
-    <!-- 抢单 -->
+    <!-- 抢单，任务在等待抢单状态，经过抢单操作，任务变成已经接受状态 -->
     <task_routes id="3" bussiness_code="BUCR020103" current_event="E100003" current_status="1004" next_event="E100010" next_status="1014" type="100"/>
     <!-- 接受 -->
     <task_routes id="4" bussiness_code="BUCR020103" current_event="E100010" current_status="1014" next_event="E100004" next_status="1006" type="100"/>
@@ -15,6 +15,8 @@
     <!-- 评价任务 -->
     <task_routes id="7" bussiness_code="BUCR020103" current_event="E100008" current_status="1011" next_event="E100008" next_status="1011" type="101"/>
     <!-- 取消任务 -->
-    <task_routes id="8" bussiness_code="BUCR020103" current_event="E100012" current_status="1000" next_event="E100013" next_status="1012" type="101"/>
+    <task_routes id="8" bussiness_code="BUCR020103" current_event="E100001" current_status="1000" next_event="E100013" next_status="1012" type="101"/>
+    <!-- 无法处理任务 -->
+    <task_routes id="9" bussiness_code="BUCR020103" current_event="E100010" current_status="1004" next_event="E100014" next_status="1010" type="100"/>
 </dataset>
 

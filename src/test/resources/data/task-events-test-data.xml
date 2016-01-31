@@ -13,5 +13,6 @@
     <task_events id="11" code="E100011" event="dispatch" name="分配任务" msg="任务分配给了某人" type="100" created="2015-10-10" updated="2015-10-11"/>
     <task_events id="12" code="E100012" event="init" name="业主初始化任务" msg="发起了任务" type="101" created="2015-10-10" updated="2015-10-11"/>
     <task_events id="13" code="E100013" event="cancle" name="取消任务" msg="业主取消任务" type="101" created="2015-10-10" updated="2015-10-11"/>
+    <task_events id="14" code="E100014" event="cannot" name="无法处理任务" msg="无法处理任务" type="101" created="2015-10-10" updated="2015-10-11"/>
 </dataset>
 

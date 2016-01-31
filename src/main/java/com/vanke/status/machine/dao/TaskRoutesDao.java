@@ -174,14 +174,14 @@ public class TaskRoutesDao extends JdbcBaseDao {
 	 * @return
 	 * @throws BaseDaoException
 	 */
-	public List<TaskRoutes> getNextRoutesByJdbc(String bussinessCode,int currentStatus) throws BaseDaoException{
+	public List<TaskRoutes> getNextRoutesByJdbc(String bussinessCode,int currentStatus, int operationType) throws BaseDaoException{
 		if(currentStatus==0||bussinessCode.equals("")){
 			throw new BaseDaoException(ResponesCodeConst.QUERY_PARAMS_ERROR_CODE,"查询任务调度参数错误，缺少参数值");
 		}
 		
-		Object[] params = new Object[]{bussinessCode,currentStatus};
+		Object[] params = new Object[]{bussinessCode,currentStatus,operationType};
 		StringBuilder sqlBuilder = new StringBuilder("select * from task_routes where bussiness_code = ? "
-				+ "and current_status = ?");
+				+ "and current_status = ? and type = ?");
 		 return jdbcTemplate.query(sqlBuilder.toString(), params, taskRouteRowMapper);
 	}
 
