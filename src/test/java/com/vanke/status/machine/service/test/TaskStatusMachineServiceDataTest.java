@@ -237,6 +237,7 @@ public class TaskStatusMachineServiceDataTest extends BaseDaoTestBeans{
 		
 		// 开始处理任务操作
 		String currentEvent = "E100004";
+		
 		Task createTemp = taskDao.createTask(task);
 		
 		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,ResponesCodeConst.TASK_EVENT_TYPE_LEBANG);
@@ -265,8 +266,73 @@ public class TaskStatusMachineServiceDataTest extends BaseDaoTestBeans{
 		assertThat("task should be not null ",nextEventTempTwo, is(notNullValue()));
 		assertThat("task should be not null ",nextEventTempTwo.getCode(), is("E100005"));
 		
+	}
+	
+	@Test
+	public void testFinishTaskShouldGetNextRoutesIsEvalutionRoutes() throws BaseServiceException, BaseDaoException{
+		
+		// 测试测试完成工单，评价之前的状态是正在处理中状态：1007，操作之后的状态是完成带评价状态：1009
+		Task task = new Task();
+		task.setTaskNo("19111010010002");
+		task.setBusinessType("BUCR020103");
+		
+		// 操作之前的任务状态应该是：工单处理中
+		task.setStatus(1007);
+		
+		// 完成任务操作
+		String currentEvent = "E100007";
+		
+		Task createTemp = taskDao.createTask(task);
+		
+		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,ResponesCodeConst.TASK_EVENT_TYPE_LEBANG);
+
+		// 路由之后的结果应该是正常的
+		assertThat("task should be not null ",createTemp, is(notNullValue()));
+		assertThat("task snapshot should be not null ",result, is(notNullValue()));
+				
+		// 处理之后的任务状态是1009，完成
+		Task resultTaskTemp = result.getTask();
+		assertThat("task should be not null ",resultTaskTemp, is(notNullValue()));
+		assertThat("task should be not null ",resultTaskTemp.getStatus(), is(1009));
+		
+		// 员工再完成之后无法再操作了，也就没有对应的操作事件
+		List<TaskEvents> operationsTemp = result.getOperations();
+		assertThat("task should be not null ",operationsTemp, is(notNullValue()));
+		assertThat("task should be not null ",operationsTemp.size(), is(0));
+				
+	}
+	
+	@Test
+	public void testUserEvalutionTask() throws BaseServiceException, BaseDaoException{
+		// 测试用户评价任务，初始状态是：完成待评价，操作之后的状态是：已评价状态
+		Task task = new Task();
+		task.setTaskNo("19111010010002");
+		task.setBusinessType("BUCR020103");
+		
+		// 操作之前的任务状态应该是：已经完成带评价
+		task.setStatus(1009);
+		
+		// 完成任务操作
+		String currentEvent = "E100008";
+		
+		Task createTemp = taskDao.createTask(task);
+		
+		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,ResponesCodeConst.TASK_EVENT_TYPE_ZHUZHER);
+
+		// 路由之后的结果应该是正常的
+		assertThat("task should be not null ",createTemp, is(notNullValue()));
+		assertThat("task snapshot should be not null ",result, is(notNullValue()));
+				
+		// 处理之后的任务状态是1011，已经评价
+		Task resultTaskTemp = result.getTask();
+		assertThat("task should be not null ",resultTaskTemp, is(notNullValue()));
+		assertThat("task should be not null ",resultTaskTemp.getStatus(), is(1011));
+		
+		// 员工再完成之后无法再操作了，也就没有对应的操作事件
+		List<TaskEvents> operationsTemp = result.getOperations();
+		assertThat("task should be not null ",operationsTemp, is(notNullValue()));
+		assertThat("task should be not null ",operationsTemp.size(), is(0));
 		
 	}
 	
-
 }

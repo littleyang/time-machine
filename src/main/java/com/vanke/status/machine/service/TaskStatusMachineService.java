@@ -69,11 +69,11 @@ public class TaskStatusMachineService {
 		// 查找下一个操作事件
 		List<TaskEvents> nextEvents = taskEventsDao.findNextEventsByRoutes(taskNextEventRoutes);
 		
-		if(null==route||route.getCurrentStatus()==0||route.getCurrentEvent().equals("")||null==taskNextEventRoutes
-				||taskNextEventRoutes.size()==0||null==nextEvents||nextEvents.size()==0){
-			// 如果上述查找任何一个失败或者是没有返回值，都表示任务的路由规则或者是对应的事件操作失败
-			throw new BaseServiceException(ResponesCodeConst.PROCESS_ERROR,"任务操作错了,无法找到对应状态的下一步操作");
-		}
+//		if(null==route||route.getCurrentStatus()==0||route.getCurrentEvent().equals("")||null==taskNextEventRoutes
+//				||taskNextEventRoutes.size()==0||null==nextEvents||nextEvents.size()==0){
+//			// 如果上述查找任何一个失败或者是没有返回值，都表示任务的路由规则或者是对应的事件操作失败
+//			throw new BaseServiceException(ResponesCodeConst.PROCESS_ERROR,"任务操作错了,无法找到对应状态的下一步操作");
+//		}
 			
 		// 处理task业务逻辑,设置当前操作对任务改变的下一个状态并保存
 		task.setStatus(route.getNextStatus());
