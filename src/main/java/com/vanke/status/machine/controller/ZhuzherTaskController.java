@@ -29,10 +29,40 @@ public class ZhuzherTaskController {
 	@Qualifier("taskStatusMachineService")
 	private TaskStatusMachineService taskStatusMachineService;
     
+    /**
+     * zhuzher 创建任务
+     */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
     public void createTask(){
     	log.info("zhuzher create task");
+    }
+    
+    /**
+     * zhuzher 任务评分
+     */
+    @RequestMapping(value = "/evaluate", method = RequestMethod.POST)
+    @ResponseBody
+    public void evalutionTask(){
+    	
+    }
+    
+    /**
+     * zhuzher 催促任务
+     */
+    @RequestMapping(value = "/urge", method = RequestMethod.POST)
+    @ResponseBody
+    public void urgeTask(){
+    	
+    }
+    
+    /**
+     * zhuzher 取消任务
+     */
+    @RequestMapping(value = "/cancle", method = RequestMethod.POST)
+    @ResponseBody
+    public void cancnelTask(){
+    	
     }
 
 }
