@@ -12,8 +12,8 @@
     <task_routes id="5" bussiness_code="BUCR020103" current_event="E100004" current_status="1006" next_status="1007" type="100"/>
     <!-- 开始工作之后可以是,完成任务,也可以是暂停工作。这里是完成工作 -->
     <task_routes id="6" bussiness_code="BUCR020103" current_event="E100007" current_status="1007" next_status="1009" type="100"/>
-    <!-- 完成任务之后是，评价任务 -->
-    <task_routes id="7" bussiness_code="BUCR020103" current_event="E100008" current_status="1011" next_status="1011" type="101"/>
+    <!-- 完成任务之后是，评价任务,任务变为已经评价状态，到这里任务已经走完一个流程 -->
+    <task_routes id="7" bussiness_code="BUCR020103" current_event="E100008" current_status="1009" next_status="1011" type="101"/>
     <!-- 取消任务 -->
     <task_routes id="8" bussiness_code="BUCR020103" current_event="E100001" current_status="1000" next_status="1012" type="101"/>
     <!-- 无法处理任务 -->

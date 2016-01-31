@@ -195,7 +195,7 @@ public class TaskStatusMachineServiceDataTest extends BaseDaoTestBeans{
 		task.setTaskNo("19111010010002");
 		task.setBusinessType("BUCR020103");
 		
-		// 操作之前的任务状态应该是等待抢单状态
+		// 操作之前的任务状态应该是任务已接受状态
 		task.setStatus(1014);
 		
 		// 无法处理任务操作
@@ -224,7 +224,49 @@ public class TaskStatusMachineServiceDataTest extends BaseDaoTestBeans{
 	}
 	
 	@Test
-	public void testStartTaskShouldBeGetNextRoutesIs
+	public void testStartTaskShouldBeGetNextRoutesIsFinishTaskAndPauseTask() throws BaseServiceException, BaseDaoException{
+		
+		// 测试开始处理Task，路由应该是开始处理，变化之后的状态应该是任务处理中：1007.
+		// 下一步操作应该是两个操作:完成工作，暂停处理
+		Task task = new Task();
+		task.setTaskNo("19111010010002");
+		task.setBusinessType("BUCR020103");
+		
+		// 操作之前的任务状态应该是已经接受状态
+		task.setStatus(1006);
+		
+		// 开始处理任务操作
+		String currentEvent = "E100004";
+		Task createTemp = taskDao.createTask(task);
+		
+		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,ResponesCodeConst.TASK_EVENT_TYPE_LEBANG);
+		
+		// 路由之后的结果应该是正常的
+		assertThat("task should be not null ",createTemp, is(notNullValue()));
+		assertThat("task snapshot should be not null ",result, is(notNullValue()));
+		
+		// 处理之后的任务状态是1007，任务处理中状态
+		Task resultTaskTemp = result.getTask();
+		assertThat("task should be not null ",resultTaskTemp, is(notNullValue()));
+		assertThat("task should be not null ",resultTaskTemp.getStatus(), is(1007));
+		
+		// 下一步的操作应该是两个:完成工作，暂停工作两个操作
+		List<TaskEvents> operationsTemp = result.getOperations();
+		assertThat("task should be not null ",operationsTemp, is(notNullValue()));
+		assertThat("task should be not null ",operationsTemp.size(), is(2));
+		
+		// 下一步的操作分别是:完成工作，暂停工作两个操作.完成工作
+		TaskEvents nextEventTempOne = operationsTemp.get(0);
+		assertThat("task should be not null ",nextEventTempOne, is(notNullValue()));
+		assertThat("task should be not null ",nextEventTempOne.getCode(), is("E100007"));
+		
+		// 下一步的操作分别是:完成工作，暂停工作两个操作.暂停工作
+		TaskEvents nextEventTempTwo = operationsTemp.get(1);
+		assertThat("task should be not null ",nextEventTempTwo, is(notNullValue()));
+		assertThat("task should be not null ",nextEventTempTwo.getCode(), is("E100005"));
+		
+		
+	}
 	
 
 }
