@@ -39,7 +39,7 @@ public class TaskStatusMachineServiceDataTest extends BaseDaoTestBeans{
 	@After
 	public void clean(){
 		System.out.println("======clean all test data ======");
-		//taskDao.deleteAllTask();;
+		taskDao.deleteAllTask();;
 	}
 	
 	
@@ -304,11 +304,6 @@ public class TaskStatusMachineServiceDataTest extends BaseDaoTestBeans{
 		TaskEvents nextEventTempOne = operationsTemp.get(0);
 		assertThat("task should be not null ",nextEventTempOne, is(notNullValue()));
 		assertThat("task should be not null ",nextEventTempOne.getCode(), is("E100006"));
-		
-		// 下一步的操作分别是:完成工作，暂停工作两个操作.暂停工作
-		TaskEvents nextEventTempTwo = operationsTemp.get(1);
-		assertThat("task should be not null ",nextEventTempTwo, is(notNullValue()));
-		assertThat("task should be not null ",nextEventTempTwo.getCode(), is("E100005"));
 		
 	}
 	
