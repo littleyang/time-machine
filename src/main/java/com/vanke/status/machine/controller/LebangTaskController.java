@@ -29,10 +29,33 @@ public class LebangTaskController {
 	@Qualifier("taskStatusMachineService")
 	private TaskStatusMachineService taskStatusMachineService;
     
+    /**
+     * lebang 创建任务
+     */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
     public void createTask(){
     	log.info("zhuzher create task");
     }
+    
+    /**
+     * lebang 处理任务
+     */
+    @RequestMapping(value = "/deal", method = RequestMethod.POST)
+    @ResponseBody
+    public void operation(){
+    	
+    }
+    
+    /**
+     * 设置业务类型
+     */
+    @RequestMapping(value = "/bussiness/set", method = RequestMethod.POST)
+    @ResponseBody
+    public void setTaskBussiness(){
+    	
+    }
+    
+    
 
 }
