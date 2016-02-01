@@ -9,6 +9,8 @@ import javax.persistence.Table;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Table(name = "task_routes")
 public class TaskRoutes {
@@ -20,15 +22,19 @@ public class TaskRoutes {
 	private int id;
 
 	@Column(name = "bussiness_code")
+	@JsonProperty("bussiness_code")
 	private String bussinessCode;
 
 	@Column(name = "current_event")
+	@JsonProperty("current_event")
 	private String currentEvent;
 
 	@Column(name = "current_status")
+	@JsonProperty("current_status")
 	private int currentStatus;
 
 	@Column(name = "next_status")
+	@JsonProperty("next_status")
 	private int nextStatus;
 
 	@Column(name = "type")

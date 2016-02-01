@@ -9,9 +9,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
+import com.vanke.common.constant.ResponesCodeConst;
+import com.vanke.common.data.vo.TaskSnapshot;
+import com.vanke.common.exceptions.BaseDaoException;
+import com.vanke.common.exceptions.BaseServiceException;
 import com.vanke.common.model.task.Task;
 import com.vanke.common.service.TaskService;
 import com.vanke.status.machine.service.TaskStatusMachineService;
@@ -36,30 +41,54 @@ public class LebangTaskController {
      * lebang 创建任务
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public void createTask(@RequestBody Task task){
-    	log.info("zhuzher create task and params :  " + task);
+    @ResponseBody
+    public TaskSnapshot createTask(@RequestBody Task task){
+    	//log.info("zhuzher create task and params :  " + task);
     	long start = System.currentTimeMillis();
     	
-    	//Task task = mapper.readValue(requestBody, Task.class);
+    	System.out.println("task business is   " + task.getBusinessType());
+    	
+    	// 初始化 task no
+    	task.setTaskNo(taskService.createTaskNo());
+    	// 初始化状态
+    	task.setStatus(1000);
+    	
+    	String taskInitEvents = "E100001";
+    	
+    	TaskSnapshot taskData = null;
+    	
+    	try {
+    		Task create = taskService.createTask(task);
+    		
+			taskData = taskStatusMachineService.operationTask(create, taskInitEvents, ResponesCodeConst.TASK_EVENT_TYPE_LEBANG);
+			
+		} catch (BaseServiceException | BaseDaoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
     	long end = System.currentTimeMillis();
     	log.info("/api/lebang/task/create 耗时:  " + (end - start) + " ms");
+    	
+    	System.out.println(taskData.getTask().getTaskNo());
+    	
+    	return taskData;
     	
     }
     
     /**
      * lebang 处理任务
      */
-    @RequestMapping(value = "/deal/{task_no}", method=RequestMethod.PUT)
-    public void operation(@PathVariable("task_no") String taskNo,@RequestBody String operation){
+    @RequestMapping(value = "/deal/{task_no}", method=RequestMethod.POST, produces={"application/json"})
+    public void operation(@PathVariable("task_no") String taskNo, @RequestParam String operation){
     	
     }
     
     /**
      * 设置业务类型
      */
-    @RequestMapping(value = "/{task_no}/set/business", method = RequestMethod.PUT)
-    public void setTaskBussiness(@PathVariable("task_no") String taskNo, @RequestBody String bussinessType){
+    @RequestMapping(value = "/set/business/{task_no}", method = RequestMethod.POST,produces={"application/json"})
+    public void setTaskBussiness(@PathVariable("task_no") String taskNo, @RequestParam String bussinessType){
     	
     }
     
