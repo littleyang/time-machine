@@ -3,10 +3,17 @@ package com.vanke.status.machine.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONObject;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,9 +52,16 @@ public class LebangTaskController {
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String ,Object> createTask(@RequestBody Task task){
+    public ResponseEntity<Map<String,Object>> createTask(@RequestBody String taskString){
     	//log.info("zhuzher create task and params :  " + task);
     	long start = System.currentTimeMillis();
+    	
+    	JSONObject object = JSONObject.fromObject(taskString);
+    	
+    	System.out.println("task business is   " + object.getString("bussiness_type"));
+    	
+    	Task task = new Task();
+    	task.setBusinessType(object.getString("bussiness_type"));
     	
     	System.out.println("task business is   " + task.getBusinessType());
     	
@@ -60,7 +74,11 @@ public class LebangTaskController {
     	
     	TaskSnapshot taskData = null;
     	
+    	HttpHeaders headers = new HttpHeaders();
+    	
     	Map<String,Object> result = new HashMap<String,Object>();
+    	
+    	HttpStatus status = HttpStatus.OK;
     	
     	try {
     		Task create = taskService.createTask(task);
@@ -76,33 +94,36 @@ public class LebangTaskController {
 			result.put("code", e.getCode());
 			result.put("msg", e.getMsg());
 			result.put("data", null);
+			status = HttpStatus.BAD_REQUEST;
 		} catch (BaseDaoException e) {
 			// TODO Auto-generated catch block
 			result.put("code", e.getCode());
 			result.put("msg", e.getMsg());
 			result.put("data", null);
+			status = HttpStatus.BAD_REQUEST;
 		}
     	
     	long end = System.currentTimeMillis();
     	log.info("/api/lebang/task/create 耗时:  " + (end - start) + " ms");
 
-    	return result;
+    	return new ResponseEntity<Map<String,Object>>(result, headers, status);
     	
     }
     
     /**
      * lebang 处理任务
      */
-    @RequestMapping(value = "/deal/{task_no}", method=RequestMethod.POST, produces={"application/json"})
-    public void operation(@PathVariable("task_no") String taskNo, @RequestParam String operation){
-    	
+    @RequestMapping(value = "/deal/{task_no}", method=RequestMethod.POST)
+    public void operation(@PathVariable("task_no") String taskNo, @RequestParam("operation") String operation){
+    	System.out.println("task_no   is   " + taskNo);
+    	System.out.println("operation   is   " + operation);
     }
     
     /**
      * 设置业务类型
      */
-    @RequestMapping(value = "/set/business/{task_no}", method = RequestMethod.POST,produces={"application/json"})
-    public void setTaskBussiness(@PathVariable("task_no") String taskNo, @RequestParam String bussinessType){
+    @RequestMapping(value = "/set/business/{task_no}", method = RequestMethod.POST)
+    public void setTaskBussiness(@PathVariable("task_no") String taskNo, @RequestParam("bussiness_type") String bussinessType){
     	
     }
     

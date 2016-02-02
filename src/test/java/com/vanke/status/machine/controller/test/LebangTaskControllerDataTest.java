@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.unitils.spring.annotation.SpringBeanByType;
 
+import com.google.gson.Gson;
 import com.vanke.common.model.task.Task;
 import com.vanke.common.service.TaskService;
 import com.vanke.status.machine.controller.LebangTaskController;
@@ -55,12 +56,11 @@ public class LebangTaskControllerDataTest extends BaseDaoTestBeans{
 	@Test
 	public void testLebangTaskControllerCreateTask() throws Exception{
 		
-		Task task = new Task();
-		task.setBusinessType("BUCR020103");
+		String taskJson = "{\"bussiness_type\":\"BUCR020103\"}";
 		
 		mockMvc.perform(post("/api/lebang/task/create")
 				.contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(task))).andDo(print())
+				.content(taskJson)).andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.data.task", is(notNullValue())))
 				.andExpect(jsonPath("$.data.task.business_type", is("BUCR020103")))
@@ -69,6 +69,38 @@ public class LebangTaskControllerDataTest extends BaseDaoTestBeans{
 				.andExpect(jsonPath("$.data.operations[0]", is(notNullValue())))
 				.andExpect(jsonPath("$.data.operations[0].code", is("E100002")))
 				.andExpect(jsonPath("$.data.operations[0].type", is(100)));
+	}
+	
+	@Test
+	public void testLebangCreateTaskJson() throws Exception{
+		String taskJson = "{\"bussiness_type\":\"BUCR020103\"}";
+		mockMvc.perform(post("/api/lebang/task/create")
+				.contentType(TestUtil.APPLICATION_JSON_UTF8)
+				.content(taskJson)).andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.data.task", is(notNullValue())))
+				.andExpect(jsonPath("$.data.task.business_type", is("BUCR020103")))
+				.andExpect(jsonPath("$.data.task.status", is(1001)))
+				.andExpect(jsonPath("$.data.operations", hasSize(1)))
+				.andExpect(jsonPath("$.data.operations[0]", is(notNullValue())))
+				.andExpect(jsonPath("$.data.operations[0].code", is("E100002")))
+				.andExpect(jsonPath("$.data.operations[0].type", is(100)));
+	}
+	
+	@Test
+	public void testLebangTaskControllerCreateTaskBadRequest() throws Exception{
+		String taskJson = "{\"bussiness_type\":\"\"}";
+		mockMvc.perform(post("/api/lebang/task/create")
+				.contentType(TestUtil.APPLICATION_JSON_UTF8)
+				.content(taskJson)).andDo(print())
+				.andExpect(status().isBadRequest());
+	}
+	
+	@Test
+	public void testOperationTask() throws Exception{
+		mockMvc.perform(post("/api/lebang/task//deal/2016899874123")
+				.param("operation", "test_operation")).andDo(print())
+				.andExpect(status().isOk());
 	}
 
 }
