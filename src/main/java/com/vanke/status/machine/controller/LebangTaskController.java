@@ -52,18 +52,16 @@ public class LebangTaskController {
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<Map<String,Object>> createTask(@RequestBody String taskString){
+    public ResponseEntity<Map<String,Object>> createTask(@RequestBody String taskParams){
     	//log.info("zhuzher create task and params :  " + task);
     	long start = System.currentTimeMillis();
     	
-    	JSONObject object = JSONObject.fromObject(taskString);
+    	JSONObject objectParams = JSONObject.fromObject(taskParams);
     	
-    	System.out.println("task business is   " + object.getString("bussiness_type"));
+    	System.out.println("task business is   " + objectParams.getString("bussiness_type"));
     	
     	Task task = new Task();
-    	task.setBusinessType(object.getString("bussiness_type"));
-    	
-    	System.out.println("task business is   " + task.getBusinessType());
+    	task.setBusinessType(objectParams.getString("bussiness_type"));
     	
     	// 初始化 task no
     	task.setTaskNo(taskService.createTaskNo());
@@ -73,8 +71,6 @@ public class LebangTaskController {
     	String taskInitEvents = "E100001";
     	
     	TaskSnapshot taskData = null;
-    	
-    	HttpHeaders headers = new HttpHeaders();
     	
     	Map<String,Object> result = new HashMap<String,Object>();
     	
@@ -106,7 +102,7 @@ public class LebangTaskController {
     	long end = System.currentTimeMillis();
     	log.info("/api/lebang/task/create 耗时:  " + (end - start) + " ms");
 
-    	return new ResponseEntity<Map<String,Object>>(result, headers, status);
+    	return new ResponseEntity<Map<String,Object>>(result, status);
     	
     }
     
