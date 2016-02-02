@@ -1,6 +1,6 @@
 package com.vanke.common.constant;
 
-public class ResponesCodeConst {
+public class CommonCodeConst {
 	
 	/**
 	 * 数据库查询出错
@@ -26,5 +26,11 @@ public class ResponesCodeConst {
 	 * 第三方调用事件类型
 	 */
 	public static final int TASK_EVENT_TYPE_PARTERNER = 103;
+	
+	public static final int STATUS_OK = 200;
+	
+	public static final int BAD_REQUEST = 400;
+	
+	public static final String SUCCESS_MESSAGE = "successfully";
 
 }

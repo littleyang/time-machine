@@ -62,13 +62,13 @@ public class LebangTaskControllerDataTest extends BaseDaoTestBeans{
 				.contentType(TestUtil.APPLICATION_JSON_UTF8)
 				.content(TestUtil.convertObjectToJsonBytes(task))).andDo(print())
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.task", is(notNullValue())))
-				.andExpect(jsonPath("$.task.business_type", is("BUCR020103")))
-				.andExpect(jsonPath("$.task.status", is(1001)))
-				.andExpect(jsonPath("$.operations", hasSize(1)))
-				.andExpect(jsonPath("$.operations[0]", is(notNullValue())))
-				.andExpect(jsonPath("$.operations[0].code", is("E100002")))
-				.andExpect(jsonPath("$.operations[0].type", is(100)));
+				.andExpect(jsonPath("$.data.task", is(notNullValue())))
+				.andExpect(jsonPath("$.data.task.business_type", is("BUCR020103")))
+				.andExpect(jsonPath("$.data.task.status", is(1001)))
+				.andExpect(jsonPath("$.data.operations", hasSize(1)))
+				.andExpect(jsonPath("$.data.operations[0]", is(notNullValue())))
+				.andExpect(jsonPath("$.data.operations[0].code", is("E100002")))
+				.andExpect(jsonPath("$.data.operations[0].type", is(100)));
 	}
 
 }

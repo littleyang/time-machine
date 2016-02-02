@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.unitils.spring.annotation.SpringBeanByType;
 
-import com.vanke.common.constant.ResponesCodeConst;
+import com.vanke.common.constant.CommonCodeConst;
 import com.vanke.common.data.vo.TaskSnapshot;
 import com.vanke.common.exceptions.BaseDaoException;
 import com.vanke.common.exceptions.BaseServiceException;
@@ -59,7 +59,7 @@ public class TaskStatusMachineServiceDataTest extends BaseDaoTestBeans{
 		
 		Task createTemp = taskDao.createTask(task);
 	
-		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,ResponesCodeConst.TASK_EVENT_TYPE_LEBANG);
+		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,CommonCodeConst.TASK_EVENT_TYPE_LEBANG);
 		
 		assertThat("task should be not null ",createTemp, is(notNullValue()));
 		assertThat("task snapshot should be not null ",result, is(notNullValue()));
@@ -94,7 +94,7 @@ public class TaskStatusMachineServiceDataTest extends BaseDaoTestBeans{
 		
 		Task createTemp = taskDao.createTask(task);
 	
-		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,ResponesCodeConst.TASK_EVENT_TYPE_LEBANG);
+		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,CommonCodeConst.TASK_EVENT_TYPE_LEBANG);
 		
 		assertThat("task should be not null ",createTemp, is(notNullValue()));
 		assertThat("task snapshot should be not null ",result, is(notNullValue()));
@@ -127,7 +127,7 @@ public class TaskStatusMachineServiceDataTest extends BaseDaoTestBeans{
 		
 		Task createTemp = taskDao.createTask(task);
 		
-		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,ResponesCodeConst.TASK_EVENT_TYPE_LEBANG);
+		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,CommonCodeConst.TASK_EVENT_TYPE_LEBANG);
 
 		assertThat("task should be not null ",createTemp, is(notNullValue()));
 		assertThat("task snapshot should be not null ",result, is(notNullValue()));
@@ -167,7 +167,7 @@ public class TaskStatusMachineServiceDataTest extends BaseDaoTestBeans{
 		
 		Task createTemp = taskDao.createTask(task);
 		
-		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,ResponesCodeConst.TASK_EVENT_TYPE_LEBANG);
+		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,CommonCodeConst.TASK_EVENT_TYPE_LEBANG);
 		
 		assertThat("task should be not null ",createTemp, is(notNullValue()));
 		assertThat("task snapshot should be not null ",result, is(notNullValue()));
@@ -203,7 +203,7 @@ public class TaskStatusMachineServiceDataTest extends BaseDaoTestBeans{
 		
 		Task createTemp = taskDao.createTask(task);
 		
-		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,ResponesCodeConst.TASK_EVENT_TYPE_LEBANG);
+		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,CommonCodeConst.TASK_EVENT_TYPE_LEBANG);
 		
 		assertThat("task should be not null ",createTemp, is(notNullValue()));
 		assertThat("task snapshot should be not null ",result, is(notNullValue()));
@@ -240,7 +240,7 @@ public class TaskStatusMachineServiceDataTest extends BaseDaoTestBeans{
 		
 		Task createTemp = taskDao.createTask(task);
 		
-		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,ResponesCodeConst.TASK_EVENT_TYPE_LEBANG);
+		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,CommonCodeConst.TASK_EVENT_TYPE_LEBANG);
 		
 		// 路由之后的结果应该是正常的
 		assertThat("task should be not null ",createTemp, is(notNullValue()));
@@ -284,7 +284,7 @@ public class TaskStatusMachineServiceDataTest extends BaseDaoTestBeans{
 		
 		Task createTemp = taskDao.createTask(task);
 		
-		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,ResponesCodeConst.TASK_EVENT_TYPE_LEBANG);
+		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,CommonCodeConst.TASK_EVENT_TYPE_LEBANG);
 		
 		// 路由之后的结果应该是正常的
 		assertThat("task should be not null ",createTemp, is(notNullValue()));
@@ -323,7 +323,7 @@ public class TaskStatusMachineServiceDataTest extends BaseDaoTestBeans{
 		
 		Task createTemp = taskDao.createTask(task);
 		
-		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,ResponesCodeConst.TASK_EVENT_TYPE_LEBANG);
+		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,CommonCodeConst.TASK_EVENT_TYPE_LEBANG);
 		
 		// 路由之后的结果应该是正常的
 		assertThat("task should be not null ",createTemp, is(notNullValue()));
@@ -362,7 +362,7 @@ public class TaskStatusMachineServiceDataTest extends BaseDaoTestBeans{
 		
 		Task createTemp = taskDao.createTask(task);
 		
-		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,ResponesCodeConst.TASK_EVENT_TYPE_LEBANG);
+		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,CommonCodeConst.TASK_EVENT_TYPE_LEBANG);
 
 		// 路由之后的结果应该是正常的
 		assertThat("task should be not null ",createTemp, is(notNullValue()));
@@ -395,7 +395,7 @@ public class TaskStatusMachineServiceDataTest extends BaseDaoTestBeans{
 		
 		Task createTemp = taskDao.createTask(task);
 		
-		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,ResponesCodeConst.TASK_EVENT_TYPE_ZHUZHER);
+		TaskSnapshot result = taskStatusMachineService.operationTask(createTemp,currentEvent,CommonCodeConst.TASK_EVENT_TYPE_ZHUZHER);
 
 		// 路由之后的结果应该是正常的
 		assertThat("task should be not null ",createTemp, is(notNullValue()));

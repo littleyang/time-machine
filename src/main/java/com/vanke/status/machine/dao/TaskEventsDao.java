@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import com.vanke.common.constant.ResponesCodeConst;
+import com.vanke.common.constant.CommonCodeConst;
 import com.vanke.common.dao.base.JdbcBaseDao;
 import com.vanke.common.exceptions.BaseDaoException;
 import com.vanke.status.machine.dao.crud.TaskEventsCrudDao;
@@ -158,7 +158,7 @@ public class TaskEventsDao extends JdbcBaseDao {
 	 */
 	public TaskEvents getTaskEventByIdByJdbc(int id) throws BaseDaoException{
 		if(id==0){
-			throw new BaseDaoException(ResponesCodeConst.QUERY_PARAMS_ERROR_CODE,"查询任务调度参数错误，缺少参数值");
+			throw new BaseDaoException(CommonCodeConst.QUERY_PARAMS_ERROR_CODE,"查询任务调度参数错误，缺少参数值");
 		}
 		StringBuilder sqlBuilder = new StringBuilder("select * from task_events where id = ?");
 		Object[] params = new Object[]{id};
@@ -173,7 +173,7 @@ public class TaskEventsDao extends JdbcBaseDao {
 	 */
 	public TaskEvents getTaskEventByCodeByJdbc(String code) throws BaseDaoException{
 		if(null==code||code.equals("")){
-			throw new BaseDaoException(ResponesCodeConst.QUERY_PARAMS_ERROR_CODE,"查询任务调度参数错误，缺少参数值");
+			throw new BaseDaoException(CommonCodeConst.QUERY_PARAMS_ERROR_CODE,"查询任务调度参数错误，缺少参数值");
 		}
 		StringBuilder sqlBuilder = new StringBuilder("select * from task_events where code = ?");
 		Object[] params = new Object[]{code};

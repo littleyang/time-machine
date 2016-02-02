@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import com.vanke.common.constant.ResponesCodeConst;
+import com.vanke.common.constant.CommonCodeConst;
 import com.vanke.common.dao.base.JdbcBaseDao;
 import com.vanke.common.exceptions.BaseDaoException;
 import com.vanke.common.model.task.Task;
@@ -41,7 +41,7 @@ public class TaskDao extends JdbcBaseDao{
 	 */
 	public Task createTask(Task task) throws BaseDaoException{
 		if(null==task||task.getTaskNo().equals("")){
-			throw new BaseDaoException(ResponesCodeConst.QUERY_PARAMS_ERROR_CODE,"创建任务参数错误，缺少参数值");
+			throw new BaseDaoException(CommonCodeConst.QUERY_PARAMS_ERROR_CODE,"创建任务参数错误，缺少参数值");
 		}
 		return taskCrudDao.save(task);
 	}
@@ -53,7 +53,7 @@ public class TaskDao extends JdbcBaseDao{
 	 */
 	public void deleteTask(Task task) throws BaseDaoException{
 		if(null==task||task.getTaskNo().equals("")){
-			throw new BaseDaoException(ResponesCodeConst.QUERY_PARAMS_ERROR_CODE,"删除任务参数错误，缺少参数值");
+			throw new BaseDaoException(CommonCodeConst.QUERY_PARAMS_ERROR_CODE,"删除任务参数错误，缺少参数值");
 		}
 		taskCrudDao.delete(task);
 	}
@@ -98,7 +98,7 @@ public class TaskDao extends JdbcBaseDao{
 	 */
 	public Task findById(int taskId) throws BaseDaoException{
 		if(taskId==0){
-			throw new BaseDaoException(ResponesCodeConst.QUERY_PARAMS_ERROR_CODE,"查询任务参数错误，缺少参数值");
+			throw new BaseDaoException(CommonCodeConst.QUERY_PARAMS_ERROR_CODE,"查询任务参数错误，缺少参数值");
 		}
 		return taskCrudDao.findById(taskId);
 	}
@@ -111,7 +111,7 @@ public class TaskDao extends JdbcBaseDao{
 	 */
 	public Task findByTaskNo(String taskNo) throws BaseDaoException{
 		if(null==taskNo||taskNo.equals("")){
-			throw new BaseDaoException(ResponesCodeConst.QUERY_PARAMS_ERROR_CODE,"查询任务参数错误，缺少参数值");
+			throw new BaseDaoException(CommonCodeConst.QUERY_PARAMS_ERROR_CODE,"查询任务参数错误，缺少参数值");
 		}
 		return taskCrudDao.findByTaskNo(taskNo);
 	}
@@ -131,7 +131,7 @@ public class TaskDao extends JdbcBaseDao{
 	 */
 	public Task getTaskByIdByJdbc(int taskId) throws BaseDaoException{
 		if(taskId==0){
-			throw new BaseDaoException(ResponesCodeConst.QUERY_PARAMS_ERROR_CODE,"查询任务参数错误，缺少参数值");
+			throw new BaseDaoException(CommonCodeConst.QUERY_PARAMS_ERROR_CODE,"查询任务参数错误，缺少参数值");
 		}
 		StringBuilder sqlBuilder = new StringBuilder("select * from task where id = ?");
 		Object[] params = new Object[]{taskId};
@@ -146,7 +146,7 @@ public class TaskDao extends JdbcBaseDao{
 	 */
 	public Task getTaskByTaskNoByJdbc(String taskNo) throws BaseDaoException{
 		if(null==taskNo||taskNo.equals("")){
-			throw new BaseDaoException(ResponesCodeConst.QUERY_PARAMS_ERROR_CODE,"查询任务参数错误，缺少参数值");
+			throw new BaseDaoException(CommonCodeConst.QUERY_PARAMS_ERROR_CODE,"查询任务参数错误，缺少参数值");
 		}
 		StringBuilder sqlBuilder = new StringBuilder("select * from task where task_no = ?");
 		Object[] params = new Object[]{taskNo};

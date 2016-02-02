@@ -1,5 +1,8 @@
 package com.vanke.status.machine.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.vanke.common.constant.ResponesCodeConst;
+import com.vanke.common.constant.CommonCodeConst;
 import com.vanke.common.data.vo.TaskSnapshot;
 import com.vanke.common.exceptions.BaseDaoException;
 import com.vanke.common.exceptions.BaseServiceException;
@@ -42,7 +45,7 @@ public class LebangTaskController {
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
-    public TaskSnapshot createTask(@RequestBody Task task){
+    public Map<String ,Object> createTask(@RequestBody Task task){
     	//log.info("zhuzher create task and params :  " + task);
     	long start = System.currentTimeMillis();
     	
@@ -55,22 +58,28 @@ public class LebangTaskController {
     	
     	String taskInitEvents = "E100001";
     	
-    	TaskSnapshot taskData = null;
+    	Map<String,Object> result = new HashMap<String,Object>();
     	
     	try {
     		Task create = taskService.createTask(task);
     		
-			taskData = taskStatusMachineService.operationTask(create, taskInitEvents, ResponesCodeConst.TASK_EVENT_TYPE_LEBANG);
+    		TaskSnapshot taskData = taskStatusMachineService.operationTask(create, taskInitEvents, CommonCodeConst.TASK_EVENT_TYPE_LEBANG);
+			
+			result.put("code", CommonCodeConst.STATUS_OK);
+			result.put("msg", CommonCodeConst.SUCCESS_MESSAGE);
+			result.put("data", taskData);
 			
 		} catch (BaseServiceException | BaseDaoException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			result.put("code", CommonCodeConst.BAD_REQUEST);
+			result.put("msg", e.getMessage());
+			result.put("data", null);
 		}
     	
     	long end = System.currentTimeMillis();
     	log.info("/api/lebang/task/create 耗时:  " + (end - start) + " ms");
 
-    	return taskData;
+    	return result;
     	
     }
     
