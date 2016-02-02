@@ -9,7 +9,7 @@ public class BaseServiceException extends Exception{
 	
 	
 	private int code;
-	private String message;
+	private String msg;
 	
 	public BaseServiceException(){
 		super();
@@ -19,13 +19,13 @@ public class BaseServiceException extends Exception{
 		this.code = code;
 	}
 	
-	public BaseServiceException(String message){
-		this.message = message;
+	public BaseServiceException(String msg){
+		this.msg = msg;
 	}
 	
-	public BaseServiceException(int code,String message){
+	public BaseServiceException(int code,String msg){
 		this.code = code;
-		this.message = message;
+		this.msg = msg;
 	}
 
 	public int getCode() {
@@ -36,12 +36,12 @@ public class BaseServiceException extends Exception{
 		this.code = code;
 	}
 
-	public String getMessage() {
-		return message;
+	public String getMsg() {
+		return msg;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setMsg(String msg) {
+		this.msg = msg;
 	}
 
 }

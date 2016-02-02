@@ -58,21 +58,28 @@ public class LebangTaskController {
     	
     	String taskInitEvents = "E100001";
     	
+    	TaskSnapshot taskData = null;
+    	
     	Map<String,Object> result = new HashMap<String,Object>();
     	
     	try {
     		Task create = taskService.createTask(task);
     		
-    		TaskSnapshot taskData = taskStatusMachineService.operationTask(create, taskInitEvents, CommonCodeConst.TASK_EVENT_TYPE_LEBANG);
+			taskData = taskStatusMachineService.operationTask(create, taskInitEvents, CommonCodeConst.TASK_EVENT_TYPE_LEBANG);
 			
 			result.put("code", CommonCodeConst.STATUS_OK);
 			result.put("msg", CommonCodeConst.SUCCESS_MESSAGE);
 			result.put("data", taskData);
 			
-		} catch (BaseServiceException | BaseDaoException e) {
+		} catch (BaseServiceException e) {
 			// TODO Auto-generated catch block
-			result.put("code", CommonCodeConst.BAD_REQUEST);
-			result.put("msg", e.getMessage());
+			result.put("code", e.getCode());
+			result.put("msg", e.getMsg());
+			result.put("data", null);
+		} catch (BaseDaoException e) {
+			// TODO Auto-generated catch block
+			result.put("code", e.getCode());
+			result.put("msg", e.getMsg());
 			result.put("data", null);
 		}
     	
