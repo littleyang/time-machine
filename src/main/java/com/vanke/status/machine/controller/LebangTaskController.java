@@ -69,9 +69,7 @@ public class LebangTaskController {
     	
     	long end = System.currentTimeMillis();
     	log.info("/api/lebang/task/create 耗时:  " + (end - start) + " ms");
-    	
-    	System.out.println(taskData.getTask().getTaskNo());
-    	
+
     	return taskData;
     	
     }
