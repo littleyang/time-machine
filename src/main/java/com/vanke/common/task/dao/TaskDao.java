@@ -2,6 +2,7 @@ package com.vanke.common.task.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -151,6 +152,22 @@ public class TaskDao extends JdbcBaseDao{
 		StringBuilder sqlBuilder = new StringBuilder("select * from task where task_no = ?");
 		Object[] params = new Object[]{taskNo};
 		return jdbcTemplate.queryForObject(sqlBuilder.toString(), params, taskRowMapper);
+	}
+	
+	/**
+	 * 
+	 * @param taskNo
+	 * @param bussinessType
+	 * @return
+	 * @throws BaseDaoException 
+	 */
+	public int setTaskBussinessTypeByJdbc(String taskNo,String businessType) throws BaseDaoException{
+		if(null==taskNo||taskNo.equals("")||null==businessType||businessType.equals("")){
+			throw new BaseDaoException(CommonCodeConst.QUERY_PARAMS_ERROR_CODE,"查询任务参数错误，缺少参数值");
+		}
+		StringBuilder sqlBuilder = new StringBuilder("update task set bussiness_type = ? where task_no = ?");
+		Object[] params = new Object[]{businessType, taskNo};
+		return jdbcTemplate.update(sqlBuilder.toString() , params, new int[]{Types.CHAR});
 	}
 	
 

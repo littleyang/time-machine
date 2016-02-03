@@ -3,15 +3,12 @@ package com.vanke.status.machine.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
-
 import net.sf.json.JSONObject;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -110,16 +107,77 @@ public class LebangTaskController {
      * lebang 处理任务
      */
     @RequestMapping(value = "/deal/{task_no}", method=RequestMethod.POST)
-    public void operation(@PathVariable("task_no") String taskNo, @RequestParam("operation") String operation){
+    public ResponseEntity<Map<String,Object>> operation(@PathVariable("task_no") String taskNo, 
+    		@RequestParam("operation") String operation){
+    	
     	System.out.println("task_no   is   " + taskNo);
     	System.out.println("operation   is   " + operation);
+    	
+    	Map<String,Object> result = new HashMap<String,Object>();
+    	
+    	HttpStatus status = HttpStatus.OK;
+    	
+    	TaskSnapshot taskData = null;
+    	
+    	try {
+    		Task task = taskService.getTaskByJdbc(taskNo);
+    		// operation task
+    		taskData = taskStatusMachineService.operationTask(task, operation, CommonCodeConst.TASK_EVENT_TYPE_LEBANG);
+			
+    		result.put("code", CommonCodeConst.STATUS_OK);
+			result.put("msg", CommonCodeConst.SUCCESS_MESSAGE);
+			result.put("data", taskData);
+			
+		} catch (BaseServiceException e) {
+			// TODO Auto-generated catch block
+			result.put("code", e.getCode());
+			result.put("msg", e.getMsg());
+			status = HttpStatus.BAD_REQUEST;
+		} catch (BaseDaoException e) {
+			// TODO Auto-generated catch block
+			result.put("code", e.getCode());
+			result.put("msg", e.getMsg());
+			status = HttpStatus.BAD_REQUEST;
+		}
+    	
+    	return new ResponseEntity<Map<String,Object>>(result, status);
+    	
     }
     
     /**
      * 设置业务类型
      */
     @RequestMapping(value = "/set/business/{task_no}", method = RequestMethod.POST)
-    public void setTaskBussiness(@PathVariable("task_no") String taskNo, @RequestParam("bussiness_type") String bussinessType){
+    public ResponseEntity<Map<String,Object>> setTaskBussiness(@PathVariable("task_no") String taskNo, 
+    		@RequestParam("bussiness_type") String bussinessType){
+    	
+    	Map<String,Object> result = new HashMap<String,Object>();
+    	
+    	HttpStatus status = HttpStatus.OK;
+    	
+    	try {
+    		Task task = taskService.setTaskBussinessType(taskNo, bussinessType);
+    		
+    		// 初始化设置自动发布抢单
+    		String taskInitEvents = "E100001";
+    		taskStatusMachineService.operationTask(task, taskInitEvents, CommonCodeConst.TASK_EVENT_TYPE_LEBANG);
+			
+    		result.put("code", CommonCodeConst.STATUS_OK);
+			result.put("msg", CommonCodeConst.SUCCESS_MESSAGE);
+			
+		} catch (BaseServiceException e) {
+			// TODO Auto-generated catch block
+			result.put("code", e.getCode());
+			result.put("msg", e.getMsg());
+			status = HttpStatus.BAD_REQUEST;
+		} catch (BaseDaoException e) {
+			// TODO Auto-generated catch block
+			result.put("code", e.getCode());
+			result.put("msg", e.getMsg());
+			status = HttpStatus.BAD_REQUEST;
+		}
+    	
+    	return new ResponseEntity<Map<String,Object>>(result, status);
     	
     }
     
@@ -128,10 +186,36 @@ public class LebangTaskController {
      * 获取task详情，包括操作
      */
     @RequestMapping(value = "/{task_no}/detail", method = RequestMethod.GET)
-    public void getTaskDetail(@PathVariable("task_no") String taskNo){
+    public ResponseEntity<Map<String,Object>> getTaskDetail(@PathVariable("task_no") String taskNo){
     	
+    	TaskSnapshot taskData = null;
+    	
+    	Map<String,Object> result = new HashMap<String,Object>();
+    	
+    	HttpStatus status = HttpStatus.OK;
+    	
+    	try {
+    		taskData = taskService.getTaskDetail(taskNo, CommonCodeConst.TASK_EVENT_TYPE_LEBANG);
+			result.put("code", CommonCodeConst.STATUS_OK);
+			result.put("msg", CommonCodeConst.SUCCESS_MESSAGE);
+			result.put("data", taskData);
+			
+		} catch (BaseServiceException e) {
+			// TODO Auto-generated catch block
+			result.put("code", e.getCode());
+			result.put("msg", e.getMsg());
+			result.put("data", null);
+			status = HttpStatus.BAD_REQUEST;
+		} catch (BaseDaoException e) {
+			// TODO Auto-generated catch block
+			result.put("code", e.getCode());
+			result.put("msg", e.getMsg());
+			result.put("data", null);
+			status = HttpStatus.BAD_REQUEST;
+		}
+    	
+    	return new ResponseEntity<Map<String,Object>>(result, status);
     }
     
     
-
 }

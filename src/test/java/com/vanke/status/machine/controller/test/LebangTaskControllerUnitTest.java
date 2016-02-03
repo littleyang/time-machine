@@ -43,12 +43,14 @@ public class LebangTaskControllerUnitTest extends BaseTestUnit{
 	@Test
 	public void testLebangTaskControllerCreateTask() throws Exception{
 		
-		Task task = new Task();
-		task.setBusinessType("BUCR020103");
+//		Task task = new Task();
+//		task.setBusinessType("BUCR020103");
+		
+		String taskJson = "{\"bussiness_type\":\"\"}";
 		
 		mockMvc.perform(post("/api/lebang/task/create")
 				.contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(task)))
+				.content(taskJson))
 				.andExpect(status().isOk());
 	}
 
