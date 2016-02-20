@@ -98,18 +98,25 @@
 			<artifactId>httpclient</artifactId>
 			<version>4.5.1</version>
 		</dependency>
-		
+
 		<dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jms</artifactId>
-            <version>4.2.4.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.activemq</groupId>
-            <artifactId>activemq-broker</artifactId>
-            <version>5.13.0</version>            
-        </dependency>
-        
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
+			<version>4.2.4.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-broker</artifactId>
+			<version>5.13.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-all</artifactId>
+			<!-- <version>5.12.2</version> -->
+			<version>5.13.0</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
@@ -124,6 +131,11 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>2.6.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.5</version>
 		</dependency>
 
 		<dependency>
@@ -195,6 +207,12 @@
 			<artifactId>druid</artifactId>
 			<version>1.0.15</version>
 		</dependency>
+		<dependency>
+			<groupId>net.sf.json-lib</groupId>
+			<artifactId>json-lib</artifactId>
+			<version>2.4</version>
+			<classifier>jdk15</classifier>
+		</dependency>
 
 		<dependency>
 			<groupId>log4j</groupId>
@@ -244,6 +262,19 @@
 			<version>3.4.2</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.jayway.jsonpath</groupId>
+			<artifactId>json-path</artifactId>
+			<version>2.1.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.jayway.jsonpath</groupId>
+			<artifactId>json-path-assert</artifactId>
+			<version>2.1.0</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
 

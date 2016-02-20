@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vanke.common.model.base.BaseModel;
 
 
@@ -28,9 +29,11 @@ public class Task extends BaseModel{
 	private int id;
 	
 	@Column(name="task_no",unique=true)
+	@JsonProperty("task_no")
 	private String taskNo;
 	
 	@Column(name="business_type")
+	@JsonProperty("business_type")
 	private String businessType;
 	
 	@Column(name="status")

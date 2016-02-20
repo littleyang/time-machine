@@ -21,9 +21,9 @@ public interface TaskRoutesCrudDao extends CrudRepository<TaskRoutes,Integer>{
 			@Param("current_event")String currentEvent,@Param("current_status")int currentStatus);
 	
 	@Query("from TaskRoutes where bussiness_code = :bussiness_code "
-			+ "and current_status = :current_status")
+			+ "and current_status = :current_status and type = :type")
 	public List<TaskRoutes> getNextRouteEvents(@Param("bussiness_code")String bussinessCode,
-			@Param("current_status")int currentStatus);
+			@Param("current_status")int currentStatus, @Param("type")int type);
 	
 	@Query("from TaskRoutes where bussiness_code = ?1")
 	public List<TaskRoutes> findByBusinessCode(String bussiness_code);

@@ -12,7 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.vanke.common.constant.ResponesCodeConst;
+import com.vanke.common.constant.CommonCodeConst;
 import com.vanke.common.exceptions.BaseDaoException;
 import com.vanke.status.machine.dao.TaskRoutesDao;
 import com.vanke.status.machine.dao.crud.TaskRoutesCrudDao;
@@ -39,8 +39,8 @@ public class TaskRoutesDaoUnitTest extends BaseTestUnit {
 		route.setBussinessCode("test-business-code");
 		route.setCurrentEvent("current-test-event");
 		route.setCurrentStatus(10001);
-		route.setNextEvent("next-test-event");
 		route.setNextStatus(10002);
+		route.setType(100);
 	}
 	
 	@After
@@ -79,7 +79,7 @@ public class TaskRoutesDaoUnitTest extends BaseTestUnit {
 			assertThat("should be null",one, is(nullValue()));
 		} catch (BaseDaoException e) {
 			// TODO Auto-generated catch block
-			assertThat("should be null",e.getCode(), is(ResponesCodeConst.QUERY_PARAMS_ERROR_CODE));
+			assertThat("should be null",e.getCode(), is(CommonCodeConst.QUERY_PARAMS_ERROR_CODE));
 		}
 	}
 	

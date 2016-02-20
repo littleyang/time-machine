@@ -20,5 +20,8 @@ public interface TaskCrudDao extends CrudRepository<Task,Integer>{
 	
 	@Query("delete from Task where task_no = ?1")
 	public void deleteTaskByTaskNo(String taskNo);
+	
+//	@Query("truncate table tasks")
+//	public void truncateTasks();
 
 }

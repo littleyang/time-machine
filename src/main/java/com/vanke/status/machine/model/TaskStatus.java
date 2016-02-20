@@ -11,6 +11,8 @@ import javax.persistence.Table;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Table(name="task_status")
 public class TaskStatus {
@@ -28,9 +30,11 @@ public class TaskStatus {
 	private String name;
 	
 	@Column(name="outer_status")
+	@JsonProperty("outer_status")
 	private int outerStatus;
 	
 	@Column(name="outer_name")
+	@JsonProperty("outer_name")
 	private String outerName;
 	
 	@Column(name="type")
