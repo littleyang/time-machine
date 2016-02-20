@@ -1,6 +1,6 @@
 package com.vanke.common.exceptions;
 
-public class BaseDaoException extends Exception{
+public class BaseServiceException extends Exception{
 	
 	/**
 	 * 
@@ -11,19 +11,19 @@ public class BaseDaoException extends Exception{
 	private int code;
 	private String msg;
 	
-	public BaseDaoException(){
+	public BaseServiceException(){
 		super();
 	}
 	
-	public BaseDaoException(int code){
+	public BaseServiceException(int code){
 		this.code = code;
 	}
 	
-	public BaseDaoException(String msg){
+	public BaseServiceException(String msg){
 		this.msg = msg;
 	}
 	
-	public BaseDaoException(int code,String msg){
+	public BaseServiceException(int code,String msg){
 		this.code = code;
 		this.msg = msg;
 	}

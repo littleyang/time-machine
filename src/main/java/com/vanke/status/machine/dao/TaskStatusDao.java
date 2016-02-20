@@ -10,13 +10,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import com.vanke.common.constant.ResponesCodeConst;
+import com.vanke.common.constant.CommonCodeConst;
 import com.vanke.common.dao.base.JdbcBaseDao;
 import com.vanke.common.exceptions.BaseDaoException;
 import com.vanke.status.machine.dao.crud.TaskStatusCrudDao;
 import com.vanke.status.machine.model.TaskStatus;
 
 @Repository
+@Qualifier("taskStatusDao")
 public class TaskStatusDao extends JdbcBaseDao {
 	
 	private static RowMapper<TaskStatus> taskStatusRowMapper = new RowMapper<TaskStatus>() {
@@ -118,7 +119,7 @@ public class TaskStatusDao extends JdbcBaseDao {
 	 */
 	public TaskStatus getTaskStatusByIdByJdbc(int id) throws BaseDaoException{
 		if(id==0){
-			throw new BaseDaoException(ResponesCodeConst.QUERY_PARAMS_ERROR_CODE,"查询状态参数错误，缺少状态值");
+			throw new BaseDaoException(CommonCodeConst.QUERY_PARAMS_ERROR_CODE,"查询状态参数错误，缺少状态值");
 		}
 		StringBuilder sqlBuilder = new StringBuilder("select * from task_status where id = ?");
 		Object[] params = new Object[]{id};
@@ -134,7 +135,7 @@ public class TaskStatusDao extends JdbcBaseDao {
 	public TaskStatus getTaskStatusByStatusByJdbc(int status) throws BaseDaoException{
 		
 		if(status==0){
-			throw new BaseDaoException(ResponesCodeConst.QUERY_PARAMS_ERROR_CODE,"查询状态参数错误，缺少状态值");
+			throw new BaseDaoException(CommonCodeConst.QUERY_PARAMS_ERROR_CODE,"查询状态参数错误，缺少状态值");
 		}
 		
 		StringBuilder sqlBuilder = new StringBuilder("select * from task_status where status = ?");
