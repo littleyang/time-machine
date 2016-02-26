@@ -27,7 +27,7 @@
     <!-- 催促任务 -->
     <task_routes id="13" bussiness_code="BUCR020103" current_event="E100009" current_status="1000" next_status="1000" type="101"/>
     <!-- zhuzher创建任务 -->
-    <task_routes id="14" bussiness_code="BUCR020103" current_event="E100001" current_status="1000" next_status="1000" type="101"/>
+    <task_routes id="14" bussiness_code="BUCR020103" current_event="E100001" current_status="999" next_status="1000" type="101"/>
     
 </dataset>
 

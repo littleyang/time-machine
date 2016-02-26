@@ -63,7 +63,7 @@ public class ZhuzherTaskController {
     	// 初始化 task no
     	task.setTaskNo(taskService.createTaskNo());
     	// 初始化状态
-    	task.setStatus(1000);
+    	task.setStatus(999);
     	
     	String taskInitEvents = "E100001";
     	
@@ -77,6 +77,8 @@ public class ZhuzherTaskController {
     		Task create = taskService.createTask(task);
     		
 			taskData = taskStatusMachineService.operationTask(create, taskInitEvents, CommonCodeConst.TASK_EVENT_TYPE_ZHUZHER);
+			
+			//taskData = taskStatusMachineService.zhuzherCreateTask(create, CommonCodeConst.TASK_EVENT_TYPE_ZHUZHER);
 			
 			result.put("code", CommonCodeConst.STATUS_OK);
 			result.put("msg", CommonCodeConst.SUCCESS_MESSAGE);
