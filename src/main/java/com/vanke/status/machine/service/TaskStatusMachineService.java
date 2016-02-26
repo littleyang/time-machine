@@ -89,6 +89,26 @@ public class TaskStatusMachineService {
 		
 		return result;
 	}
+	
+	
+	public TaskSnapshot zhuzherCreateTask(Task task,int operationType) throws BaseServiceException, BaseDaoException{
+		
+		// 检查传递的参数是否有效
+		if(null==task||0==operationType){
+			throw new BaseServiceException(CommonCodeConst.PROCESS_ERROR,"任务操作参数有错误");
+		}
+		
+		List<TaskRoutes> taskNextEventRoutes = taskRoutesDao.findNextTaskRouteEvents(task.getBusinessType(), task.getStatus(), operationType);
+		
+		// 查找下一个操作事件
+		List<TaskEvents> nextEvents = taskEventsDao.findNextEventsByRoutes(taskNextEventRoutes);
+		
+		Task savedTask = taskDao.createTask(task);
+		
+		TaskSnapshot result = new TaskSnapshot();
+		
+		return result;
+	}
 
 
 }
