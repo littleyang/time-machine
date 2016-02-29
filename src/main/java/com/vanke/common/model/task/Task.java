@@ -10,12 +10,12 @@ import javax.persistence.Table;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.vanke.common.model.base.BaseModel;
+import com.vanke.common.model.base.BaseObject;
 
 
 @Entity
 @Table(name="task")
-public class Task extends BaseModel{
+public class Task extends BaseObject{
 
 	/**
 	 * 

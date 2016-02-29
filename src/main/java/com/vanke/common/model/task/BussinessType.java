@@ -11,11 +11,11 @@ import javax.persistence.Table;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import com.vanke.common.model.base.BaseModel;
+import com.vanke.common.model.base.BaseObject;
 
 @Entity
 @Table(name="business_type")
-public class BussinessType extends BaseModel{
+public class BussinessType extends BaseObject{
 	
 	/**
 	 * 
