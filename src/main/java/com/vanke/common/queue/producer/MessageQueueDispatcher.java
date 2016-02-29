@@ -31,6 +31,8 @@ public class MessageQueueDispatcher {
 	@Qualifier("taskDestination")
 	private Destination taskDestination;
 	
+	
+	
 	/**
 	 * 将消息分发到任务队列
 	 * @param object
