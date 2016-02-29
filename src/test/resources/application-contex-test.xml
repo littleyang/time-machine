@@ -36,6 +36,7 @@
 				<value>classpath:config/log4j.properties</value>
 				<value>classpath:config/unitils.properties</value>
 				<value>classpath:config/context-mongo-test.properties</value>
+				<value>classpath:config/queue-test.properties</value>
 			</list>
 		</property>
 	</bean>

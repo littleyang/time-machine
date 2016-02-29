@@ -35,6 +35,7 @@
 				<value>classpath:config/context-redis.properties</value>
 				<value>classpath:config/log4j.properties</value>
 				<value>classpath:config/context-mongo.properties</value>
+				<value>classpath:config/queue.properties</value>
 			</list>
 		</property>
 	</bean>
