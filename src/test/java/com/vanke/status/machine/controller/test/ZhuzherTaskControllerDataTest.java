@@ -70,8 +70,11 @@ public class ZhuzherTaskControllerDataTest extends BaseDaoTestBeans{
 				.andExpect(jsonPath("$.data.task.status", is(1000)))
 				.andExpect(jsonPath("$.data.operations", hasSize(2)))
 				.andExpect(jsonPath("$.data.operations[0]", is(notNullValue())))
-				.andExpect(jsonPath("$.data.operations[0].code", is("E100013")))
-				.andExpect(jsonPath("$.data.operations[0].type", is(101)));
+				.andExpect(jsonPath("$.data.operations[0].code", is("E100013")))//取消任务
+				.andExpect(jsonPath("$.data.operations[0].type", is(101)))
+				.andExpect(jsonPath("$.data.operations[1]", is(notNullValue())))
+				.andExpect(jsonPath("$.data.operations[1].code", is("E100009")))//催促任务
+				.andExpect(jsonPath("$.data.operations[1].type", is(101)));
 	}
 	
 //	@Test

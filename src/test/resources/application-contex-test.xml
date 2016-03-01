@@ -36,6 +36,7 @@
 				<value>classpath:config/log4j.properties</value>
 				<value>classpath:config/unitils.properties</value>
 				<value>classpath:config/context-mongo-test.properties</value>
+				<value>classpath:config/queue-test.properties</value>
 			</list>
 		</property>
 	</bean>
@@ -50,6 +51,8 @@
 	<import resource="redis-context-test.xml"/>
 	
 	<import resource="mongo-context-test.xml"/>
+	
+	<import resource="jms-context-test.xml" />
 	
 	<import resource="data-entity-context-test.xml" />
 

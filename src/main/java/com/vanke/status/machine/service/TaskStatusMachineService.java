@@ -107,6 +107,10 @@ public class TaskStatusMachineService {
 		
 		TaskSnapshot result = new TaskSnapshot();
 		
+		result.setTask(savedTask);
+		
+		result.setOperations(nextEvents);
+		
 		return result;
 	}
 
