@@ -11,11 +11,11 @@ import javax.persistence.Table;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import com.vanke.common.model.base.BaseModel;
+import com.vanke.common.model.base.BaseObject;
 
 @Entity
 @Table(name="task_events") 
-public class TaskEvents extends BaseModel{
+public class TaskEvents extends BaseObject{
 	
 	private static final long serialVersionUID = -4816645622926005882L;
 
