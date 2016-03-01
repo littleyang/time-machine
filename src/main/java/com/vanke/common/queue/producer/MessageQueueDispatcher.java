@@ -10,11 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
+import org.springframework.stereotype.Component;
 
 import com.vanke.common.model.base.BaseObject;
 
 
-
+@Component("messageQueueDispatcher")
 public class MessageQueueDispatcher {
 	
 	/**
@@ -37,7 +38,7 @@ public class MessageQueueDispatcher {
 	 * 将消息分发到任务队列
 	 * @param object
 	 */
-	protected void dispatchToTaskDestination(final BaseObject object){
+	public void dispatchToTaskDestination(final BaseObject object){
 		
 		MessageCreator messageCreator = new MessageCreator() {
 			public Message createMessage(Session session) throws JMSException {
