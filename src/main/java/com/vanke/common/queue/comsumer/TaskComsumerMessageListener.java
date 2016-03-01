@@ -40,7 +40,7 @@ public class TaskComsumerMessageListener implements MessageListener{
 
 	private void createTask() {
 		// TODO Auto-generated method stub
-		System.out.println("===========this is create task !!!=============");
+		logger.info("===========this is create task !!!=============");
 	}
 
 }

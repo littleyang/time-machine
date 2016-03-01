@@ -44,5 +44,5 @@
 		<property name="messageListener" ref="taskComsumerMessageListener" />
 		<property name="concurrentConsumers"  value="5"/>
 	</bean>
-
+	
 </beans>
