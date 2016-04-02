@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <task_status id="1" status="1000" name="初始化任务" outer_status="10001" outer_name="发起任务" type="1" created="2015-10-10" updated="2015-10-11"/>
+    <task_status id="2" status="1001" name="发起任务" outer_status="10001" outer_name="发起任务" type="1" created="2015-10-10" updated="2015-10-11"/>
+    <task_status id="3" status="1002" name="等待管家响应" outer_status="10002" outer_name="接受任务" type="1" created="2015-10-10" updated="2015-10-11"/>
+    <task_status id="4" status="1003" name="等待CRM处理" outer_status="10002" outer_name="接受任务" type="1" created="2015-10-10" updated="2015-10-11"/>
+	<task_status id="5" status="1004" name="等待员工抢单" outer_status="10002" outer_name="接受任务" type="1" created="2015-10-10" updated="2015-10-11"/>
+    <task_status id="6" status="1005" name="等待负责人响应" outer_status="10002" outer_name="接受任务" type="1" created="2015-10-10" updated="2015-10-11"/>
+    <task_status id="7" status="1006" name="工开始工作" outer_status="10002" outer_name="接受任务" type="1" created="2015-10-10" updated="2015-10-11"/>
+    <task_status id="8" status="1007" name="任务处理中" outer_status="10003" outer_name="处理任务中" type="1" created="2015-10-10" updated="2015-10-11"/>
+    <task_status id="9" status="1008" name="暂停任务" outer_status="10003" outer_name="处理任务中" type="1" created="2015-10-10" updated="2015-10-11"/>
+    <task_status id="10" status="1009" name="完成任务待评价" outer_status="10004" outer_name="完成待评价" type="1" created="2015-10-10" updated="2015-10-11"/>
+    <task_status id="11" status="1010" name="关闭任务" outer_status="10005" outer_name="关闭任务" type="1" created="2015-10-10" updated="2015-10-11"/>
+    <task_status id="12" status="1011" name="已评价任务" outer_status="10006" outer_name="已评价任务" type="1" created="2015-10-10" updated="2015-10-11"/>
+    <task_status id="13" status="1012" name="用户取消" outer_status="10007" outer_name="你经取消任务" type="1" created="2015-10-10" updated="2015-10-11"/>
+    <task_status id="14" status="1014" name="任务已接受" outer_status="10002" outer_name="接受任务" type="1" created="2015-10-10" updated="2015-10-11"/>
+</dataset>
+
