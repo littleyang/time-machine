@@ -7,9 +7,7 @@
     <artifactId>time-platform</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <groupId>com.vanke.time.machine</groupId>
   <artifactId>time-parter-api</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
   <name>time-parter-api</name>
   <url>http://maven.apache.org</url>
   <properties>
