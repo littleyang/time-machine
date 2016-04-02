@@ -9,7 +9,7 @@ import com.vanke.common.model.base.BaseObject;
 import com.vanke.common.queue.producer.MessageQueueDispatcher;
 import com.vanke.test.base.BaseTestUnit;
 
-public class QueueProducerTestOne extends BaseTestUnit{
+public class QueueProducerTest extends BaseTestUnit{
 	
 	@Autowired
 	private MessageQueueDispatcher messageQueueDispatcher;
