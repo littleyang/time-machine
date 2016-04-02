@@ -20,6 +20,8 @@
     <module>time-api</module>
     <module>time-web-admin</module>
     <module>time-auth-center</module>
+    <module>time-push-center</module>
+    <module>time-parter-api</module>
   </modules>
   	
 	<build>
