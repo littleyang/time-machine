@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <task_events id="1" code="E100001" event="create" name="创建任务" msg="发起了任务" type="100" created="2015-10-10" updated="2015-10-11"/>
+    <task_events id="2" code="E100002" event="publish" name="发布任务" msg="发起了任务" type="100" created="2015-10-10" updated="2015-10-11"/>
+    <task_events id="3" code="E100003" event="grab" name="抢单" msg="发起了任务" type="100" created="2015-10-10" updated="2015-10-11"/>
+    <task_events id="4" code="E100004" event="start" name="开始任务" msg="发起了任务" type="100" created="2015-10-10" updated="2015-10-11"/>
+    <task_events id="5" code="E100005" event="pause" name="暂停任务" msg="发起了任务" type="100" created="2015-10-10" updated="2015-10-11"/>
+    <task_events id="6" code="E100006" event="continue" name="继续任务" msg="发起了任务" type="100" created="2015-10-10" updated="2015-10-11"/>
+    <task_events id="7" code="E100007" event="finish" name="完成任务" msg="发起了任务" type="100" created="2015-10-10" updated="2015-10-11"/>
+    <task_events id="8" code="E100008" event="comment" name="评价任务" msg="发起了任务" type="101" created="2015-10-10" updated="2015-10-11"/>
+    <task_events id="9" code="E100009" event="urge" name="催促任务" msg="发起了任务" type="101" created="2015-10-10" updated="2015-10-11"/>
+   	<task_events id="10" code="E100010" event="accept" name="接受任务" msg="发起了任务" type="100" created="2015-10-10" updated="2015-10-11"/>
+    <task_events id="11" code="E100011" event="dispatch" name="分配任务" msg="任务分配给了某人" type="100" created="2015-10-10" updated="2015-10-11"/>
+    <task_events id="12" code="E100012" event="init" name="业主初始化任务" msg="发起了任务" type="101" created="2015-10-10" updated="2015-10-11"/>
+    <task_events id="13" code="E100013" event="cancle" name="取消任务" msg="业主取消任务" type="101" created="2015-10-10" updated="2015-10-11"/>
+    <task_events id="14" code="E100014" event="cannot" name="无法处理任务" msg="无法处理任务" type="101" created="2015-10-10" updated="2015-10-11"/>
+</dataset>
+
