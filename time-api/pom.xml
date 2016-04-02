@@ -8,10 +8,8 @@
 		<artifactId>time-platform</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>com.vanke.time.machine</groupId>
-	<artifactId>time-api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>time-api</name>
+	<artifactId>time-app-api</artifactId>
+	<name>time-app-api</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
