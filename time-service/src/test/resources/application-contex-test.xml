@@ -28,14 +28,17 @@
 
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location">
-			<description>application data source configuration </description>
+		<property name="locations">
+			<description>application test data source configuration </description>
 			<list>
-				<value>classpath:config/context-db.properties</value>
-				<value>classpath:config/context-redis.properties</value>
+				<value>classpath:config/context-db-test.properties</value>
+				<!--  
+				<value>classpath:config/context-redis-test.properties</value>
 				<value>classpath:config/log4j.properties</value>
-				<value>classpath:config/context-mongo.properties</value>
-				<value>classpath:config/queue.properties</value>
+				<value>classpath:config/unitils.properties</value>
+				<value>classpath:config/context-mongo-test.properties</value>
+				<value>classpath:config/queue-test.properties</value>
+				-->
 			</list>
 		</property>
 	</bean>
@@ -43,18 +46,18 @@
 	<!-- Scan for spring beans in this package and all sub-packages -->
 
 
-	<context:component-scan base-package="com.vanke" />
+	<context:component-scan base-package="com" />
 
-	<import resource="datasource-context.xml" />
+	<!--  
+	<import resource="datasource-context-test.xml" />
 	
-	<import resource="redis-context.xml"/>
+	<import resource="redis-context-test.xml"/>
 	
-	<import resource="mongo-context.xml"/>
+	<import resource="mongo-context-test.xml"/>
 	
-	<import resource="jms-context.xml" />
+	<import resource="jms-context-test.xml" />
 	
-	<import resource="data-entity-context.xml" />
+	<import resource="data-entity-context-test.xml" />
+	-->
 	
-
-
 </beans>

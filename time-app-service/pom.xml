@@ -1,28 +1,32 @@
 <?xml version="1.0"?>
-<project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>com.vanke.time.machine</groupId>
-		<artifactId>time-platform</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</parent>
-	<artifactId>time-service</artifactId>
-	<name>time-service</name>
-	<url>http://maven.apache.org</url>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
-	<dependencies>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.vanke.time.machine</groupId>
+    <artifactId>time-platform</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>time-app-service</artifactId>
+  <packaging>war</packaging>
+  <name>time-app-service webapp</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
 		<dependency>
 			<groupId>com.vanke.time.machine</groupId>
 			<artifactId>time-common</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
-	
 	<build>
+		<finalName>time-app-service</finalName>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<resources>
 			<resource>
@@ -71,5 +75,4 @@
 			</plugin>
 		</plugins>
 	</build>
-	<packaging>war</packaging>
 </project>

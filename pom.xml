@@ -22,6 +22,7 @@
     <module>time-auth-center</module>
     <module>time-push-center</module>
     <module>time-parter-api</module>
+    <module>time-app-service</module>
   </modules>
   	
 	<build>

@@ -9,7 +9,7 @@ import com.vanke.common.model.base.BaseObject;
 import com.vanke.common.queue.comsumer.TaskComsumerMessageListener;
 import com.vanke.test.base.BaseTestUnit;
 
-public class QueueComsumerTestOne extends BaseTestUnit{
+public class QueueComsumerTest extends BaseTestUnit{
 	
 	
 	@Autowired
