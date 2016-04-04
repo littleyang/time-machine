@@ -1,6 +1,7 @@
 package com.time.api;
 
-import org.apache.xbean.spring.context.ClassPathXmlApplicationContext;
+
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.time.registry.service.RegistryService;
 

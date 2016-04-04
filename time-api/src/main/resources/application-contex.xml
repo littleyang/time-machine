@@ -32,7 +32,7 @@
 	
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location">
+		<property name="locations">
 			<description>application data source configuration </description>
 			<list>
 				<value>classpath:config/context-db.properties</value>
