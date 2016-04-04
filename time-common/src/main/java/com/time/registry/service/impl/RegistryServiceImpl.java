@@ -1,11 +1,8 @@
 package com.time.registry.service.impl;
 
-import org.springframework.stereotype.Service;
+import com.time.registry.service.RegistryDemoService;
 
-import com.time.registry.service.RegistryService;
-
-@Service("registryService")
-public class RegistryServiceImpl implements RegistryService {
+public class RegistryServiceImpl implements RegistryDemoService {
 
 	@Override
 	public String sayHello(String name) {
