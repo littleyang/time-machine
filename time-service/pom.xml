@@ -11,6 +11,9 @@
 	<artifactId>time-service</artifactId>
 	<name>time-service</name>
 	<url>http://maven.apache.org</url>
+	
+<packaging>war</packaging>
+	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -71,5 +74,5 @@
 			</plugin>
 		</plugins>
 	</build>
-	<packaging>war</packaging>
+	
 </project>
