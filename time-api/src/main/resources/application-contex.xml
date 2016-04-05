@@ -40,6 +40,7 @@
 				<value>classpath:config/log4j.properties</value>
 				<value>classpath:config/context-mongo.properties</value>
 				<value>classpath:config/queue.properties</value>
+				<value>classpath:config/dubbo-customer.properties</value>
 			</list>
 		</property>
 	</bean>

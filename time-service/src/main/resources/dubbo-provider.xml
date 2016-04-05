@@ -10,19 +10,17 @@
     		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
        <!-- 提供方应用信息，用于计算依赖关系 -->
-       <dubbo:application name="time-service"  />
+       <dubbo:application name="${dubbo.app.name}"  />
        
        <dubbo:annotation package="com.*" />
 
        <!-- 使用zookeeper注册中心暴露服务地址 -->
-       <dubbo:registry address="zookeeper://127.0.0.1:2181" />
+       <dubbo:registry address="${dubbo.registry.address}" />
 
        <!-- 用dubbo协议在20880端口暴露服务 -->
-       <dubbo:protocol name="dubbo" port="20880" />
+       <dubbo:protocol name="${dubbo.protocol}" port="${dubbo.port}" />
 
        <!-- 声明需要暴露的服务接口 -->
   	   <dubbo:service interface="com.time.registry.service.RegistryDemoService" ref="registryDemoService"/> 
-  	   
-  	   <bean id="registryDemoService" class="com.time.registry.service.impl.RegistryServiceImpl"/>
 
 </beans>
