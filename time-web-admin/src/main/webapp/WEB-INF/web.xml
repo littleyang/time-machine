@@ -6,15 +6,15 @@
 
 	<display-name>Web Application</display-name>
 
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
-
 	<context-param>
 		<description>time web admin</description>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:application-contex.xml</param-value>
 	</context-param>
+	
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
 	
 	<filter>
 		<filter-name>encodingFilter</filter-name>
@@ -38,7 +38,6 @@
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<!-- 此处配置的是SpringMVC的配置文件 -->
 			<param-value>/WEB-INF/dispatcher-servlet.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
@@ -48,6 +47,7 @@
 		<servlet-name>dispatcher</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	
 
 	<session-config>
 		<session-timeout>30</session-timeout>
@@ -55,11 +55,11 @@
 
 	<error-page>
        <error-code>404</error-code>
-       <location>/404.html</location>
+       <location>/404.jsp</location>
     </error-page>
     <error-page>
        <error-code>505</error-code>                             
-       <location>/505.html</location>
+       <location>/505.jsp</location>
     </error-page>
    
 	<welcome-file-list>

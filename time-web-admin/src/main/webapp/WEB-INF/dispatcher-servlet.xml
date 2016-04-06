@@ -11,49 +11,42 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 	
-	<context:component-scan base-package="com." />
 	
-	<mvc:annotation-driven/>
+	<context:component-scan base-package="com.time.*" />
 	
+	<!-- 
 	<mvc:annotation-driven>  
-        <!-- 返回json数据，@response使用 -->  
         <mvc:message-converters register-defaults="true">  
-            <bean  
-                class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">  
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">  
                 <property name="supportedMediaTypes">  
                     <list>  
                         <value>text/html;charset=UTF-8</value>  
                         <value>application/json;charset=UTF-8</value>  
                     </list>  
-                </property>  
-  
+                </property>
             </bean>  
         </mvc:message-converters>  
     </mvc:annotation-driven>  
-    
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-    	<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" /> 
-		<property name="prefix">
-			<value>/WEB-INF/pages/</value>
-		</property>
-		<property name="suffix">
-			<value>.jsp</value>
-		</property>
+   -->
+      
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/pages/" />
+		<property name="suffix" value=".jsp" />
 	</bean>
 	
-	<!-- 配置多文件上传 -->  
+	<!-- 配置多文件上传 
     <bean id="multipartResolver"  
         class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
         <property name="defaultEncoding">  
             <value>UTF-8</value>  
         </property>  
-        <property name="maxUploadSize">  
-            <!-- 上传文件大小限制为 -->  
+        <property name="maxUploadSize">
             <value>32505856</value>  
         </property>  
         <property name="maxInMemorySize">  
             <value>4096</value>  
         </property>  
     </bean>  
-	
+	--> 
 </beans>
