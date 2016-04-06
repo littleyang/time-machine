@@ -10,18 +10,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 
+
 @Controller
 @RequestMapping("/index")
 public class AdminIndexController {
 
 	private static final Log logger = LogFactory.getLog(AdminIndexController.class);
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value="/greeting", method=RequestMethod.GET)
 	public ModelAndView login(){
         return new ModelAndView("hello");
     }
 
-	@RequestMapping(value = "/{name}", method = RequestMethod.GET)
+	@RequestMapping(value="/hello/{name}", method=RequestMethod.GET)
 	public ModelAndView welcome(@PathVariable String name, ModelMap model) {
 		model.addAttribute("message", "Welcome " + name);
 		logger.debug("[Welcome counter :{}" + name);
