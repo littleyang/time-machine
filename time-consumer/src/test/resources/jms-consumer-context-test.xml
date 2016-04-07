@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:cache="http://www.springframework.org/schema/cache"
+   xmlns:amq="http://activemq.apache.org/schema/core"
+   xmlns:jms="http://www.springframework.org/schema/jms"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans.xsd
+     http://www.springframework.org/schema/jms
+     http://www.springframework.org/schema/jms/spring-jms.xsd
+     http://activemq.apache.org/schema/core
+     http://activemq.apache.org/schema/core/activemq-core-5.8.0.xsd
+     http://www.springframework.org/schema/cache 
+     http://www.springframework.org/schema/cache/spring-cache-4.2.xsd">
+     
+     
+    <cache:annotation-driven/>
+	
+	<bean id="activeMQConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL">
+			<value>${activeMq}</value>
+		</property>
+		<!-- 2016-02-29 -->
+		<property name="useAsyncSend" value="true" />
+	</bean>
+    
+    <bean id="connectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+		<!-- Session缓存数量 -->
+		<property name="sessionCacheSize">
+			<value>${MqSessionCacheSize}</value>
+		</property>
+		<property name="targetConnectionFactory" ref="activeMQConnectionFactory"/>
+	</bean>
+	
+	<!-- 任务的消息队列 -->
+    <bean id="taskDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg index="0" value="taskQueue" />
+	</bean>
+	
+	<!-- 发送消息的目的地（一个主题） -->  
+    <bean id="taskTopicDestination" class="org.apache.activemq.command.ActiveMQTopic">  
+        <!-- 设置消息主题的名字 -->  
+        <constructor-arg index="0" value="taskTopic" />  
+    </bean> 
+	
+	<!--消息推送到队列监听器,消息的消费者,使用队列模式 
+	<bean id="taskJmsConsumer" class="org.springframework.jms.listener.DefaultMessageListenerContainer" >
+		<property name="pubSubDomain" value="false"/>
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="taskDestination" />
+		<property name="messageListener" ref="taskComsumerMessageListener" />
+		<property name="concurrentConsumers"  value="5"/>
+	</bean>
+	-->
+	
+	<!-- 定义Queue监听器,消息的消费者，另外一种配置方式-->
+    <jms:listener-container destination-type="queue" container-type="default" connection-factory="connectionFactory" acknowledge="auto">
+        <jms:listener destination="taskQueue" ref="taskComsumerMessageListener"/>
+    </jms:listener-container>
+	
+	
+	<!-- 消息订阅客户端1 
+    <bean id="subscribeListenerClientOne" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="topicConnectionFactory" />
+        <property name="pubSubDomain" value="true"/>
+        <property name="destination" ref="taskTopicDestination" />
+        <property name="messageListener" ref="taskMessageSubscriberListener" />
+        <property name="concurrentConsumers"  value="5"/>
+    </bean>
+	-->
+	
+    <!-- 消息订阅客户端2 
+    <bean id="subscribeListenerClientTwo" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="pubSubDomain" value="true"/>
+        <property name="destination" ref="taskTopicDestination" />
+        <property name="messageListener" ref="taskMessageSubscriberListener" />
+    </bean>
+	-->
+	<!-- 消息推送到队列监听器,消息的消费者,使用发布订阅模式 ,定义Topic监听器-->
+    <jms:listener-container destination-type="topic" container-type="default" connection-factory="connectionFactory" acknowledge="auto">
+        <jms:listener destination="taskTopic" ref="taskMessageSubscriberListener"/>
+    </jms:listener-container>
+	
+	
+</beans>

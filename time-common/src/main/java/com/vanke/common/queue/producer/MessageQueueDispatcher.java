@@ -22,8 +22,8 @@ public class MessageQueueDispatcher {
 	 * Jms消息模版
 	 */
 	@Autowired
-	@Qualifier("jmsTemplate")
-	private JmsTemplate jmsTemplate;
+	@Qualifier("jmsQueueTemplate")
+	private JmsTemplate jmsQueueTemplate;
 	
 	/**
 	 * 任务队列
@@ -48,7 +48,7 @@ public class MessageQueueDispatcher {
 			}
 		};
 
-		jmsTemplate.send(this.taskDestination, messageCreator);
+		jmsQueueTemplate.send(this.taskDestination, messageCreator);
 	}
 
 }

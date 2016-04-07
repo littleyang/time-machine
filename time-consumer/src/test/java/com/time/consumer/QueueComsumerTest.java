@@ -1,4 +1,4 @@
-package com.vanke.common.queue.test;
+package com.time.consumer;
 
 import org.junit.After;
 import org.junit.Before;
@@ -6,10 +6,9 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vanke.common.model.base.BaseObject;
-import com.vanke.common.queue.comsumer.TaskComsumerMessageListener;
-import com.vanke.test.base.BaseTestUnit;
+import com.vanke.test.base.BaseConsumerTestUnit;
 
-public class QueueComsumerTest extends BaseTestUnit{
+public class QueueComsumerTest extends BaseConsumerTestUnit{
 	
 	
 	@Autowired

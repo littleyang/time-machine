@@ -1,4 +1,4 @@
-package com.vanke.common.queue.comsumer;
+package com.time.consumer;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 
 import com.vanke.common.model.base.BaseObject;
 
-@Component("taskComsumerMessageListener")
-public class TaskComsumerMessageListener implements MessageListener{
+@Component("taskMessageSubscriberTwoListener")
+public class TaskMessageSubscriberTwoListener implements MessageListener{
 
 	protected Log logger = LogFactory.getLog(getClass());
 	

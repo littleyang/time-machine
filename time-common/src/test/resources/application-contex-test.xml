@@ -52,7 +52,7 @@
 	
 	<import resource="mongo-context-test.xml"/>
 	
-	<import resource="jms-context-test.xml" />
+	<import resource="jms-producer-context-test.xml" />
 	
 	<import resource="data-entity-context-test.xml" />
 

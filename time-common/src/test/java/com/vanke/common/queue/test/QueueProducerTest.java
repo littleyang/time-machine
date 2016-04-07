@@ -32,7 +32,7 @@ public class QueueProducerTest extends BaseTestUnit{
 	@Test
 	public void createTaskAndPushToTaskQueueTest(){
 		// 一般开发先注释掉
-		// messageQueueDispatcher.dispatchToTaskDestination(testObject);
+		messageQueueDispatcher.dispatchToTaskDestination(testObject);
 	}
 
 }
