@@ -1,4 +1,4 @@
-package com.vanke.common.queue.test;
+package com.time.producer;
 
 import org.junit.After;
 import org.junit.Before;
@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vanke.common.model.base.BaseObject;
 import com.vanke.common.queue.producer.MessageQueueDispatcher;
-import com.vanke.test.base.BaseTestUnit;
+import com.vanke.test.base.BaseProducerTestUnit;
 
-public class QueueProducerTest extends BaseTestUnit{
+public class QueueProducerTest extends BaseProducerTestUnit{
 	
 	@Autowired
 	private MessageQueueDispatcher messageQueueDispatcher;
