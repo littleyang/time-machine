@@ -8,25 +8,21 @@
 		<artifactId>time-platform</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>time-web-admin</artifactId>
-	<name>time-web-admin</name>
-	<url>http://maven.apache.org</url>
-	
+	<artifactId>time-consumer</artifactId>
 	<packaging>war</packaging>
-	
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
+	<name>time-consumer Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+
 	<dependencies>
-		<!-- -->
 		<dependency>
 			<groupId>com.vanke.time.machine</groupId>
 			<artifactId>time-common</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
+
 	<build>
-		<finalName>admin</finalName>
+		<finalName>time-consumer</finalName>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<resources>
 			<resource>

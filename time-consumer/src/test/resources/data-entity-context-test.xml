@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd   
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd 
+        http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd"
+        >
+
+	<!-- JPA实体管理工厂的配置 -->  
+    <bean id="entityManagerFactory"  
+        class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">  
+        <property name="dataSource" ref="dataSource" />  
+        <property name="persistenceUnitName" value="myPersistenceUnit" />
+        <property name="packagesToScan" ref="packagesToScan" />
+        <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/> 
+        <property name="jpaProperties">  
+            <props>  
+            	<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop> 
+                <prop key="hibernate.show_sql">true</prop>  
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>  
+            </props>  
+        </property>  
+    </bean>  
+	
+	<!-- 事务配置 -->  
+    <bean id="transactionEntityManager" class="org.springframework.orm.jpa.JpaTransactionManager">  
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>  
+    </bean> 
+	
+	<!--指定实现JPA的适配器 -->  
+    <bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="showSql" value="true"/>
+  		<property name="generateDdl" value="true"/>
+        <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />  
+    </bean>  
+    
+     <!-- 注解式事务 -->
+    <jpa:repositories base-package="com.vanke" transaction-manager-ref="transactionEntityManager" 
+    	entity-manager-factory-ref="entityManagerFactory" />
+   
+    <tx:annotation-driven transaction-manager="transactionEntityManager" />  
+     	 
+  
+    <!-- 实体映射 -->  
+    <bean id="packagesToScan"  
+        class="org.springframework.beans.factory.config.ListFactoryBean">  
+        <property name="sourceList">  
+            <list>  
+                <value>com.vanke</value>  
+            </list>  
+        </property>  
+    </bean>
+	
+	<bean id="taskExecutor"  
+        class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">  
+        <property name="corePoolSize" value="2" />  
+        <property name="maxPoolSize" value="5" />  
+        <property name="queueCapacity" value="6" />  
+        <property name="keepAliveSeconds" value="2000" />  
+        <property name="rejectedExecutionHandler">  
+            <bean class="java.util.concurrent.ThreadPoolExecutor$AbortPolicy" />  
+        </property>  
+    </bean> 
+    
+</beans>

@@ -1,4 +1,4 @@
-package com.vanke.common.queue.test;
+package com.time.consumer;
 
 import org.junit.After;
 import org.junit.Before;

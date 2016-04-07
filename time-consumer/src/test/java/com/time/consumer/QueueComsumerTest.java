@@ -1,4 +1,4 @@
-package com.vanke.common.queue.test;
+package com.time.consumer;
 
 import org.junit.After;
 import org.junit.Before;
@@ -6,14 +6,14 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vanke.common.model.base.BaseObject;
-import com.vanke.common.queue.producer.MessageQueueDispatcher;
 import com.vanke.test.base.BaseTestUnit;
 
-public class QueueProducerTest extends BaseTestUnit{
+public class QueueComsumerTest extends BaseTestUnit{
+	
 	
 	@Autowired
-	private MessageQueueDispatcher messageQueueDispatcher;
-	
+	private TaskComsumerMessageListener taskComsumerMessageListener;
+
 	private BaseObject testObject;
 	
 	@Before
@@ -32,7 +32,7 @@ public class QueueProducerTest extends BaseTestUnit{
 	@Test
 	public void createTaskAndPushToTaskQueueTest(){
 		// 一般开发先注释掉
-		messageQueueDispatcher.dispatchToTaskDestination(testObject);
+		// messageQueueDispatcher.dispatchToTaskDestination(testObject);
 	}
-
+	
 }

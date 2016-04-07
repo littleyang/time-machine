@@ -15,22 +15,22 @@ import org.springframework.stereotype.Component;
 import com.vanke.common.model.base.BaseObject;
 
 
-@Component("messageQueueDispatcher")
-public class MessageQueueDispatcher {
+@Component("messageTopicDispatcher")
+public class MessageTopicDispatcher {
 	
 	/**
 	 * Jms消息模版
 	 */
 	@Autowired
-	@Qualifier("jmsQueueTemplate")
-	private JmsTemplate jmsQueueTemplate;
+	@Qualifier("jmsTopicTemplate")
+	private JmsTemplate jmsTopicTemplate;
 	
 	/**
 	 * 任务队列
 	 */
 	@Autowired
-	@Qualifier("taskDestination")
-	private Destination taskDestination;
+	@Qualifier("taskTopicDestination")
+	private Destination taskTopicDestination;
 	
 	
 	
@@ -38,7 +38,7 @@ public class MessageQueueDispatcher {
 	 * 将消息分发到任务队列
 	 * @param object
 	 */
-	public void dispatchToTaskDestination(final BaseObject object){
+	public void dispatchToTaskTopicDestination(final BaseObject object){
 		
 		MessageCreator messageCreator = new MessageCreator() {
 			public Message createMessage(Session session) throws JMSException {
@@ -48,7 +48,7 @@ public class MessageQueueDispatcher {
 			}
 		};
 
-		jmsQueueTemplate.send(this.taskDestination, messageCreator);
+		jmsTopicTemplate.send(this.taskTopicDestination, messageCreator);
 	}
 
 }

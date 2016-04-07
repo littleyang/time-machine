@@ -1,4 +1,4 @@
-package com.vanke.common.queue.comsumer;
+package com.time.consumer;
 
 import javax.jms.JMSException;
 import javax.jms.Message;

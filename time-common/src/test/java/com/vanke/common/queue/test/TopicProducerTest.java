@@ -6,13 +6,13 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vanke.common.model.base.BaseObject;
-import com.vanke.common.queue.producer.MessageQueueDispatcher;
+import com.vanke.common.queue.producer.MessageTopicDispatcher;
 import com.vanke.test.base.BaseTestUnit;
 
-public class QueueProducerTest extends BaseTestUnit{
+public class TopicProducerTest extends BaseTestUnit{
 	
 	@Autowired
-	private MessageQueueDispatcher messageQueueDispatcher;
+	private MessageTopicDispatcher messageTopicDispatcher;
 	
 	private BaseObject testObject;
 	
@@ -32,7 +32,7 @@ public class QueueProducerTest extends BaseTestUnit{
 	@Test
 	public void createTaskAndPushToTaskQueueTest(){
 		// 一般开发先注释掉
-		messageQueueDispatcher.dispatchToTaskDestination(testObject);
+		messageTopicDispatcher.dispatchToTaskTopicDestination(testObject);
 	}
 
 }

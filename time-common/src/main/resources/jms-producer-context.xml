@@ -2,14 +2,19 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xmlns:cache="http://www.springframework.org/schema/cache"
+   xmlns:amq="http://activemq.apache.org/schema/core"
+   xmlns:jms="http://www.springframework.org/schema/jms"
    xsi:schemaLocation="http://www.springframework.org/schema/beans
      http://www.springframework.org/schema/beans/spring-beans.xsd
+     http://www.springframework.org/schema/jms
+     http://www.springframework.org/schema/jms/spring-jms.xsd
+     http://activemq.apache.org/schema/core
+     http://activemq.apache.org/schema/core/activemq-core-5.8.0.xsd
      http://www.springframework.org/schema/cache 
      http://www.springframework.org/schema/cache/spring-cache-4.2.xsd">
      
-     
     <cache:annotation-driven/>
-	
+
 	<bean id="activeMQConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
 		<property name="brokerURL">
 			<value>${activeMq}</value>
@@ -26,23 +31,32 @@
 		</property>
 		<property name="targetConnectionFactory" ref="activeMQConnectionFactory"/>
 	</bean>
-
-	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
-		<property name="connectionFactory" ref="connectionFactory" />
-	</bean>
 	
-	 <!-- 任务的消息队列 -->
+	<!-- 任务的消息队列 -->
     <bean id="taskDestination" class="org.apache.activemq.command.ActiveMQQueue">
 		<constructor-arg index="0" value="taskQueue" />
 	</bean>
 	
-	<!--消息推送监听器 -->
-	<bean id="taskJmsConsumer"
-		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+	<!-- 发送消息的目的地（一个主题） -->  
+    <bean id="taskTopicDestination" class="org.apache.activemq.command.ActiveMQTopic">  
+        <!-- 设置消息主题的名字 -->  
+        <constructor-arg index="0" value="taskTopic" />  
+    </bean>  
+
+	<!-- 普通的消息队列模式 -->
+	<bean id="jmsQueueTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<!-- 设置连接工厂 -->
 		<property name="connectionFactory" ref="connectionFactory" />
-		<property name="destination" ref="taskDestination" />
-		<property name="messageListener" ref="taskComsumerMessageListener" />
-		<property name="concurrentConsumers"  value="5"/>
+		 <!-- 非pub/sub模型（发布/订阅），即队列模式 -->
+        <property name="pubSubDomain" value="false" />
+	</bean>
+     
+	<!-- 增加消息发布订阅模式 -->
+	<bean id="jmsTopicTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<!-- 设置连接工厂 -->
+		<property name="connectionFactory" ref="connectionFactory" />
+		<!-- 非pub/sub模型（发布/订阅），即队列模式 -->
+        <property name="pubSubDomain" value="true" />
 	</bean>
 	
 </beans>
