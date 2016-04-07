@@ -38,7 +38,7 @@ public class MessageTopicDispatcher {
 	 * 将消息分发到任务队列
 	 * @param object
 	 */
-	public void dispatchToTaskTopicDestination(final BaseObject object){
+	public void publishToTaskTopicDestination(final BaseObject object){
 		
 		MessageCreator messageCreator = new MessageCreator() {
 			public Message createMessage(Session session) throws JMSException {

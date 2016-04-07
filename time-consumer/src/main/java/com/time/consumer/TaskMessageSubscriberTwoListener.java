@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 
 import com.vanke.common.model.base.BaseObject;
 
-@Component("taskMessageSubscriberListener")
-public class TaskMessageSubscriberListener implements MessageListener{
+@Component("taskMessageSubscriberTwoListener")
+public class TaskMessageSubscriberTwoListener implements MessageListener{
 
 	protected Log logger = LogFactory.getLog(getClass());
 	
@@ -40,7 +40,6 @@ public class TaskMessageSubscriberListener implements MessageListener{
 
 	private void createTask() {
 		// TODO Auto-generated method stub
-		System.out.println("===========this is create task !!!=============");
 		logger.info("===========this is create task !!!=============");
 	}
 

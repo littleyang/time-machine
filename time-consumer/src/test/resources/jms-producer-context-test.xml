@@ -12,8 +12,7 @@
      http://activemq.apache.org/schema/core/activemq-core-5.8.0.xsd
      http://www.springframework.org/schema/cache 
      http://www.springframework.org/schema/cache/spring-cache-4.2.xsd">
-     
-     
+    
     <cache:annotation-driven/>
 	
 	<bean id="activeMQConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
@@ -31,6 +30,8 @@
 		</property>
 		<property name="targetConnectionFactory" ref="activeMQConnectionFactory"/>
 	</bean>
+	
+	<bean id="jmsMessageConverter" class="org.springframework.jms.support.converter.SimpleMessageConverter" />
 	
 	<!-- 任务的消息队列 -->
     <bean id="taskDestination" class="org.apache.activemq.command.ActiveMQQueue">
@@ -57,13 +58,6 @@
 		<property name="connectionFactory" ref="connectionFactory" />
 		<!-- 非pub/sub模型（发布/订阅），即队列模式 -->
         <property name="pubSubDomain" value="true" />
-        <property name="explicitQosEnabled" value="true"/>
-        <!-- 发送模式
-             DeliveryMode.NON_PERSISTENT=1:非持久 ;
-             DeliveryMode.PERSISTENT=2:持久
-        -->
-        <property name="deliveryMode" value="1"/>
-        <property name="defaultDestination" ref="taskTopicDestination" />
 	</bean>
 	
 </beans>

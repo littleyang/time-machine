@@ -6,9 +6,9 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vanke.common.model.base.BaseObject;
-import com.vanke.test.base.BaseTestUnit;
+import com.vanke.test.base.BaseConsumerTestUnit;
 
-public class QueueComsumerTest extends BaseTestUnit{
+public class QueueComsumerTest extends BaseConsumerTestUnit{
 	
 	
 	@Autowired

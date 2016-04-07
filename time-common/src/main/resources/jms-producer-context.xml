@@ -15,7 +15,7 @@
      
     <cache:annotation-driven/>
 
-	<bean id="activeMQConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+	<bean id="activeMQProducerConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
 		<property name="brokerURL">
 			<value>${activeMq}</value>
 		</property>
@@ -23,13 +23,13 @@
 		<property name="useAsyncSend" value="true" />
 	</bean>
     
-    <bean id="connectionFactory"
+    <bean id="proceducerConnectionFactory"
 		class="org.springframework.jms.connection.CachingConnectionFactory">
 		<!-- Session缓存数量 -->
 		<property name="sessionCacheSize">
 			<value>${MqSessionCacheSize}</value>
 		</property>
-		<property name="targetConnectionFactory" ref="activeMQConnectionFactory"/>
+		<property name="targetConnectionFactory" ref="activeMQProducerConnectionFactory"/>
 	</bean>
 	
 	<!-- 任务的消息队列 -->
@@ -46,7 +46,7 @@
 	<!-- 普通的消息队列模式 -->
 	<bean id="jmsQueueTemplate" class="org.springframework.jms.core.JmsTemplate">
 		<!-- 设置连接工厂 -->
-		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="connectionFactory" ref="proceducerConnectionFactory" />
 		 <!-- 非pub/sub模型（发布/订阅），即队列模式 -->
         <property name="pubSubDomain" value="false" />
 	</bean>
@@ -54,7 +54,7 @@
 	<!-- 增加消息发布订阅模式 -->
 	<bean id="jmsTopicTemplate" class="org.springframework.jms.core.JmsTemplate">
 		<!-- 设置连接工厂 -->
-		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="connectionFactory" ref="proceducerConnectionFactory" />
 		<!-- 非pub/sub模型（发布/订阅），即队列模式 -->
         <property name="pubSubDomain" value="true" />
 	</bean>

@@ -32,7 +32,7 @@ public class TopicProducerTest extends BaseTestUnit{
 	@Test
 	public void createTaskAndPushToTaskQueueTest(){
 		// 一般开发先注释掉
-		messageTopicDispatcher.dispatchToTaskTopicDestination(testObject);
+		messageTopicDispatcher.publishToTaskTopicDestination(testObject);
 	}
 
 }

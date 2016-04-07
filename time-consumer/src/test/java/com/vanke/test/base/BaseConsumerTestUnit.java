@@ -10,10 +10,10 @@ import org.unitils.UnitilsJUnit4;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:application-contex-test.xml" })
-public class BaseTestUnit extends UnitilsJUnit4{
+@ContextConfiguration(locations = { "classpath:application-consumer-contex-test.xml" })
+public class BaseConsumerTestUnit extends UnitilsJUnit4{
 	
-	public BaseTestUnit() {
+	public BaseConsumerTestUnit() {
 		MockitoAnnotations.initMocks(this);
 	}
 	
