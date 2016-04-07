@@ -46,12 +46,11 @@
 		</property>
 	</bean>
 	
-	<!-- Scan for spring beans in this package and all sub-packages
+	<!-- Scan for spring beans in this package and all sub-packages -->
 
 	<import resource="application-common-contex.xml" />	
 	
 	<import resource="dubbo-customer.xml" />
-	 
-	 -->
+	  
 	
 </beans>
