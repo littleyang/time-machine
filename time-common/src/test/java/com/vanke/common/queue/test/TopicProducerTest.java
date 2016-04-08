@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vanke.common.model.base.BaseObject;
-import com.vanke.common.queue.producer.MessageTopicDispatcher;
+import com.vanke.common.topic.producer.MessageTopicDispatcher;
 import com.vanke.test.base.BaseTestUnit;
 
 public class TopicProducerTest extends BaseTestUnit{
