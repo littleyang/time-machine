@@ -80,6 +80,7 @@
 	<!-- 消息推送到队列监听器,消息的消费者,使用发布订阅模式 ,定义Topic监听器-->
     <jms:listener-container destination-type="topic" container-type="default" connection-factory="connectionFactory" acknowledge="auto">
         <jms:listener destination="taskTopic" ref="taskMessageSubscriberListener"/>
+        <jms:listener destination="taskTopic" ref="taskTextMessageSubscriberListener"/>
     </jms:listener-container>
 	
 	

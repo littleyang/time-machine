@@ -21,10 +21,17 @@
 		</property>
 		<!-- 2016-02-29 -->
 		<property name="useAsyncSend" value="true" />
+		<property name="trustAllPackages" value="true"/>
+		<!-- 
+		<property name="trustedPackages">
+        	<list>
+            	<value>com</value>
+        	</list>
+    	</property>
+    	 -->
 	</bean>
     
-    <bean id="consumerConnectionFactory"
-		class="org.springframework.jms.connection.CachingConnectionFactory">
+    <bean id="consumerConnectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
 		<!-- Session缓存数量 -->
 		<property name="sessionCacheSize">
 			<value>${MqSessionCacheSize}</value>
@@ -62,11 +69,19 @@
        	 -->
     </bean>
 	
-	<!-- 消息推送到队列监听器,消息的消费者,使用发布订阅模式 ,定义Topic监听器
+	 <!-- 消息订阅客户端3 
+    <bean id="textSubscribeListener" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="consumerConnectionFactory" />
+        <property name="pubSubDomain" value="true"/>
+        <property name="destination" ref="taskTopicDestination" />
+        <property name="messageListener" ref="taskTextMessageSubscriberListener" />
+    </bean>
+    -->
+    
+   	<!-- 消息推送到队列监听器,消息的消费者,使用发布订阅模式 ,定义Topic监听器-->
     <jms:listener-container destination-type="topic" container-type="default" connection-factory="consumerConnectionFactory" acknowledge="auto">
-        <jms:listener destination="taskTopic" ref="taskMessageSubscriberListener"/>
+        <jms:listener destination="taskTopic" ref="taskTextMessageSubscriberListener"/>
     </jms:listener-container>
-	-->
-	
+   
 	
 </beans>

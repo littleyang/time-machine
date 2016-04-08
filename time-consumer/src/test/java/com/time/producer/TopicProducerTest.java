@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vanke.common.model.base.BaseObject;
-import com.vanke.common.queue.producer.MessageTopicDispatcher;
+import com.vanke.common.topic.producer.MessageTopicDispatcher;
 import com.vanke.test.base.BaseProducerTestUnit;
 
 public class TopicProducerTest extends BaseProducerTestUnit{
@@ -30,9 +30,15 @@ public class TopicProducerTest extends BaseProducerTestUnit{
 	}
 	
 	@Test
-	public void createTaskAndPushToTaskQueueTest(){
+	public void createTaskAndPushToTaskTopicTest(){
 		// 一般开发先注释掉
 		messageTopicDispatcher.publishToTaskTopicDestination(testObject);
+	}
+	
+	@Test
+	public void createTaskTextMessageAndPushToTaskTopicTest(){
+		// 一般开发先注释掉
+		messageTopicDispatcher.publishTaskTextMessage("this is a test message");
 	}
 
 }
