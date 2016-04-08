@@ -21,6 +21,7 @@
 		</property>
 		<!-- 2016-02-29 -->
 		<property name="useAsyncSend" value="true" />
+		<property name="trustAllPackages" value="true"/>
 	</bean>
     
     <bean id="consumerConnectionFactory"
@@ -37,11 +38,6 @@
 		<constructor-arg index="0" value="taskQueue" />
 	</bean>
 	
-	<!-- 发送消息的目的地（一个主题） -->  
-    <bean id="taskTopicDestination" class="org.apache.activemq.command.ActiveMQTopic">  
-        <!-- 设置消息主题的名字 -->  
-        <constructor-arg index="0" value="taskTopic" />  
-    </bean> 
 	
 	<!--消息推送到队列监听器,消息的消费者,使用队列模式 -->
 	<bean id="taskJmsConsumer" class="org.springframework.jms.listener.DefaultMessageListenerContainer" >
@@ -59,32 +55,6 @@
     </jms:listener-container>
 	-->
 	
-	
-	<!-- 消息订阅客户端1 -->
-    <bean id="subscribeListenerClientOne" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
-        <property name="connectionFactory" ref="consumerConnectionFactory" />
-        <!-- 开启订阅模式 -->
-        <property name="pubSubDomain" value="true"/>
-        <property name="destination" ref="taskTopicDestination" />
-        <property name="messageListener" ref="taskMessageSubscriberListener" />
-      	<property name="concurrentConsumers"  value="5"/>
-    </bean>
-
-    <!-- 消息订阅客户端2 -->
-    <bean id="subscribeListenerClientTwo" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
-        <property name="connectionFactory" ref="consumerConnectionFactory" />
-        <!-- 开启订阅模式 -->
-        <property name="pubSubDomain" value="true"/>
-        <property name="destination" ref="taskTopicDestination" />
-        <property name="messageListener" ref="taskMessageSubscriberTwoListener" />
-       	<property name="concurrentConsumers"  value="5"/>
-    </bean>
-	
-	<!-- 消息推送到队列监听器,消息的消费者,使用发布订阅模式 ,定义Topic监听器
-    <jms:listener-container destination-type="topic" container-type="default" connection-factory="consumerConnectionFactory" acknowledge="auto">
-        <jms:listener destination="taskTopic" ref="taskMessageSubscriberListener"/>
-    </jms:listener-container>
-	-->
 	
 	
 </beans>

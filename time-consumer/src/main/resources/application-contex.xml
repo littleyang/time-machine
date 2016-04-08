@@ -54,6 +54,8 @@
 	<import resource="dubbo-provider.xml" />
 	 -->
 	 
-	 <import resource="jms-consumer-context.xml" />
+	<import resource="jms-queue-consumer-context.xml" />
+	
+	<import resource="jms-topic-consumer-context.xml" />
 
 </beans>

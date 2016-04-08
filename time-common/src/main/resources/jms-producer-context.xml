@@ -21,6 +21,7 @@
 		</property>
 		<!-- 2016-02-29 -->
 		<property name="useAsyncSend" value="true" />
+		<property name="trustAllPackages" value="true"/>
 	</bean>
     
     <bean id="proceducerConnectionFactory"

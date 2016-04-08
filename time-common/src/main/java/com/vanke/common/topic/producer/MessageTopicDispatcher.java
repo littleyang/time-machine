@@ -1,10 +1,11 @@
-package com.vanke.common.queue.producer;
+package com.vanke.common.topic.producer;
 
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.ObjectMessage;
 import javax.jms.Session;
+import javax.jms.TextMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -47,8 +48,21 @@ public class MessageTopicDispatcher {
 				return message;
 			}
 		};
-
 		jmsTopicTemplate.send(this.taskTopicDestination, messageCreator);
+	}
+	
+	
+	public void publishTaskTextMessage(String message){
+		MessageCreator creator = new MessageCreator() {  
+            public Message createMessage(Session session) throws JMSException {  
+                TextMessage msg = session.createTextMessage();  
+                // 设置消息内容  
+                msg.setText(message);  
+                return msg;  
+            }  
+        };
+		
+		jmsTopicTemplate.send(this.taskTopicDestination, creator);  
 	}
 
 }
