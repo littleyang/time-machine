@@ -19,8 +19,19 @@
 			<artifactId>time-common</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>0.9.0.1</version>
+        </dependency>
+		<!--
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>hadoop-consumer</artifactId>
+			<version>0.8.0</version>
+		</dependency>
+		-->
 	</dependencies>
-
 	<build>
 		<finalName>time-consumer</finalName>
 		<sourceDirectory>src/main/java</sourceDirectory>
