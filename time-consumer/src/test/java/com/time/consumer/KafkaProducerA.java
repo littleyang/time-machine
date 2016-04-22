@@ -8,7 +8,7 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 
 public class KafkaProducerA {
 
-	public static String topicName = "test";
+	public static String topicName = "nginx";
 
 	public static void main(String[] args) throws InterruptedException {
 

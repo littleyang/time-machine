@@ -13,7 +13,7 @@ public class KafkaConsumerA {
 	        Properties props = new Properties();
 	        //props.put("bootstrap.servers", "localhost:9092");
 	        //props.put("bootstrap.servers", "127.0.0.1:9092");
-	        props.put("bootstrap.servers", "10.0.72.51:9092");
+	        props.put("bootstrap.servers", "10.0.58.21:9092");
 	        props.put("group.id", "test");
 	        props.put("enable.auto.commit", "true");
 	        props.put("auto.commit.interval.ms", "1000");
@@ -21,12 +21,16 @@ public class KafkaConsumerA {
 	        props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 	        props.put("value.deserializer","org.apache.kafka.common.serialization.StringDeserializer");
 	        KafkaConsumer<String, String> consumer = new KafkaConsumer<String, String>(props);
-	        consumer.subscribe(Arrays.asList(KafkaProducerA.topicName));
+	        //consumer.subscribe(Arrays.asList(KafkaProducerA.topicName));
+	        consumer.subscribe(Arrays.asList("falcon"));
 	        while (true) {
 	            ConsumerRecords<String, String> records = consumer.poll(100);
 	            for (ConsumerRecord<String, String> record : records)
-	                System.out.printf("offset = %d, key = %s, value = %s \n",
-	                        record.offset(), record.key(), record.value());
+	               //System.out.printf("offset = %d, key = %s, value = %s \n",
+	               //        record.offset(), record.key(), record.value());
+	            	if(record.value().contains("/api/lebang/staffs/me/work")){
+	            		System.out.println("员工开始签到了 ………………………… " + record.value());
+	            	}
 	        }
 	    }
 }
