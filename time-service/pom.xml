@@ -26,6 +26,7 @@
 	</dependencies>
 	
 	<build>
+		<finalName>time-service</finalName>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<resources>
 			<resource>
