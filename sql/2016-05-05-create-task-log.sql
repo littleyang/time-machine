@@ -6,8 +6,8 @@ create table `task_log` (
 	`source_id` int (8) NOT NULL COMMENT 'source',
 	`rate` int (4) NOT NULL COMMENT '排序',
 	`task_no` varchar (32) COMMENT 'task_no',
-	`event` varchar (32) COMMENT 'event',
+	`event` varchar (128) COMMENT 'event',
 	`score` varchar (32) COMMENT 'score',
-	`msg` varchar (64) NOT NULL COMMENT '描述信息',
+	`msg` varchar (512) COMMENT '描述信息',
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '任务log表';
