@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 
-public class TaskLog {
+public class TaskLogBack {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,35 +19,27 @@ public class TaskLog {
 	private long id;
 	
 	@Column(name="status") 
-	@Field("status") 
 	private int status;
 	
-	@Column(name="created")
-	@Field("created") 
+	@Column(name="created") 
 	private Date created;
 	
-	@Column(name="source_id")
-	@Field("source_id") 
+	@Column(name="source_id") 
 	private int sourceId;
 	
-	@Column(name="rate")
-	@Field("rate") 
+	@Column(name="rate") 
 	private int rate;
 	
-	@Column(name="task_no")
-	@Field("task_no")
-	private String taskNo;
+	@Column(name="task_no") 
+	private int taskNo;
 	
-	@Column(name="event")
-	@Field("event")
+	@Column(name="event") 
 	private String event;
 	
-	@Column(name="score")
-	@Field("score")
+	@Column(name="score") 
 	private String score;
 	
-	@Column(name="msg")
-	@Field("msg")
+	@Column(name="msg") 
 	private String msg;
 
 	public long getId() {
@@ -90,11 +82,11 @@ public class TaskLog {
 		this.rate = rate;
 	}
 
-	public String getTaskNo() {
+	public int getTaskNo() {
 		return taskNo;
 	}
 
-	public void setTaskNo(String taskNo) {
+	public void setTaskNo(int taskNo) {
 		this.taskNo = taskNo;
 	}
 

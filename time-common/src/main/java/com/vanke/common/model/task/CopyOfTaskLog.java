@@ -5,49 +5,42 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
+//import javax.persistence.Id;
 
+
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-
-public class TaskLog {
+public class CopyOfTaskLog {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	//@Id
+	//@GeneratedValue(strategy = GenerationType.AUTO)
 	//为了使得mongo认得这个是Id而不是ObjectId
 	@Field("ObjectId")
 	private long id;
 	
-	@Column(name="status") 
 	@Field("status") 
 	private int status;
 	
-	@Column(name="created")
 	@Field("created") 
 	private Date created;
 	
-	@Column(name="source_id")
 	@Field("source_id") 
 	private int sourceId;
 	
-	@Column(name="rate")
 	@Field("rate") 
 	private int rate;
 	
-	@Column(name="task_no")
-	@Field("task_no")
+	@Field("task_no") 
 	private String taskNo;
 	
-	@Column(name="event")
-	@Field("event")
+	@Field("event") 
 	private String event;
 	
-	@Column(name="score")
-	@Field("score")
+	@Field("score") 
 	private String score;
 	
-	@Column(name="msg")
-	@Field("msg")
+	@Field("msg") 
 	private String msg;
 
 	public long getId() {
