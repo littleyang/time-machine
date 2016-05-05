@@ -27,7 +27,7 @@ public class TaskLogToHive extends BaseTestUnit{
 
 	
 	@Test
-	public void testGetTaskEventsByIdFromMongo() throws ParseException{
+	public void testGetTaskEventsByIdFromMongo() throws ParseException, BaseDaoException{
 		
 		Map<String,Object> dates = new HashMap<String,Object>();
 		
@@ -49,9 +49,11 @@ public class TaskLogToHive extends BaseTestUnit{
 		
 		for(int i=0;i<logs.size();i++){
 			TaskLog taskLog = logs.get(i);
+			System.out.println("log id : " + taskLog.getObjectId());
 			System.out.println("log status : " + taskLog.getStatus());
 			System.out.println("log taskNo : " + taskLog.getTaskNo());
 			System.out.println("log msg : " + taskLog.getMsg());
+			taskLogDao.createTaskLog(taskLog);
 		}
 		
 	}
@@ -59,7 +61,7 @@ public class TaskLogToHive extends BaseTestUnit{
 	@Test
 	public void testTaskLogCreate() throws BaseDaoException{
 		TaskLog log = new TaskLog();
-		log.setObjectId("56fb1a526dddf97c8e7728ac");
+		log.setObjectId(123);
 		log.setEvent("test");
 		log.setCreated(new Date());
 		log.setMsg("test");

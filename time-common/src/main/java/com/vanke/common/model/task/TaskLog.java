@@ -3,22 +3,26 @@ package com.vanke.common.model.task;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 
-
+@Entity
+@Table(name="task_log")
 public class TaskLog {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	//为了使得mongo认得这个是Id而不是ObjectId
+	@Field("id")
 	private int id;
 	
 	@Field("ObjectId")
-	private String objectId;
+	private int objectId;
 
 	@Column(name="status") 
 	@Field("status") 
@@ -52,13 +56,13 @@ public class TaskLog {
 	@Field("msg")
 	private String msg;
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
+//	public int getId() {
+//		return id;
+//	}
+//
+//	public void setId(int id) {
+//		this.id = id;
+//	}
 
 	public int getStatus() {
 		return status;
@@ -125,11 +129,11 @@ public class TaskLog {
 	}
 	
 	
-	public String getObjectId() {
+	public int getObjectId() {
 		return objectId;
 	}
 
-	public void setObjectId(String objectId) {
+	public void setObjectId(int objectId) {
 		this.objectId = objectId;
 	}
 

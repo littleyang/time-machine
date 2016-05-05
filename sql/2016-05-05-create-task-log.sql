@@ -9,6 +9,5 @@ create table `task_log` (
 	`event` varchar (32) COMMENT 'event',
 	`score` varchar (32) COMMENT 'score',
 	`msg` varchar (64) NOT NULL COMMENT '描述信息',
-	PRIMARY KEY (`id`),
-	UNIQUE KEY `IDX_CODE` (`objectId`)
+	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '任务log表';
