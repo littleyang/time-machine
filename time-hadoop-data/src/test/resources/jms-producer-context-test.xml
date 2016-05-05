@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:cache="http://www.springframework.org/schema/cache"
+   xmlns:amq="http://activemq.apache.org/schema/core"
+   xmlns:jms="http://www.springframework.org/schema/jms"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans.xsd
+     http://www.springframework.org/schema/jms
+     http://www.springframework.org/schema/jms/spring-jms.xsd
+     http://activemq.apache.org/schema/core
+     http://activemq.apache.org/schema/core/activemq-core-5.8.0.xsd
+     http://www.springframework.org/schema/cache 
+     http://www.springframework.org/schema/cache/spring-cache-4.2.xsd">
+     
+     
+    <cache:annotation-driven/>
+	
+	<bean id="activeMQConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL">
+			<value>${activeMq}</value>
+		</property>
+		<!-- 2016-02-29 -->
+		<property name="useAsyncSend" value="true" />
+	</bean>
+    
+    <bean id="connectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+		<!-- Session缓存数量 -->
+		<property name="sessionCacheSize">
+			<value>${MqSessionCacheSize}</value>
+		</property>
+		<property name="targetConnectionFactory" ref="activeMQConnectionFactory"/>
+	</bean>
+	
+	<!-- 任务的消息队列 -->
+    <bean id="taskDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg index="0" value="taskQueue" />
+	</bean>
+	
+	<!-- 发送消息的目的地（一个主题） -->  
+    <bean id="taskTopicDestination" class="org.apache.activemq.command.ActiveMQTopic">  
+        <!-- 设置消息主题的名字 -->  
+        <constructor-arg index="0" value="taskTopic" />  
+    </bean>  
+
+	<!-- 普通的消息队列模式 -->
+	<bean id="jmsQueueTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<!-- 设置连接工厂 -->
+		<property name="connectionFactory" ref="connectionFactory" />
+		 <!-- 非pub/sub模型（发布/订阅），即队列模式 -->
+        <property name="pubSubDomain" value="false" />
+	</bean>
+     
+	<!-- 增加消息发布订阅模式 -->
+	<bean id="jmsTopicTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<!-- 设置连接工厂 -->
+		<property name="connectionFactory" ref="connectionFactory" />
+		<!-- 非pub/sub模型（发布/订阅），即队列模式 -->
+        <property name="pubSubDomain" value="true" />
+        <property name="explicitQosEnabled" value="true"/>
+        <!-- 发送模式
+             DeliveryMode.NON_PERSISTENT=1:非持久 ;
+             DeliveryMode.PERSISTENT=2:持久
+        -->
+        <property name="deliveryMode" value="1"/>
+        <property name="defaultDestination" ref="taskTopicDestination" />
+	</bean>
+	
+</beans>

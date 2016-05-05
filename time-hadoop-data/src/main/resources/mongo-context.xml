@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/util
+     http://www.springframework.org/schema/util/spring-util.xsd
+     http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context.xsd
+     http://www.springframework.org/schema/data/mongo 
+     http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
+
+	<context:annotation-config />
+
+
+	<!-- 定义MongoDbFactory -->
+	<mongo:db-factory dbname="${mongo.database}" host="${mongo.host}" port="${mongo.port}" id="mongoDbFactory"/>  
+
+    <bean id="mongoMappingContext" class="org.springframework.data.mongodb.core.mapping.MongoMappingContext" />  
+    
+    <bean id="defaultTypeMapper" class="org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper">  
+        <constructor-arg name="typeKey"><null/></constructor-arg>  
+    </bean> 
+   	
+   	<!--  
+    <bean id="defaultTypeMapper" class="org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper">  
+        <constructor-arg name="typeKey"><null/></constructor-arg>  
+    </bean> 
+    --> 
+    <bean id="mongoConverter" class="org.springframework.data.mongodb.core.convert.MappingMongoConverter">  
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />  
+        <constructor-arg name="mappingContext" ref="mongoMappingContext" />  
+        <property name="typeMapper" ref="defaultTypeMapper"/>  
+    </bean>  
+       
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">       
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>  
+        <constructor-arg name="mongoConverter" ref="mongoConverter"/>         
+    </bean>  
+      
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>  
+
+</beans>
