@@ -1,10 +1,15 @@
 package com.vanke.common.cache.mongo;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
+
+import com.vanke.common.model.task.TaskLog;
 
 @Repository("mongoCommonUtils")
 public abstract class MongoCommonManager {
@@ -53,6 +58,17 @@ public abstract class MongoCommonManager {
 	
 	public void removeOneById(Integer id,String collection){
 		mongoTemplate.remove(new Query(Criteria.where("id").is(id)), Object.class, collection); 
+	}
+	
+	/**
+	 * 
+	 * @param dates: gte(great than and equal) and let( less than and equal)
+	 * @param collection
+	 * @return
+	 */
+	public List<TaskLog> getAllTaskLogBetweenDates(Map<String,Object> dates){
+		Criteria queryCritera = Criteria.where("created").gte(dates.get("gte")).lte(dates.get("lte"));
+		return mongoTemplate.find(new Query(queryCritera), TaskLog.class, "task_log");
 	}
 	
 
