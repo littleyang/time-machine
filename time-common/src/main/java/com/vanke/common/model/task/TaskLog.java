@@ -15,9 +15,11 @@ public class TaskLog {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	//为了使得mongo认得这个是Id而不是ObjectId
-	@Field("ObjectId")
-	private long id;
+	private int id;
 	
+	@Field("ObjectId")
+	private String objectId;
+
 	@Column(name="status") 
 	@Field("status") 
 	private int status;
@@ -50,11 +52,11 @@ public class TaskLog {
 	@Field("msg")
 	private String msg;
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -120,6 +122,15 @@ public class TaskLog {
 
 	public void setMsg(String msg) {
 		this.msg = msg;
+	}
+	
+	
+	public String getObjectId() {
+		return objectId;
+	}
+
+	public void setObjectId(String objectId) {
+		this.objectId = objectId;
 	}
 
 }
