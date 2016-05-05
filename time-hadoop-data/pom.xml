@@ -8,15 +8,10 @@
 		<artifactId>time-platform</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>time-web-admin</artifactId>
-	<name>time-web-admin</name>
-	<url>http://maven.apache.org</url>
-	
+	<artifactId>time-hadoop-data</artifactId>
 	<packaging>war</packaging>
-	
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
+	<name>time-hadoop-data Maven Webapp</name>
+	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>
 			<groupId>com.vanke.time.machine</groupId>

@@ -28,6 +28,8 @@
     	<!-- 
     	<module>time-spark</module>
     	 -->
+    <module>time-hadoop</module>
+    <module>time-hadoop-data</module>
   </modules>
   
   <dependencies>
