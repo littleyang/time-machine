@@ -1,5 +1,7 @@
 package com.vanke.common.cache.mongo;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -53,6 +55,11 @@ public abstract class MongoCommonManager {
 	
 	public void removeOneById(Integer id,String collection){
 		mongoTemplate.remove(new Query(Criteria.where("id").is(id)), Object.class, collection); 
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Object> getListValue(Class entity, String collection){
+		return mongoTemplate.find(new Query(Criteria.where("id").is("")), entity, collection);
 	}
 	
 
