@@ -21,10 +21,11 @@ public class TaskLog {
 	@Field("id")
 	private int id;
 	
+	@Column(name="ObjectId", length=32) 
 	@Field("ObjectId")
 	private int objectId;
 
-	@Column(name="status") 
+	@Column(name="status", length=8) 
 	@Field("status") 
 	private int status;
 	
@@ -40,29 +41,29 @@ public class TaskLog {
 	@Field("rate") 
 	private int rate;
 	
-	@Column(name="task_no")
+	@Column(name="task_no",length=64)
 	@Field("task_no")
 	private String taskNo;
 	
-	@Column(name="event")
+	@Column(name="event",length=128)
 	@Field("event")
 	private String event;
 	
-	@Column(name="score")
+	@Column(name="score",length=32)
 	@Field("score")
 	private String score;
 	
-	@Column(name="msg")
+	@Column(name="msg",length=512)
 	@Field("msg")
 	private String msg;
 
-//	public int getId() {
-//		return id;
-//	}
-//
-//	public void setId(int id) {
-//		this.id = id;
-//	}
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public int getStatus() {
 		return status;
