@@ -47,14 +47,14 @@
     <bean  class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="jobDetails">
             <list>
-            	<!-- -->
+            	<!-- 设置具体的调度任务 -->
                 <ref bean="loadMongoDataToMysqlJobDetail" />
                	<ref bean="loadTaskLogDataScheduleJob" /> 
             </list>
         </property>
         <property name="triggers">
             <list>
-            	<!-- -->
+            	<!-- 设置调度的执行trigger -->
                 <ref bean="loadMongoDataToMysqlJobDetailTrigger" />
                 <ref bean="loadTaskLogDataScheduleJobTrigger" />
             </list>
