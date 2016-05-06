@@ -11,6 +11,11 @@ import java.util.Map;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.MongoClient;
 import com.vanke.common.exceptions.BaseDaoException;
 import com.vanke.common.model.task.TaskLog;
 import com.vanke.common.task.dao.TaskLogDao;
@@ -54,7 +59,24 @@ public class TaskLogToHive extends BaseTestUnit{
 			System.out.println("log taskNo : " + taskLog.getTaskNo());
 			System.out.println("log msg : " + taskLog.getMsg());
 			taskLogDao.createTaskLog(taskLog);
-		}
+		}	
+		
+//		MongoClient mongoClient = new MongoClient("10.0.72.97");
+//		DB db = mongoClient.getDB( "falcon" );
+//		DBCollection coll = db.getCollection("task_log");
+//		
+//		BasicDBObject query = new BasicDBObject("created", new BasicDBObject("$gte", endDate));
+//		
+//		DBCursor cursor = coll.find(query);
+//		
+//		try {
+//			while (cursor.hasNext()) {
+//				System.out.println(cursor.next());
+//			}
+//		} finally {
+//			cursor.close();
+//		}
+//		
 		
 	}
 	
