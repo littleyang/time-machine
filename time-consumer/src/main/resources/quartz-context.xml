@@ -8,7 +8,7 @@
                         http://www.springframework.org/schema/context 
                         http://www.springframework.org/schema/context/spring-context-4.0.xsd">
  
-    <context:component-scan base-package="com.time.quartz" />
+    <context:component-scan base-package="com" />
  
     <!-- 每天凌晨一点从mongo里面load前一天的data到mysql数据库里面 -->
     <bean id="loadMongoDataToMysqlJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
