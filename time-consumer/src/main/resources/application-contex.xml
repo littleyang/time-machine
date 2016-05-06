@@ -58,5 +58,7 @@
 	<import resource="jms-queue-consumer-context.xml" />
 	
 	<import resource="jms-topic-consumer-context.xml" />
+	
+	<import resource="quartz-context.xml" />
 
 </beans>

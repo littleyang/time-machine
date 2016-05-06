@@ -1,5 +1,7 @@
 package com.vanke.common.task.dao;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -21,5 +23,8 @@ public interface TaskLogCrudDao extends CrudRepository<TaskLog,Integer>{
 	
 	@Query("delete from TaskLog where task_no = :task_no")
 	public void deletedTaskLogByTaskNo(@Param("task_no")int taskNo);
+	
+	@Query("from TaskLog where task_no = ?1")
+	public List<TaskLog> getTaskLogsByTaskNo(String taskNo);
 
 }

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+	xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    					http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                        http://www.springframework.org/schema/context 
+                        http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+ 
+    <context:component-scan base-package="com" />
+ 
+    <!-- 每天凌晨一点从mongo里面load前一天的data到mysql数据库里面 -->
+    <bean id="loadMongoDataToMysqlJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="loadTaskLogDataFromMongoToMysqlJob" />
+        <property name="targetMethod" value="loadDataFromMongoToMysql" />
+    </bean>
+ 	
+ 
+    <!-- 调度任务的另外一种实现方式 -->
+    <bean name="loadTaskLogDataScheduleJob"  class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.time.quartz.job.LoadTaskLogDataScheduledJob" />
+        <property name="jobDataMap">
+            <map>
+                <entry key="loadTaskLogDataFromMongoToMysqlJob" value-ref="loadTaskLogDataFromMongoToMysqlJob" />
+            </map>
+        </property>
+        <property name="durability" value="true" />
+    </bean>
+ 	
+    <!-- 定时任务的时间调度 -->
+    <bean id="loadMongoDataToMysqlJobDetailTrigger"  class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+        <property name="jobDetail" ref="loadMongoDataToMysqlJobDetail" />
+        <property name="startDelay" value="1000" />
+        <property name="repeatInterval" value="2000" />
+    </bean>
+ 	
+ 	
+    <!-- 基于crontab的时间调度 每天凌晨执行任务 -->
+    <bean id="loadTaskLogDataScheduleJobTrigger"  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="loadTaskLogDataScheduleJob" />
+        <property name="cronExpression" value="* * 1 * * ?" />
+    </bean>
+ 	
+ 
+    <!-- Scheduler factory bean to glue together jobDetails and triggers to Configure Quartz Scheduler -->
+    <bean  class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="jobDetails">
+            <list>
+            	<!-- -->
+                <ref bean="loadMongoDataToMysqlJobDetail" />
+               	<ref bean="loadTaskLogDataScheduleJob" /> 
+            </list>
+        </property>
+        <property name="triggers">
+            <list>
+            	<!-- -->
+                <ref bean="loadMongoDataToMysqlJobDetailTrigger" />
+                <ref bean="loadTaskLogDataScheduleJobTrigger" />
+            </list>
+        </property>
+    </bean>
+ 
+</beans>
