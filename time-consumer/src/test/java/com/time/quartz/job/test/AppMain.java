@@ -5,7 +5,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  
 public class AppMain {
     public static void main(String args[]){
-        AbstractApplicationContext context = new ClassPathXmlApplicationContext("quartz-context-test.xml");
+        AbstractApplicationContext context = new ClassPathXmlApplicationContext(
+        		"application-consumer-contex-test.xml");
     }
  
 }
