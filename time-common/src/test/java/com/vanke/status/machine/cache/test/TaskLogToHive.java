@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -21,6 +22,7 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.vanke.common.exceptions.BaseDaoException;
 import com.vanke.common.model.task.TaskLog;
+import com.vanke.common.model.task.TaskLogCommon;
 import com.vanke.common.task.dao.TaskLogDao;
 import com.vanke.status.machine.cache.TaskEventMongoCacheManager;
 import com.vanke.test.base.BaseTestUnit;
@@ -80,10 +82,14 @@ public class TaskLogToHive extends BaseTestUnit{
 		
 		try {
 			while (cursor.hasNext()) {
-				System.out.println(cursor.next());
-				Gson gson=new Gson();
-				TaskLog log = gson.fromJson(cursor.next().toString(), TaskLog.class);
-				System.out.println(log.getTaskNo());
+				DBObject myObj = cursor.next();
+				//System.out.println(myObj);
+				//Gson gson=new Gson();
+				Gson gson = new GsonBuilder().setPrettyPrinting().create();
+				String json = gson.toJson(myObj);
+				System.out.println(json);
+				//TaskLog log = gson.fromJson(cursor.next().toString(), TaskLog.class);
+				
 			}
 		} finally {
 			cursor.close();
