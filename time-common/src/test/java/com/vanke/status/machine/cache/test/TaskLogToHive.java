@@ -86,6 +86,7 @@ public class TaskLogToHive extends BaseTestUnit{
 		DBCollection coll = db.getCollection("task_log");
 		
 		DBCursor cursor = coll.find();
+		 cursor.addOption(com.mongodb.Bytes.QUERYOPTION_NOTIMEOUT);
 		
 		try {
 			while (cursor.hasNext()) {
@@ -110,6 +111,7 @@ public class TaskLogToHive extends BaseTestUnit{
 					// set object id
 					log.setObjectId(object.getInt("objectId"));
 				}
+				
 				
 				if(object.has("status")){
 					// set status
