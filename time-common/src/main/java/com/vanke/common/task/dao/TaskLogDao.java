@@ -73,8 +73,7 @@ public class TaskLogDao extends JdbcBaseDao{
 	 * @throws BaseDaoException
 	 */
 	public TaskLog createTaskLog(TaskLog taskLog) throws BaseDaoException{
-		//if(null==taskLog||"".equals(taskLog.getTaskNo())){
-		if(null==taskLog||taskLog.getTaskNo().equals("")){
+		if(null==taskLog||"".equals(taskLog.getTaskNo())){
 			throw new BaseDaoException(CommonCodeConst.QUERY_PARAMS_ERROR_CODE,"创建任务参数错误，缺少参数值");
 		}
 		return taskLogCrudDao.save(taskLog);

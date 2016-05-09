@@ -58,6 +58,8 @@
 	<import resource="jms-consumer-context-test.xml" />
 	
 	<import resource="data-entity-context-test.xml" />
+	
+	<import resource="quartz-context-test.xml" />
 
 
 </beans>

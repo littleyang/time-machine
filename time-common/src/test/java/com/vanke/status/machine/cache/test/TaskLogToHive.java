@@ -1,9 +1,6 @@
 package com.vanke.status.machine.cache.test;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -11,15 +8,11 @@ import java.util.Map;
 
 import net.sf.json.JSONObject;
 
-import org.apache.poi.ss.usermodel.DateUtil;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
@@ -28,7 +21,6 @@ import com.mongodb.MongoClient;
 import com.time.util.TimeDateUtil;
 import com.vanke.common.exceptions.BaseDaoException;
 import com.vanke.common.model.task.TaskLog;
-import com.vanke.common.model.task.TaskLogCommon;
 import com.vanke.common.task.dao.TaskLogDao;
 import com.vanke.status.machine.cache.TaskEventMongoCacheManager;
 import com.vanke.test.base.BaseTestUnit;
@@ -43,31 +35,25 @@ public class TaskLogToHive extends BaseTestUnit{
 
 	
 	@Test
-	public void testGetTaskEventsByIdFromMongo() throws ParseException, BaseDaoException{
-		
-//		// 默认查询
-//		Calendar calendarBegin = Calendar.getInstance();
-//		calendarBegin.add(Calendar.DATE, 0);
-//		    	
-//		Calendar calendarEnd = Calendar.getInstance();
-//		calendarEnd.add(Calendar.DATE, 0);
-//		
+	public void testGetYesterDayTaskLogsFromMongo() throws ParseException, BaseDaoException{
+				
 		Map<String,Object> dates = new HashMap<String,Object>();
 		
-//		String beginDateString = "2016-05-05 00:00:00";
-//		String endDateString  = "2016-05-05 23:59:59";
-//		
-//		Date beginDate = df.parse(beginDateString);
-//		
-//		Date endDate = df.parse(endDateString);
-//		
-//		dates.put("gte", beginDate);
-//		dates.put("lte", endDate);
-//		
-//		List<TaskLog> logs = taskEventMongoCacheManager.getAllTaskLogBetweenDates(dates);
-//		
-//		System.out.println(logs.size());
-//		
+		Date today = new Date();
+		
+		// yesterday 00:00:00
+		Date beginDate = TimeDateUtil.getSpecifiedDayZeroHourBefore(today);
+		
+		// today 00:00:00
+		Date endDate = TimeDateUtil.getSpecifiedDay24HourBefore(today);
+		
+		dates.put("gte", beginDate);
+		dates.put("lte", endDate);
+		
+		List<TaskLog> logs = taskEventMongoCacheManager.getAllTaskLogBetweenDates(dates);
+		
+		System.out.println(logs.size());
+		
 //		for(int i=0;i<logs.size();i++){
 //			TaskLog taskLog = logs.get(i);
 //			System.out.println("log id : " + taskLog.getObjectId());
@@ -76,6 +62,24 @@ public class TaskLogToHive extends BaseTestUnit{
 //			System.out.println("log msg : " + taskLog.getMsg());
 //			taskLogDao.createTaskLog(taskLog);
 //		}	
+	}
+	
+	
+	@Test
+	public void testGetBeforeDate() throws ParseException{
+		Date today = new Date();
+		
+		Date yesterdayZero = TimeDateUtil.getSpecifiedDayZeroHourBefore(today);
+		
+		Date yesterday24 = TimeDateUtil.getSpecifiedDay24HourBefore(today);
+		
+		System.out.println(yesterdayZero);
+		
+		System.out.println(yesterday24);
+	}
+	
+	@Test
+	public void testTaskLogFromMongoToHiveOneTime() throws ParseException, BaseDaoException{
 		
 		MongoClient mongoClient = new MongoClient("10.0.72.97");
 		DB db = mongoClient.getDB( "falcon" );
@@ -86,21 +90,21 @@ public class TaskLogToHive extends BaseTestUnit{
 		try {
 			while (cursor.hasNext()) {
 				
+				TaskLog log = new TaskLog();
+				
 				DBObject myObj = cursor.next();
 				
-				System.out.println(myObj);
-				
-				//Gson gson = new Gson();
-				
+				//System.out.println(myObj);
+								
 				Gson gson = new GsonBuilder().setPrettyPrinting().create();
 				
 				String json = gson.toJson(myObj);
 				//System.out.println(json);
 			
 				JSONObject object = JSONObject.fromObject(json);
-				System.out.println(object.toString());
+				//System.out.println(object.toString());
 				
-				TaskLog log = new TaskLog();
+				//System.out.println(object.getString("task_no"));
 				
 				if(object.has("objectId")){
 					// set object id
@@ -159,7 +163,6 @@ public class TaskLogToHive extends BaseTestUnit{
 					//设置task no
 					log.setMsg(object.getString("msg"));
 				}
-		
 				// 写入到数据库
 				taskLogDao.createTaskLog(log);
 			}
