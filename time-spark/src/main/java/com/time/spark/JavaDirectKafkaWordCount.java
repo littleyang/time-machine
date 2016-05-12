@@ -41,8 +41,18 @@ public class JavaDirectKafkaWordCount{
 		      }
 		    });
 		 
-		lines.print();
+		//lines.print();
 		
+		JavaDStream<String> postString = lines.filter(new Function<String,Boolean>(){
+			private static final long serialVersionUID = 1L;
+			public Boolean call(String x) throws Exception {
+				// 查看首页的功能的
+				if(x.contains("/api/zhuzher/users/me/index"))
+					return true;
+				return false;
+			}
+		}); 
+		postString.print();
 		
 		/**
 		 * 分离出每一行的内容
