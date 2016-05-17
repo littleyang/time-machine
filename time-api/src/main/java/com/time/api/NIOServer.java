@@ -28,8 +28,7 @@ public class NIOServer implements Runnable {
 	private void initchannel() {
 		try {
 			// 初始化SOCKET通道
-			ServerSocketChannel serverSocketChannel = ServerSocketChannel
-					.open();
+			ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
 			serverSocketChannel.configureBlocking(false);
 			ServerSocket serverSocket = serverSocketChannel.socket();
 			serverSocket.bind(new InetSocketAddress(port));
@@ -37,8 +36,7 @@ public class NIOServer implements Runnable {
 			serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
 			System.out.println("Init NIOServer listening port:" + port);
 		} catch (Exception e) {
-			System.out
-					.println("Init NIOServer failed! error:" + e.getMessage());
+			System.out.println("Init NIOServer failed! error:" + e.getMessage());
 		}
 
 	}
