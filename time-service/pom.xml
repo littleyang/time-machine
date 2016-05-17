@@ -11,9 +11,9 @@
 	<artifactId>time-service</artifactId>
 	<name>time-service</name>
 	<url>http://maven.apache.org</url>
-	
+
 	<packaging>war</packaging>
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -23,8 +23,12 @@
 			<artifactId>time-common</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+			<version>1.0.0.M2</version>
+		</dependency>
 	</dependencies>
-	
 	<build>
 		<finalName>time-service</finalName>
 		<sourceDirectory>src/main/java</sourceDirectory>
@@ -75,5 +79,5 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 </project>
