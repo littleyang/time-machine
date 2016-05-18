@@ -47,7 +47,21 @@
 	    <constructor-arg ref="kafkaProducerFactory"/>
 	</bean>
 	
-	<bean id="topicTestConsumer" class="com.time.common.kafka.consumer.TopicTestConsumer"/>
-
+	<bean id="kafkaListenerContainerFactory" class="org.springframework.kafka.config.SimpleKafkaListenerContainerFactory">
+		<property name="consumerFactory" ref="kafkaConsumerFactory"/>
+		<property name="concurrency" value="3"/>
+		<property name="autoStartup" value="true"/>
+	</bean>
 	
+	<!-- 消息订阅客户端2 -->
+    <bean id="testTopicKafkaListener" class="org.springframework.kafka.listener.KafkaMessageListenerContainer">
+    	<constructor-arg name="consumerFactory" ref="kafkaConsumerFactory"/>
+    	<constructor-arg name="topics" value="nginx" />
+    	<!-- 
+       	<property name="consumerFactory" ref="kafkaConsumerFactory"/>
+        <property name="topics" value="nginx" />
+         -->
+        <property name="messageListener" ref="testTopicListener" />
+    </bean>
+
 </beans>
