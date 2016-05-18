@@ -26,7 +26,7 @@
         http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd"
 		default-autowire="byName">
 	
-	<!--  
+	<!--  -->
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
@@ -41,7 +41,7 @@
 			</list>
 		</property>
 	</bean>
-	-->
+	
 	
 	<!-- Scan for spring beans in this package and all sub-packages -->
 

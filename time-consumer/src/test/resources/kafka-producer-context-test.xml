@@ -18,8 +18,8 @@
 	 <bean id="kafkaProducerFactory" class="org.springframework.kafka.core.DefaultKafkaProducerFactory">
 	 	<constructor-arg>
 	        <map>
-	        	<entry key="bootstrap.servers" value="10.0.58.21:9092" />
-	        	<entry key="group.id" value="test" />
+	        	<entry key="bootstrap.servers" value="${kafka.bootstrap.servers}" />
+	        	<entry key="group.id" value="${kafka.group.id}" />
 	        	<entry key="enable.auto.commit" value="true" />
 	        	<entry key="auto.commit.interval.ms" value="1000" />
 	        	<entry key="session.timeout.ms" value="30000" />

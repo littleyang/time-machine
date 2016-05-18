@@ -37,7 +37,7 @@
 				<value>classpath:config/unitils.properties</value>
 				<value>classpath:config/context-mongo-test.properties</value>
 				<value>classpath:config/queue-test.properties</value>
-				<value>classpath:config/kafa-context-test.properties</value>
+				<value>classpath:config/context-kafka-test.properties</value>
 			</list>
 		</property>
 	</bean>
