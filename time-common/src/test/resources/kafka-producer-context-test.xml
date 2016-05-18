@@ -28,40 +28,9 @@
 	       	</map>
 	    </constructor-arg>
 	 </bean>
-	 
-	 <bean id="kafkaConsumerFactory" class="org.springframework.kafka.core.DefaultKafkaConsumerFactory">
-	 	<constructor-arg>
-	        <map>
-	        	<entry key="bootstrap.servers" value="10.0.58.21:9092" />
-	        	<entry key="group.id" value="test" />
-	        	<entry key="enable.auto.commit" value="true" />
-	        	<entry key="auto.commit.interval.ms" value="1000" />
-	        	<entry key="session.timeout.ms" value="30000" />
-	        	<entry key="key.deserializer" value="org.apache.kafka.common.serialization.StringDeserializer" />
-	        	<entry key="value.deserializer" value="org.apache.kafka.common.serialization.StringDeserializer" />
-	       	</map>
-	    </constructor-arg>
-	 </bean>
 	
 	<bean id="kafkaProducerTemplate" class="org.springframework.kafka.core.KafkaTemplate">
 	    <constructor-arg ref="kafkaProducerFactory"/>
 	</bean>
-	
-	<bean id="kafkaListenerContainerFactory" class="org.springframework.kafka.config.SimpleKafkaListenerContainerFactory">
-		<property name="consumerFactory" ref="kafkaConsumerFactory"/>
-		<property name="concurrency" value="3"/>
-		<property name="autoStartup" value="true"/>
-	</bean>
-	
-	<!-- 消息订阅客户端2 -->
-    <bean id="testTopicKafkaListener" class="org.springframework.kafka.listener.KafkaMessageListenerContainer">
-    	<constructor-arg name="consumerFactory" ref="kafkaConsumerFactory"/>
-    	<constructor-arg name="topics" value="nginx" />
-    	<!-- 
-       	<property name="consumerFactory" ref="kafkaConsumerFactory"/>
-        <property name="topics" value="nginx" />
-         -->
-        <property name="messageListener" ref="testTopicListener" />
-    </bean>
-
+	 
 </beans>

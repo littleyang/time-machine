@@ -58,7 +58,9 @@
 	
 	<import resource="data-entity-context.xml" />
 	
-	<import resource="kafka-context.xml" />
+	<import resource="kafka-consumer-context.xml" />
+	
+	<import resource="kafka-producer-context.xml" />
 	
 
 
