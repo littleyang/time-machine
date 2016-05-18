@@ -15,7 +15,7 @@
 	
 	<context:annotation-config/>
 	
-	 <bean id="kafkaConsumerFactory" class="org.springframework.kafka.core.DefaultKafkaConsumerFactory">
+	 <bean id="kafkaProducerFactory" class="org.springframework.kafka.core.DefaultKafkaProducerFactory">
 	 	<constructor-arg>
 	        <map>
 	        	<entry key="bootstrap.servers" value="10.0.58.21:9092" />
@@ -28,22 +28,9 @@
 	       	</map>
 	    </constructor-arg>
 	 </bean>
-	 	
-	<bean id="kafkaListenerContainerFactory" class="org.springframework.kafka.config.SimpleKafkaListenerContainerFactory">
-		<property name="consumerFactory" ref="kafkaConsumerFactory"/>
-		<property name="concurrency" value="3"/>
-		<property name="autoStartup" value="true"/>
-	</bean>
 	
-	<!-- 消息订阅客户端2 -->
-    <bean id="testTopicKafkaConsumerListener" class="org.springframework.kafka.listener.KafkaMessageListenerContainer">
-    	<constructor-arg name="consumerFactory" ref="kafkaConsumerFactory"/>
-    	<constructor-arg name="topics" value="nginx" />
-    	<!-- 
-       	<property name="consumerFactory" ref="kafkaConsumerFactory"/>
-        <property name="topics" value="nginx" />
-         -->
-        <property name="messageListener" ref="testTopicConsumerListener" />
-    </bean>
-
+	<bean id="kafkaProducerTemplate" class="org.springframework.kafka.core.KafkaTemplate">
+	    <constructor-arg ref="kafkaProducerFactory"/>
+	</bean>
+	 
 </beans>

@@ -60,6 +60,10 @@
 	<import resource="data-entity-context-test.xml" />
 	
 	<import resource="quartz-context-test.xml" />
+	
+	<import resource="kafka-consumer-context-test.xml" />
+	
+	<import resource="kafka-producer-context-test.xml" />
 
 
 </beans>
