@@ -15,16 +15,22 @@
 	
 	<context:annotation-config/>
 	
-	<bean id="kafkaFactory" class="org.springframework.kafka.core.DefaultKafkaProducerFactory">
+	 <bean id="kafkaProducerFactory" class="org.springframework.kafka.core.DefaultKafkaProducerFactory">
 	 	<constructor-arg>
 	        <map>
-	        	<entry key="bootstrap.servers" value="localhost:9092" />
+	        	<entry key="bootstrap.servers" value="${kafka.bootstrap.servers}" />
+	        	<entry key="group.id" value="${kafka.group.id}" />
+	        	<entry key="enable.auto.commit" value="true" />
+	        	<entry key="auto.commit.interval.ms" value="1000" />
+	        	<entry key="session.timeout.ms" value="30000" />
+	        	<entry key="key.deserializer" value="org.apache.kafka.common.serialization.StringDeserializer" />
+	        	<entry key="value.deserializer" value="org.apache.kafka.common.serialization.StringDeserializer" />
 	       	</map>
 	    </constructor-arg>
-	</bean>
+	 </bean>
 	
-	<bean id="kafkaTemplate" class="org.springframework.kafka.core.KafkaTemplate">
-	    <constructor-arg ref="kafkaFactory"/>
+	<bean id="kafkaProducerTemplate" class="org.springframework.kafka.core.KafkaTemplate">
+	    <constructor-arg ref="kafkaProducerFactory"/>
 	</bean>
-
+	 
 </beans>

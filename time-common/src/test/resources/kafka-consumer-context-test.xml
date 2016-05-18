@@ -36,14 +36,14 @@
 	</bean>
 	
 	<!-- 消息订阅客户端2 -->
-    <bean id="testTopicKafkaConsumerListener" class="org.springframework.kafka.listener.KafkaMessageListenerContainer">
+    <bean id="testTopicKafkaListener" class="org.springframework.kafka.listener.KafkaMessageListenerContainer">
     	<constructor-arg name="consumerFactory" ref="kafkaConsumerFactory"/>
     	<constructor-arg name="topics" value="nginx" />
     	<!-- 
        	<property name="consumerFactory" ref="kafkaConsumerFactory"/>
         <property name="topics" value="nginx" />
          -->
-        <property name="messageListener" ref="testTopicConsumerListener" />
+        <property name="messageListener" ref="testTopicListener" />
     </bean>
 
 </beans>

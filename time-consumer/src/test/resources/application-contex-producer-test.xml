@@ -37,6 +37,7 @@
 				<value>classpath:config/unitils.properties</value>
 				<value>classpath:config/context-mongo-test.properties</value>
 				<value>classpath:config/queue-test.properties</value>
+				<value>classpath:config/context-kafka-test.properties</value>
 			</list>
 		</property>
 	</bean>
@@ -58,5 +59,8 @@
 	 -->
 	<import resource="data-entity-context-test.xml" />
 
+	<import resource="kafka-consumer-context-test.xml" />
+	
+	<import resource="kafka-producer-context-test.xml" />
 
 </beans>
