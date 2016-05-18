@@ -19,6 +19,7 @@
 			<artifactId>time-common</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<!-- 
 		<dependency>
 			<groupId>org.apache.kafka</groupId>
 			<artifactId>kafka-clients</artifactId>
@@ -29,6 +30,7 @@
 			<artifactId>spring-kafka</artifactId>
 			<version>1.0.0.M2</version>
 		</dependency>
+		-->
 		<!-- test -->
 		<dependency>
 			<groupId>org.springframework</groupId>

@@ -19,6 +19,12 @@
 	 	<constructor-arg>
 	        <map>
 	        	<entry key="bootstrap.servers" value="10.0.58.21:9092" />
+	        	<entry key="group.id" value="test" />
+	        	<entry key="enable.auto.commit" value="true" />
+	        	<entry key="auto.commit.interval.ms" value="1000" />
+	        	<entry key="session.timeout.ms" value="30000" />
+	        	<entry key="key.deserializer" value="org.apache.kafka.common.serialization.StringDeserializer" />
+	        	<entry key="value.deserializer" value="org.apache.kafka.common.serialization.StringDeserializer" />
 	       	</map>
 	    </constructor-arg>
 	 </bean>
@@ -27,6 +33,12 @@
 	 	<constructor-arg>
 	        <map>
 	        	<entry key="bootstrap.servers" value="10.0.58.21:9092" />
+	        	<entry key="group.id" value="test" />
+	        	<entry key="enable.auto.commit" value="true" />
+	        	<entry key="auto.commit.interval.ms" value="1000" />
+	        	<entry key="session.timeout.ms" value="30000" />
+	        	<entry key="key.deserializer" value="org.apache.kafka.common.serialization.StringDeserializer" />
+	        	<entry key="value.deserializer" value="org.apache.kafka.common.serialization.StringDeserializer" />
 	       	</map>
 	    </constructor-arg>
 	 </bean>
@@ -35,10 +47,7 @@
 	    <constructor-arg ref="kafkaProducerFactory"/>
 	</bean>
 	
-	<bean id="kafkaConsumerListener" class="org.springframework.kafka.listener.ConcurrentMessageListenerContainer">
-		<constructor-arg name="consumerFactory" ref="kafkaConsumerFactory"/>
-		<constructor-arg name="topics" value="test"/>
-		<property name="concurrency" value="3"/>
-	</bean>
+	<bean id="topicTestConsumer" class="com.time.common.kafka.consumer.TopicTestConsumer"/>
 
+	
 </beans>
