@@ -37,6 +37,7 @@
 				<value>classpath:config/log4j.properties</value>
 				<value>classpath:config/context-mongo.properties</value>
 				<value>classpath:config/queue.properties</value>
+				<value>classpath:config/context-kafka.properties</value>
 			</list>
 		</property>
 	</bean>
@@ -56,6 +57,8 @@
 	<import resource="jms-producer-context.xml" />
 	
 	<import resource="data-entity-context.xml" />
+	
+	<import resource="kafka-context.xml" />
 	
 
 

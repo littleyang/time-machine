@@ -20,6 +20,11 @@
 			<artifactId>time-common</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>0.9.0.1</version>
+        </dependency>
 	</dependencies>
 	<build>
 		<finalName>time-api</finalName>
