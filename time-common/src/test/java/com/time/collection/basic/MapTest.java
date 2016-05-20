@@ -138,6 +138,10 @@ public class MapTest {
 			System.out.println(entity.getKey().toString() +" value: "+ entity.getValue());
 		}
 		
+		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%");
+		
+		linkedMaps.forEach((k,v)->System.out.println("Key: " + k + ": Value: " + v));
+		
 	}
 }
 
