@@ -1,6 +1,7 @@
 package com.time.collection.basic;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
@@ -72,6 +73,70 @@ public class MapTest {
 	
 	@Test
 	public void testLinkedHashMapBasic(){
+		// linkedhashmap is subclass of hashmap
+		// use linkedlist 存储元素，唯一的就是需要保持insert插入的顺序
+		
+		LinkedHashMap<Dog,Integer> linkedMaps = new LinkedHashMap<Dog,Integer>();
+		
+		HashMap<Dog,Integer> dogMaps = new HashMap<Dog,Integer>();
+		
+		Dog d1 = new Dog("d1");
+		Dog d2 = new Dog("d22");
+		Dog d3 = new Dog("d333");
+		Dog d4 = new Dog("d4444");
+		Dog d5 = new Dog("d55555");
+		Dog d6 = new Dog("d55555");
+		
+		// hash map
+		dogMaps.put(d1, 1);
+		dogMaps.put(d2, 2);
+		dogMaps.put(d3, 3);
+		dogMaps.put(d5, 5);
+		dogMaps.put(d4, 4);
+		
+		// linked hash map
+		linkedMaps.put(d1, 1);
+		linkedMaps.put(d2, 2);
+		linkedMaps.put(d3, 3);
+		linkedMaps.put(d5, 5);
+		linkedMaps.put(d4, 4);
+		
+		Assert.assertEquals("hash map size should be equal 5", 5, dogMaps.size());
+		
+		Assert.assertEquals("linke hash map size should be equal 5", 5, linkedMaps.size());
+		
+		// hash map
+		for(Entry<Dog,Integer> entity : dogMaps.entrySet()){
+			System.out.println(entity.getKey().toString() +" value: "+ entity.getValue());
+		}
+		
+		System.out.println("------------------");
+		// linked hash map
+		for(Entry<Dog,Integer> entity : linkedMaps.entrySet()){
+			System.out.println(entity.getKey().toString() +" value: "+ entity.getValue());
+		}
+		
+		System.out.println("===================");
+		
+		System.out.println("===================");
+		
+		// linked hash map 以及 hashMap 都是不允许重复key值的元素的，如果有重复的元素，会自动覆盖掉以及存在元素的值
+		// linked hash map 在insert方法上需要保持key的有序
+		
+		dogMaps.put(d6, 6);
+		
+		linkedMaps.put(d6, 6);
+		
+		for(Entry<Dog,Integer> entity : dogMaps.entrySet()){
+			System.out.println(entity.getKey().toString() +" value: "+ entity.getValue());
+		}
+		
+		System.out.println("------------------");
+		
+		// 最后一个输出d5的值应该是6
+		for(Entry<Dog,Integer> entity : linkedMaps.entrySet()){
+			System.out.println(entity.getKey().toString() +" value: "+ entity.getValue());
+		}
 		
 	}
 }
@@ -97,11 +162,28 @@ class Cat implements Comparable<Cat>{
 class Dog{
 	String name;
 	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public Dog(String name){
 		this.name = name;
 	}
 	
 	public String toString(){
 		return name + "_dog";
+	}
+	
+	// 重写equals以及hashcode方法
+	public boolean equals(Object o){
+		return this.name.equals(((Dog) o).getName());
+	}
+	
+	public int hashCode(){
+		return name.length();
 	}
 }
