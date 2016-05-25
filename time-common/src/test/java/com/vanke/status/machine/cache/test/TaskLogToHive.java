@@ -39,13 +39,20 @@ public class TaskLogToHive extends BaseTestUnit{
 				
 		Map<String,Object> dates = new HashMap<String,Object>();
 		
+		String beginDateString = "2016-05-19 00:00:00";
+		
+		String endDateString = "2016-05-21 00:00:00";
+		
 		Date today = new Date();
 		
 		// yesterday 00:00:00
-		Date beginDate = TimeDateUtil.getSpecifiedDayZeroHourBefore(today);
+		//Date beginDate = TimeDateUtil.getSpecifiedDayZeroHourBefore(today);
+		Date beginDate = TimeDateUtil.parse(beginDateString);
 		
 		// today 00:00:00
-		Date endDate = TimeDateUtil.getSpecifiedDay24HourBefore(today);
+		//Date endDate = TimeDateUtil.getSpecifiedDay24HourBefore(today);
+		
+		Date endDate = TimeDateUtil.parse(endDateString);
 		
 		dates.put("gte", beginDate);
 		dates.put("lte", endDate);
@@ -54,14 +61,15 @@ public class TaskLogToHive extends BaseTestUnit{
 		
 		System.out.println(logs.size());
 		
-//		for(int i=0;i<logs.size();i++){
-//			TaskLog taskLog = logs.get(i);
-//			System.out.println("log id : " + taskLog.getObjectId());
-//			System.out.println("log status : " + taskLog.getStatus());
-//			System.out.println("log taskNo : " + taskLog.getTaskNo());
-//			System.out.println("log msg : " + taskLog.getMsg());
-//			taskLogDao.createTaskLog(taskLog);
-//		}	
+		for(int i=0;i<logs.size();i++){
+			TaskLog taskLog = logs.get(i);
+			System.out.println("log id : " + taskLog.getObjectId());
+			System.out.println("log status : " + taskLog.getStatus());
+			System.out.println("log taskNo : " + taskLog.getTaskNo());
+			System.out.println("log msg : " + taskLog.getMsg());
+			System.out.println("log score : " + taskLog.getScore());
+			taskLogDao.createTaskLog(taskLog);
+		}	
 	}
 	
 	
