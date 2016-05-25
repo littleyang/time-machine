@@ -12,7 +12,7 @@ import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-public class DaliyStaffCheckIn {
+public class DaliyTotalRequest {
 
 	// 首先实现是mapper类
 	static class ChechInMapper extends Mapper<Object, Text, Text, IntWritable> {
@@ -24,25 +24,22 @@ public class DaliyStaffCheckIn {
 				throws IOException, InterruptedException {
 			// 如果包含API调用，则纪录签到一次
 			Text word = new Text();
-			
-			if (value.toString().contains("POST /api/lebang/staffs/me/work")) {
-				word.set("Begin Job: POST /api/lebang/staffs/me/work");
-				context.write(word, one);
-				System.out.println("======" + "After Mapper:" + word + ", " + one);
-	            //System.out.println("======" + "After Mapper:" + new Text(value.toString()) + ", " + one);
-			}
-			if (value.toString().contains("PATCH /api/lebang/staffs/me/work")) {
-				word.set("Add Job Postion: PATCH /api/lebang/staffs/me/work");
-				context.write(word, one);
-				System.out.println("======" + "After Mapper:" + word + ", " + one);
-	            //System.out.println("======" + "After Mapper:" + new Text(value.toString()) + ", " + one);
-			}
-			if (value.toString().contains("PUT /api/lebang/staffs/me/work")) {
-				word.set("Finish Job: PUT /api/lebang/staffs/me/work");
-				context.write(word, one);
-				System.out.println("======" + "After Mapper:" + word + ", " + one);
-	            //System.out.println("======" + "After Mapper:" + new Text(value.toString()) + ", " + one);
-			}
+			word.set("request");
+			context.write(word, one);
+//			System.out.println("======" + "After Mapper:" + word + ", " + one);
+//			
+//			if (value.toString().contains("PATCH /api/lebang/staffs/me/work")) {
+//				word.set("Add Job Postion: PATCH /api/lebang/staffs/me/work");
+//				context.write(word, one);
+//				System.out.println("======" + "After Mapper:" + word + ", " + one);
+//	            //System.out.println("======" + "After Mapper:" + new Text(value.toString()) + ", " + one);
+//			}
+//			if (value.toString().contains("PUT /api/lebang/staffs/me/work")) {
+//				word.set("Finish Job: PUT /api/lebang/staffs/me/work");
+//				context.write(word, one);
+//				System.out.println("======" + "After Mapper:" + word + ", " + one);
+//	            //System.out.println("======" + "After Mapper:" + new Text(value.toString()) + ", " + one);
+//			}
 			
 		}
 
@@ -65,10 +62,10 @@ public class DaliyStaffCheckIn {
 	
 	public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException{
 		 //输入路径
-        String dst = "hdfs://10.0.58.21:9000/nginx/2016/05/23/*.log";
+        String dst = "hdfs://10.0.58.21:9000/nginx/2016/05/24/*.log";
 
         //输出路径，必须是不存在的，空文件加也不行。
-        String dstOut = "hdfs://10.0.58.21:9000/output3";
+        String dstOut = "hdfs://10.0.58.21:9000/outputreq24";
 
         Configuration hadoopConfig = new Configuration();
         //hadoopConfig.
