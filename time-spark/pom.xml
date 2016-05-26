@@ -72,4 +72,7 @@
 			<version>1.6.1</version>
 		</dependency>
 	</dependencies>
+	<build>
+		<finalName>time-service</finalName>
+	</build>
 </project>
