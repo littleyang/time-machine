@@ -29,8 +29,21 @@ public class StaffCheckInStatic {
 				return false;
 			}
 		});
-		
 		System.out.println("员工check in数据" + staffCheckIns.count());
+		
+		// 员工开始工作数据
+		JavaRDD<String> staffBeginWorkRdd = staffCheckIns.filter(new Function<String,Boolean>(){
+			private static final long serialVersionUID = 1L;
+			public Boolean call(String x) throws Exception {
+				// 查看首页的功能的
+				if(x.contains("POST /api/lebang/staffs/me/work"))
+					return true;
+				return false;
+			}
+		});
+		System.out.println("员工开始工作数据" + staffBeginWorkRdd.count());
+		
+		
 		
 	}
 }
