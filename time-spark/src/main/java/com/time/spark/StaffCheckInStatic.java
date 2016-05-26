@@ -29,8 +29,43 @@ public class StaffCheckInStatic {
 				return false;
 			}
 		});
-		
 		System.out.println("员工check in数据" + staffCheckIns.count());
+		
+		// 员工开始工作数据
+		JavaRDD<String> staffBeginWorkRdd = staffCheckIns.filter(new Function<String,Boolean>(){
+			private static final long serialVersionUID = 1L;
+			public Boolean call(String x) throws Exception {
+				// 查看首页的功能的
+				if(x.contains("POST /api/lebang/staffs/me/work"))
+					return true;
+				return false;
+			}
+		});
+		System.out.println("员工开始工作数据" + staffBeginWorkRdd.count());
+		
+		// 员工结束工作数据
+		JavaRDD<String> staffEndWorkRdd = staffCheckIns.filter(new Function<String,Boolean>(){
+			private static final long serialVersionUID = 1L;
+			public Boolean call(String x) throws Exception {
+				// 查看首页的功能的
+				if(x.contains("PUT /api/lebang/staffs/me/work"))
+					return true;
+				return false;
+			}
+		});
+		System.out.println("员工结束工作数据" + staffEndWorkRdd.count());
+		
+		// 员工上报位置数据
+		JavaRDD<String> staffPositionRdd = staffCheckIns.filter(new Function<String,Boolean>(){
+			private static final long serialVersionUID = 1L;
+			public Boolean call(String x) throws Exception {
+			// 查看首页的功能的
+				if(x.contains("PATCH /api/lebang/staffs/me/work"))
+					return true;
+				return false;
+			}
+		});
+		System.out.println("员工上报位置数据" + staffPositionRdd.count());
 		
 	}
 }
