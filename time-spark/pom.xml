@@ -73,6 +73,6 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>time-service</finalName>
+		<finalName>time-spark</finalName>
 	</build>
 </project>
