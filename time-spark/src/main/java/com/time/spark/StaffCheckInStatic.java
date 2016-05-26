@@ -48,7 +48,7 @@ public class StaffCheckInStatic {
 			private static final long serialVersionUID = 1L;
 			public Boolean call(String x) throws Exception {
 				// 查看首页的功能的
-				if(x.contains("POST /api/lebang/staffs/me/work"))
+				if(x.contains("PUT /api/lebang/staffs/me/work"))
 					return true;
 				return false;
 			}
@@ -60,7 +60,7 @@ public class StaffCheckInStatic {
 			private static final long serialVersionUID = 1L;
 			public Boolean call(String x) throws Exception {
 			// 查看首页的功能的
-				if(x.contains("POST /api/lebang/staffs/me/work"))
+				if(x.contains("PATCH /api/lebang/staffs/me/work"))
 					return true;
 				return false;
 			}
