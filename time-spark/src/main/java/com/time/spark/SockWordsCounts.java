@@ -30,7 +30,6 @@ public class SockWordsCounts {
 				// TODO Auto-generated method stub
 				return Arrays.asList(arg0.split(" "));
 			}
-			
 		});
 		
 		// map to key - value pairs
