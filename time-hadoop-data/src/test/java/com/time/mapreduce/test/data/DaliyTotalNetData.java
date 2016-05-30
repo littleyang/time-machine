@@ -25,6 +25,7 @@ public class DaliyTotalNetData {
 			word.set("requestData");
 			// 如果包含API调用，则纪录签到一次
 			context.write(word, data);
+			System.out.println("======" + "After Mapper:" + word + ", " + data);
 		}
 
 	}
@@ -36,8 +37,10 @@ public class DaliyTotalNetData {
 		public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
 			int sum = 0;
 			for (IntWritable val : values) {
-				sum += val.get();
+				sum = sum + Integer.parseInt(val.toString());
+				System.out.println("data 3333 " + val);
 			}
+			System.out.println("data sum " + sum);
 			result.set(sum);
 			context.write(key, result);
 			System.out.println("======" + "After reduce :" + new Text(key.toString()) + ", " + sum);
@@ -46,10 +49,10 @@ public class DaliyTotalNetData {
 	
 	public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException{
 		 //输入路径
-        String dst = "hdfs://10.0.58.21:9000/nginx/2016/05/29/*.log";
+        String dst = "hdfs://10.0.58.21:9000/nginx/2016/05/26/*.log";
 
         //输出路径，必须是不存在的，空文件加也不行。
-        String dstOut = "hdfs://10.0.58.21:9000/outputdata29c";
+        String dstOut = "hdfs://10.0.58.21:9000/result/outputdata26f";
 
         Configuration hadoopConfig = new Configuration();
         //hadoopConfig.
