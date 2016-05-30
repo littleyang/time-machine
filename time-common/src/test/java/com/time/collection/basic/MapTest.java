@@ -20,6 +20,28 @@ public class MapTest {
 	 */
 	
 	@Test
+	public void testHashMapBasicMaps(){
+		
+		HashMap<String,Integer> tempMaps = new HashMap<String,Integer>();
+		
+		tempMaps.put("数学", 1);
+		tempMaps.put("物理", 2);
+		tempMaps.put("化学", 3);
+		tempMaps.put("英语", 4);
+		tempMaps.put("中文", 5);
+		tempMaps.put("生物", 6);
+		tempMaps.put("历史", 7);
+		
+		for(Entry<String, Integer> entry : tempMaps.entrySet()){
+			System.out.println("key: " + entry.getKey() + " value: " + entry.getValue());
+		}
+		
+		System.out.println("hello");
+		
+	}
+	
+	
+	@Test
 	public void testHashMapBasic(){
 		
 		HashMap<Dog,Integer> dogMaps = new HashMap<Dog,Integer>();
