@@ -1,6 +1,7 @@
 package com.time.collection.basic;
 
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.TreeMap;
@@ -23,6 +24,67 @@ public class MapTest {
 	public void testHashMapBasicMaps(){
 		
 		HashMap<String,Integer> tempMaps = new HashMap<String,Integer>();
+		
+		tempMaps.put("数学", 1);
+		tempMaps.put("物理", 2);
+		tempMaps.put("化学", 3);
+		tempMaps.put("英语", 4);
+		tempMaps.put("中文", 5);
+		tempMaps.put("生物", 6);
+		tempMaps.put("历史", 7);
+		
+		for(Entry<String, Integer> entry : tempMaps.entrySet()){
+			System.out.println("key: " + entry.getKey() + " value: " + entry.getValue());
+		}
+		
+		System.out.println("hello");
+		
+	}
+	
+	@Test
+	public void testLinkedHashMapBasicMaps(){
+		
+		LinkedHashMap<String,Integer> tempMaps = new LinkedHashMap<String,Integer>();
+		
+		tempMaps.put("数学", 1);
+		tempMaps.put("物理", 2);
+		tempMaps.put("化学", 3);
+		tempMaps.put("英语", 4);
+		tempMaps.put("中文", 5);
+		tempMaps.put("生物", 6);
+		tempMaps.put("历史", 7);
+		
+		for(Entry<String, Integer> entry : tempMaps.entrySet()){
+			System.out.println("key: " + entry.getKey() + " value: " + entry.getValue());
+		}
+		
+		System.out.println("hello");
+		
+	}
+	
+	@Test
+	public void TreeMapBasicMaps(){
+		
+		TreeMap<String,Integer> tempMaps = new TreeMap<String,Integer>();
+		
+		tempMaps.put("数学", 1);
+		tempMaps.put("物理", 2);
+		tempMaps.put("化学", 3);
+		tempMaps.put("英语", 4);
+		tempMaps.put("中文", 5);
+		tempMaps.put("生物", 6);
+		tempMaps.put("历史", 7);
+		
+		for(Entry<String, Integer> entry : tempMaps.entrySet()){
+			System.out.println("key: " + entry.getKey() + " value: " + entry.getValue());
+		}
+		System.out.println("hello");
+	}
+	
+	@Test
+	public void HashTableBasicMaps(){
+		
+		Hashtable<String,Integer> tempMaps = new Hashtable<String,Integer>();
 		
 		tempMaps.put("数学", 1);
 		tempMaps.put("物理", 2);
