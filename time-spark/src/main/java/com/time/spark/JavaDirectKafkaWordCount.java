@@ -36,7 +36,7 @@ public class JavaDirectKafkaWordCount{
 			private static final long serialVersionUID = 1L;
 
 			public String call(Tuple2<String, String> tuple2) {
-				//System.out.println(tuple2._2());
+				System.out.println(tuple2._2());
 		        return tuple2._2();
 		      }
 		    });

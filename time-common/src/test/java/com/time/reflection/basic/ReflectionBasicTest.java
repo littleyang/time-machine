@@ -1,6 +1,7 @@
 package com.time.reflection.basic;
 
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -55,12 +56,38 @@ public class ReflectionBasicTest {
 		
 		// call say hello method 
 		Assert.assertNotNull("should not be null when call method", fTemp.sayHello("zy"));
+		
+		// get class constructor method to create an instance
+		Foo f1 = null;
+		Foo f2 = null;
+		
+		Constructor<?>[] constructors = ins.getConstructors();
+		
+		//创建 Foo 对象
+		try {
+			f1 = (Foo) constructors[0].newInstance();
+			f2 = (Foo) constructors[1].newInstance("littleyang");
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// 调用
+		f1.sayHello("zy");
+		f2.sayHello("littleyang");
 	}
 }
 
 class Foo{
 	
 	private String name ;
+	
+	public Foo(){
+		
+	}
+	
+	public Foo(String name){
+		this.name = name;
+	}
 	
 	public String sayHello(String name){
 		return name + " hello";
