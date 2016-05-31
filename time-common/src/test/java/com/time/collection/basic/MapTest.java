@@ -37,6 +37,8 @@ public class MapTest {
 			System.out.println("key: " + entry.getKey() + " value: " + entry.getValue());
 		}
 		
+		tempMaps.get("化学");
+		
 		System.out.println("hello");
 		
 	}
