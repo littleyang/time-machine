@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,15 +16,15 @@ public class Solution {
                 map.put(num, 1);
             }
         }
- 
-        // create a min heap
-//        PriorityQueue<Pair> queue = new PriorityQueue<Pair>(new Comparator<Pair>(){
-//            public int compare(Pair a, Pair b){
-//                return a.count-b.count;
-//            }
-//        });
         
-        PriorityQueue<Pair> queue = new PriorityQueue<Pair>();
+        // create a min heap
+        PriorityQueue<Pair> queue = new PriorityQueue<Pair>( new Comparator<Pair>(){
+            public int compare(Pair a, Pair b){
+                return a.count-b.count;
+            }
+        });
+        
+//        PriorityQueue<Pair> queue = new PriorityQueue<Pair>();
  
         //maintain a heap of size k. 
         for(Map.Entry<Integer, Integer> entry: map.entrySet()){
