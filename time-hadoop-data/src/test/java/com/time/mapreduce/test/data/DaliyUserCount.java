@@ -31,10 +31,14 @@ public class DaliyUserCount {
 			String values = value.toString();
 			String[] arrays = values.split(", ");
 			if(arrays.length>3&&arrays[2].contains("account")){
+				//System.out.println(arrays[2]);
 				String[] accountA = arrays[2].split(": ");
 				if(accountA.length>1){
 					String account = accountA[1];
-					if(!account.equals("None")){
+					//if(!account.equals("None")&&account.length()==7){
+						// 统计staff的
+					if(!account.equals("None")&&account.length()==8){
+						// 统计user
 						System.out.println(account);
 						word.set(account);
 						context.write(word, one);
@@ -66,14 +70,16 @@ public class DaliyUserCount {
 				throws IOException, InterruptedException {
 			Text word = new Text();
 			IntWritable data = new IntWritable(1);
-			if(key.toString().length()>7){
-				word.set("user");
+			
+			if(key.toString().length()==7){
+				System.out.println("++++++" + key.toString());
+				word.set("staff");
 				// 如果包含API调用，则纪录签到一次
 			}else{
-				word.set("staff");
+				word.set("user");
 			}
 			context.write(word, data);
-			System.out.println("======" + "After Mapper:" + word + ", " + data);
+			//System.out.println("======" + "After Mapper:" + word + ", " + data);
 		}
 	}
 	
@@ -100,32 +106,33 @@ public class DaliyUserCount {
         String dst = "hdfs://10.0.58.21:9000/falcon/2016/06/02/*.log";
 
         //输出路径，必须是不存在的，空文件加也不行。
-        String dstOut = "hdfs://10.0.58.21:9000/result/output602e";
+        String dstOut = "hdfs://10.0.58.21:9000/result/output602j";
         
-        String dstOutCount = "hdfs://10.0.58.21:9000/result/output602Count";
+        String dstOutCount = "hdfs://10.0.58.21:9000/result/output602Counte";
 
-        Configuration hadoopConfig = new Configuration();
-        //hadoopConfig.
-        Job job = Job.getInstance(hadoopConfig, "staff check in count");
-        //job.setJarByClass(DaliyStaffCheckIn.class);
-        job.setMapperClass(ChechInMapper.class);
-        job.setReducerClass(CheckInReducer.class);
-        job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(IntWritable.class);
-        FileInputFormat.addInputPath(job, new Path(dst));
-        FileOutputFormat.setOutputPath(job, new Path(dstOut));
+//        Configuration hadoopConfig = new Configuration();
+//        //hadoopConfig.
+//        Job job = Job.getInstance(hadoopConfig, "staff check in count");
+//        //job.setJarByClass(DaliyStaffCheckIn.class);
+//        job.setMapperClass(ChechInMapper.class);
+//        job.setReducerClass(CheckInReducer.class);
+//        job.setOutputKeyClass(Text.class);
+//        job.setOutputValueClass(IntWritable.class);
+//        FileInputFormat.addInputPath(job, new Path(dst));
+//        FileOutputFormat.setOutputPath(job, new Path(dstOut));
+//        System.exit(job.waitForCompletion(true) ? 0 : 1);
         
-//        Configuration hadoopConfigNew = new Configuration();
-//        Job userTotalCountjob = Job.getInstance(hadoopConfigNew, "userTotalCountjob");
-//        userTotalCountjob.setMapperClass(CheckTotalUserAccountMapper.class);
-//        userTotalCountjob.setReducerClass(CheckTotalUserAccountReducer.class);
-//        userTotalCountjob.setOutputKeyClass(Text.class);
-//        userTotalCountjob.setOutputValueClass(IntWritable.class);
-//        FileInputFormat.addInputPath(userTotalCountjob, new Path(dstOut));
-//        FileOutputFormat.setOutputPath(userTotalCountjob, new Path(dstOutCount));
-        
+        Configuration hadoopConfigNew = new Configuration();
+        Job userTotalCountjob = Job.getInstance(hadoopConfigNew, "userTotalCountjob");
+        userTotalCountjob.setMapperClass(CheckTotalUserAccountMapper.class);
+        userTotalCountjob.setReducerClass(CheckTotalUserAccountReducer.class);
+        userTotalCountjob.setOutputKeyClass(Text.class);
+        userTotalCountjob.setOutputValueClass(IntWritable.class);
+        FileInputFormat.addInputPath(userTotalCountjob, new Path(dstOut));
+        FileOutputFormat.setOutputPath(userTotalCountjob, new Path(dstOutCount));
+        System.exit(userTotalCountjob.waitForCompletion(true) ? 0 : 1);
       
-        System.exit(job.waitForCompletion(true) ? 0 : 1);
+        
 
 	}
 }
