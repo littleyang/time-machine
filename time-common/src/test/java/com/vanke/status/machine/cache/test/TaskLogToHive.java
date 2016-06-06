@@ -39,9 +39,9 @@ public class TaskLogToHive extends BaseTestUnit{
 				
 		Map<String,Object> dates = new HashMap<String,Object>();
 		
-		String beginDateString = "2016-05-19 00:00:00";
+		String beginDateString = "2016-05-24 00:00:00";
 		
-		String endDateString = "2016-05-21 00:00:00";
+		String endDateString = "2016-05-28 00:00:00";
 		
 		Date today = new Date();
 		
