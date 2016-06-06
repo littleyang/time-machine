@@ -112,28 +112,6 @@ public class DaliyUserJobControllerCount {
         String dstOut = "hdfs://10.0.58.21:9000/result/output603";
         
         String dstOutCount = "hdfs://10.0.58.21:9000/result/output602Count3";
-
-//        Configuration hadoopConfig = new Configuration();
-//        //hadoopConfig.
-//        Job job = Job.getInstance(hadoopConfig, "staff check in count");
-//        //job.setJarByClass(DaliyStaffCheckIn.class);
-//        job.setMapperClass(ChechInMapper.class);
-//        job.setReducerClass(CheckInReducer.class);
-//        job.setOutputKeyClass(Text.class);
-//        job.setOutputValueClass(IntWritable.class);
-//        FileInputFormat.addInputPath(job, new Path(dst));
-//        FileOutputFormat.setOutputPath(job, new Path(dstOut));
-//        System.exit(job.waitForCompletion(true) ? 0 : 1);
-        
-//        Configuration hadoopConfigNew = new Configuration();
-//        Job userTotalCountjob = Job.getInstance(hadoopConfigNew, "userTotalCountjob");
-//        userTotalCountjob.setMapperClass(CheckTotalUserAccountMapper.class);
-//        userTotalCountjob.setReducerClass(CheckTotalUserAccountReducer.class);
-//        userTotalCountjob.setOutputKeyClass(Text.class);
-//        userTotalCountjob.setOutputValueClass(IntWritable.class);
-//        FileInputFormat.addInputPath(userTotalCountjob, new Path(dstOut));
-//        FileOutputFormat.setOutputPath(userTotalCountjob, new Path(dstOutCount));
-//        System.exit(userTotalCountjob.waitForCompletion(true) ? 0 : 1);
         
         
         JobConf conf = new JobConf(DaliyUserJobControllerCount.class);
