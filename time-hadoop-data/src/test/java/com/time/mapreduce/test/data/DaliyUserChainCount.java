@@ -95,6 +95,20 @@ public class DaliyUserChainCount {
 		}
 	}
 	
+	static class CheckTotalUserAccountCountMapper extends MapReduceBase implements Mapper<Text, IntWritable, Text, IntWritable>{
+
+		@Override
+		public void map(Text key, IntWritable value, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
+			// TODO Auto-generated method stub
+			Text word = new Text();
+			IntWritable result = new IntWritable();
+			int sum = 0;
+			sum += value.get();
+			result.set(sum);
+			output.collect(word, result);
+		}
+	}
+	
 	
 	
 	
@@ -126,35 +140,27 @@ public class DaliyUserChainCount {
         //输出路径，必须是不存在的，空文件加也不行。
         String dstOut = "hdfs://10.0.58.21:9000/result/output602j";
         
-        String dstOutCount = "hdfs://10.0.58.21:9000/result/output603Countb";
+        String dstOutCount = "hdfs://10.0.58.21:9000/result/output603Countf";
 
-//        Configuration hadoopConfig = new Configuration();
-//        //hadoopConfig.
-//        Job job = Job.getInstance(hadoopConfig, "staff check in count");
-//        //job.setJarByClass(DaliyStaffCheckIn.class);
-//        job.setMapperClass(ChechInMapper.class);
-//        job.setReducerClass(CheckInReducer.class);
-//        job.setOutputKeyClass(Text.class);
-//        job.setOutputValueClass(IntWritable.class);
-//        FileInputFormat.addInputPath(job, new Path(dst));
-//        FileOutputFormat.setOutputPath(job, new Path(dstOut));
-//        System.exit(job.waitForCompletion(true) ? 0 : 1);
-        
         
         JobConf conf = new JobConf(DaliyUserChainCount.class);
         conf.setOutputKeyClass(Text.class);
 		conf.setOutputValueClass(IntWritable.class);
 		conf.setJobName("DaliyUserChainCount");
         
-        JobConf mapUserCount = new JobConf(false);
-        ChainMapper.addMapper(conf, ChechInMapper.class, LongWritable.class, Text.class, Text.class, IntWritable.class, false, mapUserCount);
+        JobConf mapUserCountOne = new JobConf(false);
+        ChainMapper.addMapper(conf, ChechInMapper.class, LongWritable.class, Text.class, Text.class, 
+        		IntWritable.class, false, mapUserCountOne);
+        
         
         JobConf recduceConf = new JobConf(false);
-        ChainReducer.setReducer(conf, CheckInReducer.class, Text.class, IntWritable.class, Text.class, IntWritable.class, true, recduceConf);
+        ChainReducer.setReducer(conf, CheckInReducer.class, Text.class, IntWritable.class, Text.class, 
+        		IntWritable.class, true, recduceConf);
         
         JobConf reduceMapperOne = new JobConf(false);
         ChainReducer.addMapper(conf, CheckTotalUserAccountMapper.class, Text.class, IntWritable.class, 
         		Text.class, IntWritable.class, false, reduceMapperOne);
+        
         
         FileInputFormat.addInputPath(conf, new Path(dst));
         FileOutputFormat.setOutputPath(conf, new Path(dstOutCount));
