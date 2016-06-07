@@ -65,7 +65,7 @@ public class DaliyStaffJobControllerCount {
 	}
 	
 	
-	static class CheckTotalUserAccountMapper extends Mapper<Object, Text, Text, IntWritable>{
+	static class CheckTotalStaffAccountMapper extends Mapper<Object, Text, Text, IntWritable>{
 		
 		public void map(Object key, Text value, Context context)
 				throws IOException, InterruptedException {
@@ -85,7 +85,7 @@ public class DaliyStaffJobControllerCount {
 	}
 	
 	
-	static class CheckTotalUserAccountReducer extends Reducer<Text, IntWritable, Text, IntWritable>{
+	static class CheckTotalStaffAccountReducer extends Reducer<Text, IntWritable, Text, IntWritable>{
 		
 		private IntWritable result = new IntWritable();
 
@@ -128,8 +128,8 @@ public class DaliyStaffJobControllerCount {
 
         Job jobCountUser = Job.getInstance(conf, "userTotalCountjob");
         jobCountUser.setJarByClass(DaliyStaffJobControllerCount.class);
-        jobCountUser.setMapperClass(CheckTotalUserAccountMapper.class);
-        jobCountUser.setReducerClass(CheckTotalUserAccountReducer.class);
+        jobCountUser.setMapperClass(CheckTotalStaffAccountMapper.class);
+        jobCountUser.setReducerClass(CheckTotalStaffAccountReducer.class);
         jobCountUser.setOutputKeyClass(Text.class);
         jobCountUser.setOutputValueClass(IntWritable.class);
         
