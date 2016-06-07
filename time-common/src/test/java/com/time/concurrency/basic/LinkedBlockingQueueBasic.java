@@ -2,13 +2,12 @@ package com.time.concurrency.basic;
 
 import java.util.Iterator;
 import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-public class ArrayBlockingQueueBasic {
+public class LinkedBlockingQueueBasic {
 	
-	private static LinkedBlockingQueue<String> queue = new LinkedBlockingQueue<String>(20);
+	private static ArrayBlockingQueue<String> queue = new ArrayBlockingQueue<String>(20);
 	
 	public static void main(String[] args){
 		
