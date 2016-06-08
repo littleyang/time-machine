@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.RecursiveAction;
 
 import net.sf.json.JSONObject;
 
@@ -212,5 +213,136 @@ public class TaskLogToHive extends BaseTestUnit{
 		log.setScore("6");
 		log.setTaskNo("yyyyyyyssssss");
 		taskLogDao.createTaskLog(log);
+	}
+	
+	class ImportMondoDataToMysql extends RecursiveAction{
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -178639627396410893L;
+		
+		private final static int MAX_DATES = 5;
+		
+		private int totalDates;
+		
+		private Date beginDate;
+		
+		private Date endDate;
+		
+		public ImportMondoDataToMysql(int totalDates, Date beginDate, Date endDate ){
+			this.totalDates = totalDates;
+			this.beginDate = beginDate;
+			this.endDate = endDate;
+		}
+
+		@Override
+		protected void compute() {
+			// TODO Auto-generated method stub
+			if(totalDates < MAX_DATES){
+				// 如果处理日期小于最大允许日期，直接处理
+				MongoClient mongoClient = new MongoClient("10.0.72.97");
+				DB db = mongoClient.getDB( "falcon" );
+				DBCollection coll = db.getCollection("task_log");
+				BasicDBObject whereQuery = new BasicDBObject();
+				whereQuery.put("created", new BasicDBObject("$gte", beginDate).append("$lte", endDate));
+				
+				DBCursor cursor = coll.find(whereQuery);
+				cursor.addOption(com.mongodb.Bytes.QUERYOPTION_NOTIMEOUT);
+				
+				try {
+					while (cursor.hasNext()) {
+						
+						TaskLog log = new TaskLog();
+						
+						DBObject myObj = cursor.next();
+						
+						//System.out.println(myObj);
+										
+						Gson gson = new GsonBuilder().setPrettyPrinting().create();
+						
+						String json = gson.toJson(myObj);
+						//System.out.println(json);
+					
+						JSONObject object = JSONObject.fromObject(json);
+						//System.out.println(object.toString());
+						
+						//System.out.println(object.getString("task_no"));
+						
+						if(object.has("objectId")){
+							// set object id
+							log.setObjectId(object.getInt("objectId"));
+						}
+						
+						
+						if(object.has("status")){
+							// set status
+							log.setStatus(object.getInt("status"));
+						}
+						
+						if(object.has("created")){
+							String dateString = object.getString("created");
+							Date createdTemp = null;
+							if(dateString.contains(",")){
+								// 特殊的日期格式
+								createdTemp = TimeDateUtil.parseSpecialFormat(object.getString("created"));
+							}else{
+								createdTemp = TimeDateUtil.parse(object.getString("created"));
+							}
+							String createdString = TimeDateUtil.format(createdTemp);
+							Date created = TimeDateUtil.parse(createdString);
+							//System.out.println(created);
+							//设置时间
+							log.setCreated(created);
+						}
+						
+						if(object.has("source_id")){
+							// set source_id
+							log.setSourceId(object.getInt("source_id"));
+						}
+						
+						if(object.has("rate")){
+							// set rate
+							log.setRate(object.getInt("rate"));
+						}
+					
+						if(object.has("task_no")){
+							//设置task no
+							//System.out.println(object.getString("task_no"));
+							log.setTaskNo(object.get("task_no").toString());
+							//System.out.println(log.getTaskNo());
+						}
+						
+						if(object.has("event")){
+							//设置task no
+							log.setEvent(object.getString("event"));
+						}
+						
+						if(object.has("score")){
+							//设置task no
+							log.setScore(object.getString("score"));
+						}
+						
+						if(object.has("msg")){
+							//设置task no
+							log.setMsg(object.getString("msg"));
+						}
+						// 写入到数据库
+						//taskLogDao.createTaskLog(log);
+					}
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} finally {
+					cursor.close();
+				}
+				
+			}else{
+				
+				int totalTaskCount = totalDates/MAX_DATES;
+				
+			}
+		}
+		
 	}
 }
