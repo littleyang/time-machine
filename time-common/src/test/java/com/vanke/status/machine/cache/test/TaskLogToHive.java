@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
@@ -93,8 +94,25 @@ public class TaskLogToHive extends BaseTestUnit{
 		DB db = mongoClient.getDB( "falcon" );
 		DBCollection coll = db.getCollection("task_log");
 		
-		DBCursor cursor = coll.find();
-		 cursor.addOption(com.mongodb.Bytes.QUERYOPTION_NOTIMEOUT);
+		String beginDateString = "2016-05-24 00:00:00";
+		
+		String endDateString = "2016-05-28 00:00:00";
+	
+		
+		// yesterday 00:00:00
+		//Date beginDate = TimeDateUtil.getSpecifiedDayZeroHourBefore(today);
+		Date beginDate = TimeDateUtil.parse(beginDateString);
+		
+		// today 00:00:00
+		//Date endDate = TimeDateUtil.getSpecifiedDay24HourBefore(today);
+		
+		Date endDate = TimeDateUtil.parse(endDateString);
+		
+		BasicDBObject whereQuery = new BasicDBObject();
+		whereQuery.put("created", new BasicDBObject("$gte", beginDate).append("$lte", endDate));
+		
+		DBCursor cursor = coll.find(whereQuery);
+		cursor.addOption(com.mongodb.Bytes.QUERYOPTION_NOTIMEOUT);
 		
 		try {
 			while (cursor.hasNext()) {
