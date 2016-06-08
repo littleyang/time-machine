@@ -1,6 +1,8 @@
 package com.vanke.status.machine.cache.test;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -215,7 +217,7 @@ public class TaskLogToHive extends BaseTestUnit{
 		taskLogDao.createTaskLog(log);
 	}
 	
-	class ImportMondoDataToMysql extends RecursiveAction{
+	class ImportMondoDataToMysqlAction extends RecursiveAction{
 
 		/**
 		 * 
@@ -224,14 +226,13 @@ public class TaskLogToHive extends BaseTestUnit{
 		
 		private final static int MAX_DATES = 5;
 		
-		private int totalDates;
 		
 		private Date beginDate;
 		
 		private Date endDate;
 		
-		public ImportMondoDataToMysql(int totalDates, Date beginDate, Date endDate ){
-			this.totalDates = totalDates;
+		public ImportMondoDataToMysqlAction(Date beginDate, Date endDate ){
+		
 			this.beginDate = beginDate;
 			this.endDate = endDate;
 		}
@@ -239,6 +240,14 @@ public class TaskLogToHive extends BaseTestUnit{
 		@Override
 		protected void compute() {
 			// TODO Auto-generated method stub
+			int totalDates =0;
+			try {
+				totalDates = daysBetween(beginDate,endDate);
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
 			if(totalDates < MAX_DATES){
 				// 如果处理日期小于最大允许日期，直接处理
 				MongoClient mongoClient = new MongoClient("10.0.72.97");
@@ -338,11 +347,37 @@ public class TaskLogToHive extends BaseTestUnit{
 				}
 				
 			}else{
-				
 				int totalTaskCount = totalDates/MAX_DATES;
+				Date beginTempDate = new Date();
+				Date endTempDate = new Date();
+				for(int i =0;i<totalTaskCount;i++){
+					try {
+						beginTempDate = TimeDateUtil.getSpecifiedDayNDayAfter(beginDate, i*MAX_DATES);
+						endTempDate = TimeDateUtil.getSpecifiedDayNDayAfter(beginDate, (i+1)*MAX_DATES);						
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					ImportMondoDataToMysqlAction actionTemp = new ImportMondoDataToMysqlAction(beginTempDate,endTempDate);
+					actionTemp.fork();
+				}
 				
 			}
 		}
 		
+		 public  int daysBetween(Date smdate,Date bdate) throws ParseException    
+		    {    
+		        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");  
+		        smdate=sdf.parse(sdf.format(smdate));  
+		        bdate=sdf.parse(sdf.format(bdate));  
+		        Calendar cal = Calendar.getInstance();    
+		        cal.setTime(smdate);    
+		        long time1 = cal.getTimeInMillis();                 
+		        cal.setTime(bdate);    
+		        long time2 = cal.getTimeInMillis();         
+		        long between_days=(time2-time1)/(1000*3600*24);  
+		            
+		       return Integer.parseInt(String.valueOf(between_days));           
+		    }    
 	}
 }
