@@ -61,6 +61,17 @@ public class TimeDateUtil {
         return sdf.parse(sdf.format(c.getTime()));
     }  
    
+   
+   public static Date getSpecifiedDayNDayAfter(Date date,int n) throws ParseException {
+       Calendar c = Calendar.getInstance();  
+       c.setTime(date);  
+       int day = c.get(Calendar.DATE);  
+       c.set(Calendar.DATE, day + n);
+       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+       return sdf.parse(sdf.format(c.getTime()));
+   }  
+  
+   
    /**
     * 
     * @param date
