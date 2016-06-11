@@ -37,25 +37,28 @@ public class RotateArray {
 //		reverse(arrays, a, arrays.length-1);
 //		reverse(arrays, 0, arrays.length-1);
 		
-		// solution three
+//		// solution three
+//		if(k > arrays.length){
+//			k = k % arrays.length;
+//		}
+//		
+//		int[] tempArrays = new int[arrays.length];
+//		
+//		for(int i=0;i<k;i++){
+//			tempArrays[i] = arrays[size-k+i];
+//		}
+//		
+//		int j=0;
+//	    for(int i=k; i<arrays.length; i++){
+//	    	tempArrays[i] = arrays[j];
+//	        j++;
+//	    }
+//		
+//	    System.arraycopy(tempArrays, 0, arrays, 0, arrays.length );
 		
-		if(k > arrays.length){
-			k = k % arrays.length;
-		}
 		
-		int[] tempArrays = new int[arrays.length];
-		
-		for(int i=0;i<k;i++){
-			tempArrays[i] = arrays[size-k+i];
-		}
-		
-		int j=0;
-	    for(int i=k; i<arrays.length; i++){
-	    	tempArrays[i] = arrays[j];
-	        j++;
-	    }
-		
-	    System.arraycopy(tempArrays, 0, arrays, 0, arrays.length );
+		//solution four
+		bubbleSort(arrays,k);
 	    
 	    
 	    System.out.println("=======================");
@@ -64,6 +67,9 @@ public class RotateArray {
 			System.out.println(arrays[i]);
 		}
 		
+		
+		//solution four
+		bubbleSort(arrays,k);
 		
 	}
 	
@@ -77,6 +83,18 @@ public class RotateArray {
 			arr[right] = temp;
 			left++;
 			right--;
+		}
+	}
+	
+	
+	public static void bubbleSort(int[] arrays,int k){
+		
+		for(int i=0;i<k;i++){
+			for(int w=arrays.length-1;w>0;w--){
+				int temp = arrays[w];
+				arrays[w] = arrays[w-1];
+				arrays[w-1] = temp; 
+			}
 		}
 	}
 
