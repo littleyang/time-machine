@@ -1,8 +1,62 @@
 package com.time.concurrency.basic;
 
 public class ProducerConsumer {
-
+	
+	public static void main(String[] args){
+		
+		Depot depot = new Depot(100);
+		
+		Producer producer = new Producer(depot);
+		Consumer consumer = new Consumer(depot);
+		
+		producer.produce(10);
+		producer.produce(100);
+		
+		consumer.consume(20);
+		consumer.consume(100);
+		
+		producer.produce(10);
+		
+		
+	}
 }
+
+class Producer{
+	
+	private Depot depot;
+	
+	public Producer(Depot depot){
+		this.depot = depot;
+	}
+	
+	public void produce(int value){
+		new Thread(){
+			public void run(){
+				depot.produce(value);
+			}
+		}.start();		
+	}
+	
+}
+
+class Consumer{
+	
+	private Depot depot;
+	
+	public Consumer(Depot depot){
+		this.depot = depot;
+	}
+	
+	public void consume(int value){
+		new Thread(){
+			public void run(){
+				depot.consume(value);
+			}
+		}.start();	
+	}
+	
+}
+
 
 class Depot{
 	
@@ -10,9 +64,9 @@ class Depot{
 	 
 	 private int size;
 	 
-	 public Depot(int capacity,int size){
+	 public Depot(int capacity){
 		 this.capacity = capacity;
-		 this.size = size;
+		 this.size = 0;
 	 }
 	
 	 /**
@@ -74,7 +128,4 @@ class Depot{
 		 }
 		 
 	 }
-	 
-	 
-	
 }
