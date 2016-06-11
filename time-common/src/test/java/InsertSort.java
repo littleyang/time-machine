@@ -9,17 +9,18 @@ public class InsertSort {
 			System.out.println(arrays[i]);
 		}
 		
-		int j =0;
+		int k =0;
 		for(int i=0;i<arrays.length;i++){
 			int temp = arrays[i];
 			// 把第i个元素与前面的元素进行对比，如果第i个元素小于某个元素，则将i插入到该元素之前。
 			// 并将元素后移
-			for(j=i;j>0;j--){
+			for(int j=i;j>0;j--){
 				if(temp<arrays[j-1]){
 					arrays[j] = arrays[j-1];
+					k =j-1;
 				}
 			}
-			arrays[j] = temp;
+			arrays[k] = temp;
 		}
 		
 		System.out.println("=======================");
