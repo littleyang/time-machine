@@ -37,7 +37,32 @@ public class RotateArray {
 //		reverse(arrays, a, arrays.length-1);
 //		reverse(arrays, 0, arrays.length-1);
 		
+		// solution three
 		
+		if(k > arrays.length){
+			k = k % arrays.length;
+		}
+		
+		int[] tempArrays = new int[arrays.length];
+		
+		for(int i=0;i<k;i++){
+			tempArrays[i] = arrays[size-k+i];
+		}
+		
+		int j=0;
+	    for(int i=k; i<arrays.length; i++){
+	    	tempArrays[i] = arrays[j];
+	        j++;
+	    }
+		
+	    System.arraycopy(tempArrays, 0, arrays, 0, arrays.length );
+	    
+	    
+	    System.out.println("=======================");
+		
+		for(int i=0;i<arrays.length;i++){
+			System.out.println(arrays[i]);
+		}
 		
 		
 	}
