@@ -135,14 +135,14 @@ public class DaliyIPJobControllerCount {
 	
 	public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException{
 		 //输入路径
-        String dst = "hdfs://10.0.58.21:9000/nginx/2016/06/03/*.log";
+        String dst = "hdfs://10.0.58.21:9000/nginx/2016/06/11/*.log";
 
         //输出路径，必须是不存在的，空文件加也不行。
-        String dstOut = "hdfs://10.0.58.21:9000/result/outputip603d";
+        String dstOut = "hdfs://10.0.58.21:9000/result/outputip611a";
         
-        String sourtOut = "hdfs://10.0.58.21:9000/result/outputsortedip603d";
+        String sourtOut = "hdfs://10.0.58.21:9000/result/outputsortedip611a";
         
-        String dstOutCount = "hdfs://10.0.58.21:9000/result/output603ipcountd";
+        String dstOutCount = "hdfs://10.0.58.21:9000/result/output611ipcounta";
         
         
         JobConf conf = new JobConf(DaliyIPJobControllerCount.class);
