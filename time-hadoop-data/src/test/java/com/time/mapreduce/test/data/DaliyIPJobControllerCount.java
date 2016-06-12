@@ -57,6 +57,38 @@ public class DaliyIPJobControllerCount {
 		}
 	}
 	
+	static class SortMapper extends Mapper<Object, Text, IntWritable, Text>{
+		
+		public void map(Object key,Text value,Context context) throws IOException, InterruptedException{
+			
+			Text ipAddressValue = new Text();
+			IntWritable ipAddressCountKey = new IntWritable();
+			
+			String[] arrays =  value.toString().split("\t");
+			
+			ipAddressCountKey.set(Integer.parseInt(arrays[1]));
+			ipAddressValue.set(arrays[0]);
+			
+			context.write(ipAddressCountKey, ipAddressValue);
+			
+			System.out.println("====== After mapper count : " + ipAddressCountKey + "ip: " + ipAddressValue);
+			
+		}
+		
+	}
+	
+	static class SortReducer extends Reducer<IntWritable, Text, Text, IntWritable>{
+		
+		public void reduce(IntWritable key, Iterable<Text> values, Context context) 
+				throws IOException, InterruptedException {
+			
+			 for (Text text : values) {
+	                context.write(text, key);
+	         }
+			
+		}
+	}
+	
 	
 	static class CheckTotalIpMapper extends Mapper<Object, Text, Text, IntWritable>{
 		
@@ -106,9 +138,11 @@ public class DaliyIPJobControllerCount {
         String dst = "hdfs://10.0.58.21:9000/nginx/2016/06/03/*.log";
 
         //输出路径，必须是不存在的，空文件加也不行。
-        String dstOut = "hdfs://10.0.58.21:9000/result/outputip603";
+        String dstOut = "hdfs://10.0.58.21:9000/result/outputip603d";
         
-        String dstOutCount = "hdfs://10.0.58.21:9000/result/output603ipcount";
+        String sourtOut = "hdfs://10.0.58.21:9000/result/outputsortedip603d";
+        
+        String dstOutCount = "hdfs://10.0.58.21:9000/result/output603ipcountd";
         
         
         JobConf conf = new JobConf(DaliyIPJobControllerCount.class);
@@ -124,6 +158,25 @@ public class DaliyIPJobControllerCount {
         FileInputFormat.addInputPath(jobCheckIn, new Path(dst));
         FileOutputFormat.setOutputPath(jobCheckIn, new Path(dstOut));
         
+        
+        Job jobSortIpJob = Job.getInstance(conf, "IpValueSortjob");
+        jobSortIpJob.setJarByClass(DaliyIPJobControllerCount.class);
+        jobSortIpJob.setMapperClass(SortMapper.class);
+        jobSortIpJob.setReducerClass(SortReducer.class);
+        jobSortIpJob.setMapOutputKeyClass(IntWritable.class);
+        jobSortIpJob.setMapOutputValueClass(Text.class);
+        jobSortIpJob.setOutputKeyClass(Text.class);
+        jobSortIpJob.setOutputValueClass(IntWritable.class);
+        jobSortIpJob.setSortComparatorClass(IntValueDescComparator.class);
+        
+        ControlledJob jobSortIpJobCtrl=new  ControlledJob(conf);   
+        jobSortIpJobCtrl.setJob(jobSortIpJob);
+        FileInputFormat.addInputPath(jobSortIpJob, new Path(dstOut));
+        FileOutputFormat.setOutputPath(jobSortIpJob, new Path(sourtOut));
+        
+        // dependence on jobCheckInCtrl
+        jobSortIpJobCtrl.addDependingJob(jobCheckInCtrl);
+        
 
         Job jobCountUser = Job.getInstance(conf, "IpCountjob");
         jobCountUser.setJarByClass(DaliyIPJobControllerCount.class);
@@ -132,18 +185,19 @@ public class DaliyIPJobControllerCount {
         jobCountUser.setOutputKeyClass(Text.class);
         jobCountUser.setOutputValueClass(IntWritable.class);
         
-        //jobCountUser.setSortComparatorClass(IntValueDescComparator.class);
+        
         
         ControlledJob jobCountUserCtlr=new  ControlledJob(conf);   
         jobCountUserCtlr.setJob(jobCountUser);
-        jobCountUserCtlr.addDependingJob(jobCheckInCtrl);
+        jobCountUserCtlr.addDependingJob(jobSortIpJobCtrl);
         
-        FileInputFormat.addInputPath(jobCountUser, new Path(dstOut));
+        FileInputFormat.addInputPath(jobCountUser, new Path(sourtOut));
         FileOutputFormat.setOutputPath(jobCountUser, new Path(dstOutCount));
         
         
         JobControl jobCtrl=new JobControl("myctrl");
-        jobCtrl.addJob(jobCheckInCtrl);   
+        jobCtrl.addJob(jobCheckInCtrl);  
+        jobCtrl.addJob(jobSortIpJobCtrl);   
         jobCtrl.addJob(jobCountUserCtlr);
         
         Thread  t=new Thread(jobCtrl);   
