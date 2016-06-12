@@ -14,6 +14,8 @@ public class IncreasingTriplet {
 	public static boolean increasingTriplet(int[] arrays){
 		
 		// 维护最小的连续两个数，如果有第三个数比这两个数大，且最近，则true
+		// o(n)
+		// space(1) 不需要额外的空间开销
 		
 		int n1 = Integer.MAX_VALUE;
 		
