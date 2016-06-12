@@ -5,6 +5,8 @@ import java.io.IOException;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
+import org.apache.hadoop.io.WritableComparable;
+import org.apache.hadoop.io.WritableComparator;
 import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapred.jobcontrol.JobControl;
 import org.apache.hadoop.mapreduce.Job;
@@ -65,7 +67,7 @@ public class DaliyIPJobControllerCount {
 			word.set("ip");
 			// 如果包含API调用，则纪录签到一次
 			context.write(word, data);
-			//System.out.println("======" + "After Mapper:" + word + ", " + data);
+			System.out.println("======" + "After Mapper:" + word + ", " + data);
 		}
 	}
 	
@@ -86,6 +88,18 @@ public class DaliyIPJobControllerCount {
 	}
 	
 	
+	static class IntValueDescComparator extends WritableComparator{
+		
+		protected IntValueDescComparator() {
+		    super(IntWritable.class, true);
+
+		}
+		
+		@Override
+		public int compare(WritableComparable a, WritableComparable b) {
+		    return super.compare(b, a);
+		}
+	}
 	
 	public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException{
 		 //输入路径
@@ -117,6 +131,8 @@ public class DaliyIPJobControllerCount {
         jobCountUser.setReducerClass(CheckTotalIpReducer.class);
         jobCountUser.setOutputKeyClass(Text.class);
         jobCountUser.setOutputValueClass(IntWritable.class);
+        
+        //jobCountUser.setSortComparatorClass(IntValueDescComparator.class);
         
         ControlledJob jobCountUserCtlr=new  ControlledJob(conf);   
         jobCountUserCtlr.setJob(jobCountUser);
