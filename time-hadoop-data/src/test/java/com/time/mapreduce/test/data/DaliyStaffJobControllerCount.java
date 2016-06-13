@@ -141,14 +141,14 @@ public class DaliyStaffJobControllerCount {
 	
 	public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException{
 		 //输入路径
-        String dst = "hdfs://10.0.58.21:9000/falcon/2016/06/06/*.log";
+        String dst = "hdfs://10.0.58.21:9000/falcon/2016/06/12/*.log";
 
         //输出路径，必须是不存在的，空文件加也不行。
-        String dstOut = "hdfs://10.0.58.21:9000/result/outputstaff606";
+        String dstOut = "hdfs://10.0.58.21:9000/result/outputstaff612a";
         
-        String sortOut = "hdfs://10.0.58.21:9000/result/outputsortedstaff611a";
+        String sortOut = "hdfs://10.0.58.21:9000/result/outputsortedstaff612a";
         
-        String dstOutCount = "hdfs://10.0.58.21:9000/result/outputstaff606Count";
+        String dstOutCount = "hdfs://10.0.58.21:9000/result/outputstaff612Counta";
         
         
         JobConf conf = new JobConf(DaliyStaffJobControllerCount.class);
@@ -165,7 +165,7 @@ public class DaliyStaffJobControllerCount {
         FileOutputFormat.setOutputPath(jobCheckIn, new Path(dstOut));
         
         Job jobSortStaffJob = Job.getInstance(conf, "staffSortjob");
-        jobSortStaffJob.setJarByClass(DaliyIPJobControllerCount.class);
+        jobSortStaffJob.setJarByClass(DaliyStaffJobControllerCount.class);
         jobSortStaffJob.setMapperClass(SortMapper.class);
         jobSortStaffJob.setReducerClass(SortReducer.class);
         jobSortStaffJob.setMapOutputKeyClass(IntWritable.class);
@@ -199,7 +199,8 @@ public class DaliyStaffJobControllerCount {
         
         
         JobControl jobCtrl=new JobControl("myctrl");
-        jobCtrl.addJob(jobCheckInCtrl);   
+        jobCtrl.addJob(jobCheckInCtrl); 
+        jobCtrl.addJob(jobSortStaffJobCtrl);   
         jobCtrl.addJob(jobCountUserCtlr);
         
         Thread  t=new Thread(jobCtrl);   

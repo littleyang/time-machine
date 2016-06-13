@@ -15,6 +15,10 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.jobcontrol.ControlledJob;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
+import com.time.mapreduce.test.data.DaliyIPJobControllerCount.IntValueDescComparator;
+import com.time.mapreduce.test.data.DaliyStaffJobControllerCount.SortMapper;
+import com.time.mapreduce.test.data.DaliyStaffJobControllerCount.SortReducer;
+
 public class DaliyUserJobControllerCount {
 
 	// 首先实现是mapper类
@@ -140,13 +144,15 @@ static class SortMapper extends Mapper<Object, Text, IntWritable, Text>{
         String dst = "hdfs://10.0.58.21:9000/falcon/2016/06/03/*.log";
 
         //输出路径，必须是不存在的，空文件加也不行。
-        String dstOut = "hdfs://10.0.58.21:9000/result/output603";
+        String dstOut = "hdfs://10.0.58.21:9000/result/outputuser603";
         
-        String dstOutCount = "hdfs://10.0.58.21:9000/result/output602Count3";
+        String sortOut = "hdfs://10.0.58.21:9000/result/outputsorteduser611a";
+        
+        String dstOutCount = "hdfs://10.0.58.21:9000/result/outputuser602Count3";
         
         
         JobConf conf = new JobConf(DaliyUserJobControllerCount.class);
-        Job jobCheckIn = Job.getInstance(conf, "staff check in count");
+        Job jobCheckIn = Job.getInstance(conf, "user check in count");
         jobCheckIn.setJarByClass(DaliyUserJobControllerCount.class);
         jobCheckIn.setMapperClass(ChechInMapper.class);
         jobCheckIn.setReducerClass(CheckInReducer.class);
@@ -158,6 +164,24 @@ static class SortMapper extends Mapper<Object, Text, IntWritable, Text>{
         FileInputFormat.addInputPath(jobCheckIn, new Path(dst));
         FileOutputFormat.setOutputPath(jobCheckIn, new Path(dstOut));
         
+        Job jobSortUserJob = Job.getInstance(conf, "UserSortjob");
+        jobSortUserJob.setJarByClass(DaliyUserJobControllerCount.class);
+        jobSortUserJob.setMapperClass(SortMapper.class);
+        jobSortUserJob.setReducerClass(SortReducer.class);
+        jobSortUserJob.setMapOutputKeyClass(IntWritable.class);
+        jobSortUserJob.setMapOutputValueClass(Text.class);
+        jobSortUserJob.setOutputKeyClass(Text.class);
+        jobSortUserJob.setOutputValueClass(IntWritable.class);
+        jobSortUserJob.setSortComparatorClass(IntValueDescComparator.class);
+        
+        ControlledJob jobSortUserJobCtrl=new  ControlledJob(conf);   
+        jobSortUserJobCtrl.setJob(jobSortUserJob);
+        FileInputFormat.addInputPath(jobSortUserJob, new Path(dstOut));
+        FileOutputFormat.setOutputPath(jobSortUserJob, new Path(sortOut));
+        
+        // dependence on jobCheckInCtrl
+        jobSortUserJobCtrl.addDependingJob(jobCheckInCtrl);
+        
 
         Job jobCountUser = Job.getInstance(conf, "userTotalCountjob");
         jobCountUser.setJarByClass(DaliyUserJobControllerCount.class);
@@ -168,14 +192,15 @@ static class SortMapper extends Mapper<Object, Text, IntWritable, Text>{
         
         ControlledJob jobCountUserCtlr=new  ControlledJob(conf);   
         jobCountUserCtlr.setJob(jobCountUser);
-        jobCountUserCtlr.addDependingJob(jobCheckInCtrl);
+        jobCountUserCtlr.addDependingJob(jobSortUserJobCtrl);
         
-        FileInputFormat.addInputPath(jobCountUser, new Path(dstOut));
+        FileInputFormat.addInputPath(jobCountUser, new Path(sortOut));
         FileOutputFormat.setOutputPath(jobCountUser, new Path(dstOutCount));
         
         
         JobControl jobCtrl=new JobControl("myctrl");
-        jobCtrl.addJob(jobCheckInCtrl);   
+        jobCtrl.addJob(jobCheckInCtrl);
+        jobCtrl.addJob(jobSortUserJobCtrl);  
         jobCtrl.addJob(jobCountUserCtlr);
         
         Thread  t=new Thread(jobCtrl);   
