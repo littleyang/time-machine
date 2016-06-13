@@ -10,9 +10,14 @@ import org.apache.hadoop.mapred.jobcontrol.JobControl;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.hadoop.mapreduce.Mapper.Context;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.jobcontrol.ControlledJob;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+
+import com.time.mapreduce.test.data.DaliyIPJobControllerCount.IntValueDescComparator;
+import com.time.mapreduce.test.data.DaliyStaffJobControllerCount.SortMapper;
+import com.time.mapreduce.test.data.DaliyStaffJobControllerCount.SortReducer;
 
 public class DaliyUserJobControllerCount {
 
@@ -65,6 +70,38 @@ public class DaliyUserJobControllerCount {
 	}
 	
 	
+static class SortMapper extends Mapper<Object, Text, IntWritable, Text>{
+		
+		public void map(Object key,Text value,Context context) throws IOException, InterruptedException{
+			
+			Text ipAddressValue = new Text();
+			IntWritable ipAddressCountKey = new IntWritable();
+			
+			String[] arrays =  value.toString().split("\t");
+			
+			ipAddressCountKey.set(Integer.parseInt(arrays[1]));
+			ipAddressValue.set(arrays[0]);
+			
+			context.write(ipAddressCountKey, ipAddressValue);
+			
+			System.out.println("====== After mapper count : " + ipAddressCountKey + "ip: " + ipAddressValue);
+			
+		}
+		
+	}
+	
+	static class SortReducer extends Reducer<IntWritable, Text, Text, IntWritable>{
+		
+		public void reduce(IntWritable key, Iterable<Text> values, Context context) 
+				throws IOException, InterruptedException {
+			
+			 for (Text text : values) {
+	                context.write(text, key);
+	         }
+			
+		}
+	}
+	
 	static class CheckTotalUserAccountMapper extends Mapper<Object, Text, Text, IntWritable>{
 		
 		public void map(Object key, Text value, Context context)
@@ -104,16 +141,18 @@ public class DaliyUserJobControllerCount {
 	
 	public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException{
 		 //输入路径
-        String dst = "hdfs://10.0.58.21:9000/falcon/2016/06/03/*.log";
+        String dst = "hdfs://10.0.58.21:9000/falcon/2016/06/12/*.log";
 
         //输出路径，必须是不存在的，空文件加也不行。
-        String dstOut = "hdfs://10.0.58.21:9000/result/output603";
+        String dstOut = "hdfs://10.0.58.21:9000/result/outputuser12";
         
-        String dstOutCount = "hdfs://10.0.58.21:9000/result/output602Count3";
+        String sortOut = "hdfs://10.0.58.21:9000/result/outputsorteduser612";
+        
+        String dstOutCount = "hdfs://10.0.58.21:9000/result/outputuser612Count";
         
         
         JobConf conf = new JobConf(DaliyUserJobControllerCount.class);
-        Job jobCheckIn = Job.getInstance(conf, "staff check in count");
+        Job jobCheckIn = Job.getInstance(conf, "user check in count");
         jobCheckIn.setJarByClass(DaliyUserJobControllerCount.class);
         jobCheckIn.setMapperClass(ChechInMapper.class);
         jobCheckIn.setReducerClass(CheckInReducer.class);
@@ -125,6 +164,24 @@ public class DaliyUserJobControllerCount {
         FileInputFormat.addInputPath(jobCheckIn, new Path(dst));
         FileOutputFormat.setOutputPath(jobCheckIn, new Path(dstOut));
         
+        Job jobSortUserJob = Job.getInstance(conf, "UserSortjob");
+        jobSortUserJob.setJarByClass(DaliyUserJobControllerCount.class);
+        jobSortUserJob.setMapperClass(SortMapper.class);
+        jobSortUserJob.setReducerClass(SortReducer.class);
+        jobSortUserJob.setMapOutputKeyClass(IntWritable.class);
+        jobSortUserJob.setMapOutputValueClass(Text.class);
+        jobSortUserJob.setOutputKeyClass(Text.class);
+        jobSortUserJob.setOutputValueClass(IntWritable.class);
+        jobSortUserJob.setSortComparatorClass(IntValueDescComparator.class);
+        
+        ControlledJob jobSortUserJobCtrl=new  ControlledJob(conf);   
+        jobSortUserJobCtrl.setJob(jobSortUserJob);
+        FileInputFormat.addInputPath(jobSortUserJob, new Path(dstOut));
+        FileOutputFormat.setOutputPath(jobSortUserJob, new Path(sortOut));
+        
+        // dependence on jobCheckInCtrl
+        jobSortUserJobCtrl.addDependingJob(jobCheckInCtrl);
+        
 
         Job jobCountUser = Job.getInstance(conf, "userTotalCountjob");
         jobCountUser.setJarByClass(DaliyUserJobControllerCount.class);
@@ -135,14 +192,15 @@ public class DaliyUserJobControllerCount {
         
         ControlledJob jobCountUserCtlr=new  ControlledJob(conf);   
         jobCountUserCtlr.setJob(jobCountUser);
-        jobCountUserCtlr.addDependingJob(jobCheckInCtrl);
+        jobCountUserCtlr.addDependingJob(jobSortUserJobCtrl);
         
-        FileInputFormat.addInputPath(jobCountUser, new Path(dstOut));
+        FileInputFormat.addInputPath(jobCountUser, new Path(sortOut));
         FileOutputFormat.setOutputPath(jobCountUser, new Path(dstOutCount));
         
         
         JobControl jobCtrl=new JobControl("myctrl");
-        jobCtrl.addJob(jobCheckInCtrl);   
+        jobCtrl.addJob(jobCheckInCtrl);
+        jobCtrl.addJob(jobSortUserJobCtrl);  
         jobCtrl.addJob(jobCountUserCtlr);
         
         Thread  t=new Thread(jobCtrl);   
