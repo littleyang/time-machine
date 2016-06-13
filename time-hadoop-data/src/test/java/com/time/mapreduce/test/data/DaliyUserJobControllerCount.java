@@ -10,6 +10,7 @@ import org.apache.hadoop.mapred.jobcontrol.JobControl;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.hadoop.mapreduce.Mapper.Context;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.jobcontrol.ControlledJob;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
@@ -64,6 +65,38 @@ public class DaliyUserJobControllerCount {
 		}
 	}
 	
+	
+static class SortMapper extends Mapper<Object, Text, IntWritable, Text>{
+		
+		public void map(Object key,Text value,Context context) throws IOException, InterruptedException{
+			
+			Text ipAddressValue = new Text();
+			IntWritable ipAddressCountKey = new IntWritable();
+			
+			String[] arrays =  value.toString().split("\t");
+			
+			ipAddressCountKey.set(Integer.parseInt(arrays[1]));
+			ipAddressValue.set(arrays[0]);
+			
+			context.write(ipAddressCountKey, ipAddressValue);
+			
+			System.out.println("====== After mapper count : " + ipAddressCountKey + "ip: " + ipAddressValue);
+			
+		}
+		
+	}
+	
+	static class SortReducer extends Reducer<IntWritable, Text, Text, IntWritable>{
+		
+		public void reduce(IntWritable key, Iterable<Text> values, Context context) 
+				throws IOException, InterruptedException {
+			
+			 for (Text text : values) {
+	                context.write(text, key);
+	         }
+			
+		}
+	}
 	
 	static class CheckTotalUserAccountMapper extends Mapper<Object, Text, Text, IntWritable>{
 		
