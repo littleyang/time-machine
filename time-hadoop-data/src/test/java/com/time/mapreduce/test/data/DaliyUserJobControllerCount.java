@@ -141,14 +141,14 @@ static class SortMapper extends Mapper<Object, Text, IntWritable, Text>{
 	
 	public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException{
 		 //输入路径
-        String dst = "hdfs://10.0.58.21:9000/falcon/2016/06/03/*.log";
+        String dst = "hdfs://10.0.58.21:9000/falcon/2016/06/12/*.log";
 
         //输出路径，必须是不存在的，空文件加也不行。
-        String dstOut = "hdfs://10.0.58.21:9000/result/outputuser603";
+        String dstOut = "hdfs://10.0.58.21:9000/result/outputuser12";
         
-        String sortOut = "hdfs://10.0.58.21:9000/result/outputsorteduser611a";
+        String sortOut = "hdfs://10.0.58.21:9000/result/outputsorteduser612";
         
-        String dstOutCount = "hdfs://10.0.58.21:9000/result/outputuser602Count3";
+        String dstOutCount = "hdfs://10.0.58.21:9000/result/outputuser612Count";
         
         
         JobConf conf = new JobConf(DaliyUserJobControllerCount.class);
