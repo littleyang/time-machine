@@ -135,8 +135,6 @@ static class SortMapper extends Mapper<Object, Text, IntWritable, Text>{
 			context.write(key, result);
 			System.out.println("======" + "After reduce :" + new Text(key.toString()) + ", " + sum);
 		}
-		
-		
 	}
 	
 	public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException{
