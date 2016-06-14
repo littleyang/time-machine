@@ -10,14 +10,11 @@ import org.apache.hadoop.mapred.jobcontrol.JobControl;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
-import org.apache.hadoop.mapreduce.Mapper.Context;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.jobcontrol.ControlledJob;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import com.time.mapreduce.test.data.DaliyIPJobControllerCount.IntValueDescComparator;
-import com.time.mapreduce.test.data.DaliyStaffJobControllerCount.SortMapper;
-import com.time.mapreduce.test.data.DaliyStaffJobControllerCount.SortReducer;
 
 public class DaliyUserJobControllerCount {
 
