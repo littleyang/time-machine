@@ -57,7 +57,7 @@ public class ProjectAndStaffString implements WritableComparable<ProjectAndStaff
 	public int compareTo(ProjectAndStaffString o) {
 		// TODO Auto-generated method stub
 		if (this.flag >= o.getFlag()) {  
-            if (this.flag > o.getFlag()) {  
+            if (this.flag > o.getFlag()){  
                 return 1;  
             }  
         } else {  

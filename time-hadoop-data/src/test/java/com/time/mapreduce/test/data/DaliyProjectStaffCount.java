@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapred.jobcontrol.JobControl;
@@ -36,18 +37,11 @@ public class DaliyProjectStaffCount {
 			System.out.println(value.toString());
 			Text mWord = new Text();
 			Text mValue = new Text();
-			if(value.toString().contains("LB")){
-				String values = value.toString().split("LB")[0];
-				if(values.length()>19){
-					String project = values.substring(values.length()-9, values.length());
-					String jobId = values.substring(0,values.length()-18);
-					mWord.set(jobId);
-					mValue.set(project);
-					context.write(mWord, mValue);
-					System.out.println("======" + "After mapper :" + project + ", " + jobId);
-				}
-			}
-			//System.out.println("======" + "After mapper :" + new Text(key.toString()) + ", " + values);
+			String[] arrays =  value.toString().split("\t");
+			mWord.set(arrays[0]);
+			mValue.set(arrays[1]);
+			context.write(mWord, mValue);
+			System.out.println("======" + "After mapper :" + mWord + ", " + mValue);
 			
 		}
 	}
@@ -74,39 +68,17 @@ public class DaliyProjectStaffCount {
 				//account: 10885667, args: ImmutableMultiDict([]), form: ImmutableMultiDict([]), json: None
 				
 				System.out.println(value.toString());
+				
 				Text mWord = new Text();
 				Text mValue = new Text();
 				
-				String values = value.toString().split("-")[0];
-				String subTemp = "";
-				String staffId = "";
-				String jobId = "";
-				if(values.contains("true")||values.contains("null")){
-					subTemp = values.substring(0, values.length()-9);
-				}
+				String[] arrays =  value.toString().split("\t");
 				
-				if(values.contains("false")){
-					subTemp = values.substring(0, values.length()-10);
-				}
-				
-				if(values.startsWith("10")){
-					String subTempString = "10" + subTemp.split("10", subTemp.length())[1];
-					String finalSubString = subTemp.substring(subTempString.length()-1, subTemp.length());
-					staffId = finalSubString.substring(0, 8);
-					jobId = finalSubString.substring(8, finalSubString.length());
-				}else{
-					String subTempString = subTemp.split("10", subTemp.length())[0];
-					String finalSubString = subTemp.substring(subTempString.length()-1, subTemp.length());
-					staffId = finalSubString.substring(0, 8);
-					jobId = finalSubString.substring(8, finalSubString.length());
-				}	
-				
-				mWord.set(staffId);
-				mValue.set(jobId);
-				
+				mWord.set(arrays[1]);
+				mValue.set(arrays[2]);
 				context.write(mWord, mValue);
-				//System.out.println("======" + "After mapper :" + new Text(key.toString()) + ", " + values);
-				
+				System.out.println("======" + "After mapper :" + mWord + ", " + mValue);
+		
 			}
 		}
 
@@ -114,104 +86,86 @@ public class DaliyProjectStaffCount {
 		
 			public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
 				
-				 for (Text text : values) {
-		                context.write(text, key);
-		                System.out.println("======" + "After reducer :" + text + ", " + key);
+				for (Text text : values) {
+					context.write(text, key);
+		            System.out.println("======" + "After reducer :" + text + ", " + key);
 		         }
 				
 			}
 		}
-	
-	static class SortMapper extends Mapper<Object, Text, IntWritable, Text>{
 		
-		public void map(Object key,Text value,Context context) throws IOException, InterruptedException{
-			
-			Text ipAddressValue = new Text();
-			IntWritable ipAddressCountKey = new IntWritable();
-			
-			String[] arrays =  value.toString().split("\t");
-			
-			ipAddressCountKey.set(Integer.parseInt(arrays[1]));
-			ipAddressValue.set(arrays[0]);
-			
-			context.write(ipAddressCountKey, ipAddressValue);
-			
-			System.out.println("====== After mapper count : " + ipAddressCountKey + "ip: " + ipAddressValue);
-			
-		}
 		
-	}
-	
-	static class SortReducer extends Reducer<IntWritable, Text, Text, IntWritable>{
-		
-		public void reduce(IntWritable key, Iterable<Text> values, Context context) 
-				throws IOException, InterruptedException {
-			
-			 for (Text text : values) {
-	                context.write(text, key);
-	         }
-			
-		}
-	}
-	
-	
-	static class CheckTotalStaffAccountMapper extends Mapper<Object, Text, Text, IntWritable>{
-		
-		public void map(Object key, Text value, Context context)
-				throws IOException, InterruptedException {
-			Text word = new Text();
-			IntWritable data = new IntWritable(1);
-			
-			if(key.toString().length()==7){
-				System.out.println("++++++" + key.toString());
-				word.set("staff");
-				// 如果包含API调用，则纪录签到一次
-			}else{
-				word.set("user");
-			}
-			context.write(word, data);
-			//System.out.println("======" + "After Mapper:" + word + ", " + data);
-		}
-	}
-	
-	
-	static class CheckTotalStaffAccountReducer extends Reducer<Text, IntWritable, Text, IntWritable>{
-		
-		private IntWritable result = new IntWritable();
+	// 首先实现是mapper类
+	static class ProjectAndJobMaperOne extends Mapper<Object, Text, Text, ProjectAndStaffString> {
 
-		public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-			int sum = 0;
-			for (IntWritable val : values) {
-				sum += val.get();
-			}
-			result.set(sum);
-			context.write(key, result);
-			System.out.println("======" + "After reduce :" + new Text(key.toString()) + ", " + sum);
+		public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
+			
+			//System.out.println(value.toString());
+
+			String[] arrays = value.toString().split("\t");
+
+			context.write(new Text(arrays[0].trim()), new ProjectAndStaffString(arrays[1].trim(), 0));
+
+			System.out.println("======" + "After mapper :" + arrays[0].trim() + ", " + arrays[1].trim());
+
 		}
-		
-		
 	}
+	
+	// 首先实现是mapper类
+	static class ProjectAndJobMaperTwo extends Mapper<Object, Text, Text, ProjectAndStaffString> {
+
+		public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
+			
+			//System.out.println(value.toString());
+
+			String[] arrays = value.toString().split("\t");
+
+			context.write(new Text(arrays[1].trim()), new ProjectAndStaffString(arrays[0].trim(), 1));
+			
+			//System.out.println("======" + "After mapper :" + arrays[1].trim() + ", " + arrays[0].trim());
+
+		}
+	}
+	
+	static class ProjectAndJobReducer extends Reducer<Text, ProjectAndStaffString, NullWritable, Text> {
+		
+		public void reduce(Text key, Iterable<ProjectAndStaffString> values, Context context) throws IOException, InterruptedException {
+			
+			String phoneValue = "";  
+	        String userValue = "";  
+	        int num = 0;  
+	        for (ProjectAndStaffString value : values) {
+	            if (num == 0) {  
+	                phoneValue = value.getValue();  
+	                num++;  
+	            } else {  
+	                userValue = value.getValue();  
+	                context.write(NullWritable.get(), new Text(userValue +"\t" + key.toString() +"\t" + phoneValue)); 
+	                //System.out.println("======" + "After reducer  :" + userValue + ", " + key.toString() + ", " +  phoneValue);
+	            }  
+	        }
+		}
+	}
+	
 	
 	public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException{
 		 //输入路径
-        String jobPath = "hdfs://10.0.58.21:9000/user/hive/warehouse/falcon.db/job/*";
+        String jobPath = "hdfs://10.0.58.21:9000/user/hive/warehouse/falcon.db/job/part-m-00000";
         
-        String jobResultPath = "hdfs://10.0.58.21:9000/result/jobResultPath0006";
+        String jobResultPath = "hdfs://10.0.58.21:9000/result/jobResultPath0007";
 
         //输出路径，必须是不存在的，空文件加也不行。
-        String jobAndStaffPath = "hdfs://10.0.58.21:9000/user/hive/warehouse/falcon.db/staff_and_job/*";
+        String jobAndStaffPath = "hdfs://10.0.58.21:9000/user/hive/warehouse/falcon.db/staff_and_job/part-m-00000";
         
-        String jobAndStaffResultPath = "hdfs://10.0.58.21:9000/result/jobAndStaffResultPath0004";
+        String jobAndStaffResultPath = "hdfs://10.0.58.21:9000/result/jobAndStaffResultPath0009";
         
-        
-        
-        String projectAndStaffOut = "hdfs://10.0.58.21:9000/result/projectAndStaffOut001";
+        String projectAndStaffOut = "hdfs://10.0.58.21:9000/result/projectAndStaffOut016";
         
         String dstOutCount = "hdfs://10.0.58.21:9000/result/outputstaff612Counta";
         
 //        Configuration hadoopConfig = new Configuration();
 //        //hadoopConfig.
-//        Job job = Job.getInstance(hadoopConfig, "ProjecetAndStaffJob");
+//        Job job = Job.getInstance(hadoopConfig, "JobJob");
 //        //job.setJarByClass(DaliyProjectStaffCount.class);
 //        job.setMapperClass(JobMapper.class);
 //        job.setReducerClass(JobReducer.class);
@@ -223,19 +177,39 @@ public class DaliyProjectStaffCount {
 //        FileOutputFormat.setOutputPath(job, new Path(jobResultPath));
 //        System.exit(job.waitForCompletion(true) ? 0 : 1);
         
-        Configuration hadoopConfig = new Configuration();
-        //hadoopConfig.
-        Job job = Job.getInstance(hadoopConfig, "ProjecetAndStaffJob");
-        //job.setJarByClass(DaliyProjectStaffCount.class);
-        job.setMapperClass(StaffAndJobMapper.class);
-        job.setReducerClass(StaffAndJobReducer.class);
-        job.setMapOutputKeyClass(Text.class);  
-        job.setMapOutputValueClass(Text.class);
-        job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(Text.class);
-        FileInputFormat.addInputPath(job, new Path(jobAndStaffPath));
-        FileOutputFormat.setOutputPath(job, new Path(jobAndStaffResultPath));
-        System.exit(job.waitForCompletion(true) ? 0 : 1);
+//        Configuration hadoopConfig = new Configuration();
+//        //hadoopConfig.
+//        Job job = Job.getInstance(hadoopConfig, "ProjecetAndStaffJob");
+//        //job.setJarByClass(DaliyProjectStaffCount.class);
+//        job.setMapperClass(StaffAndJobMapper.class);
+//        job.setReducerClass(StaffAndJobReducer.class);
+//        job.setMapOutputKeyClass(Text.class);  
+//        job.setMapOutputValueClass(Text.class);
+//        job.setOutputKeyClass(Text.class);
+//        job.setOutputValueClass(Text.class);
+//        FileInputFormat.addInputPath(job, new Path(jobAndStaffPath));
+//        FileOutputFormat.setOutputPath(job, new Path(jobAndStaffResultPath));
+//        System.exit(job.waitForCompletion(true) ? 0 : 1);
+        
+        
+	      Configuration hadoopConfig = new Configuration();
+	      //hadoopConfig.
+	      Job job = Job.getInstance(hadoopConfig, "MapProjectStaffJob");
+	      job.setJarByClass(DaliyProjectStaffCount.class);
+	      
+	      job.setMapperClass(ProjectAndJobMaperOne.class);
+	      job.setMapperClass(ProjectAndJobMaperTwo.class);
+	      job.setMapOutputKeyClass(Text.class);  
+	      job.setMapOutputValueClass(ProjectAndStaffString.class);
+	      
+	      job.setReducerClass(ProjectAndJobReducer.class);
+	      job.setOutputKeyClass(NullWritable.class);  
+	      job.setOutputValueClass(Text.class);
+	      
+	      FileInputFormat.addInputPath(job, new Path(jobResultPath));
+	      FileInputFormat.addInputPath(job, new Path(jobAndStaffResultPath));
+	      FileOutputFormat.setOutputPath(job, new Path(projectAndStaffOut));
+	      System.exit(job.waitForCompletion(true) ? 0 : 1);
         
         
 //        JobConf conf = new JobConf(DaliyProjectStaffCount.class);
