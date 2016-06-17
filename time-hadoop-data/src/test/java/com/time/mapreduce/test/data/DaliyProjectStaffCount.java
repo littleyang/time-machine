@@ -429,7 +429,7 @@ public class DaliyProjectStaffCount {
 	
 	public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException{
 		
-		String tempPath = "1001";
+		String tempPath = "1002";
 		
 		 //输入路径
         String jobPath = "hdfs://10.0.58.21:9000/user/hive/warehouse/falcon.db/job/part-m-00000";
@@ -613,6 +613,7 @@ public class DaliyProjectStaffCount {
         jobCtrl.addJob(JobJobCtlr);
         jobCtrl.addJob(projectAndStaffJobCtlr);
         jobCtrl.addJob(MapProjectStaffJobCtlr);
+        jobCtrl.addJob(ProjectStaffViewsJobCtlr);
         jobCtrl.addJob(ProjectStaffCountJobCtlr);
         jobCtrl.addJob(jobSortProjectStaffViewCountJobCtlr);
        
@@ -625,7 +626,7 @@ public class DaliyProjectStaffCount {
         	if(jobCtrl.allFinished()){//如果作业成功完成，就打印成功作业的信息   
         		System.out.println(jobCtrl.getSuccessfulJobList());   
         		jobCtrl.stop();   
-        		break;   
+        		break;
         	}  
         }
 	}
