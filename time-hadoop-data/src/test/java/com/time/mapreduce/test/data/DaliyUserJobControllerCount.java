@@ -67,7 +67,7 @@ public class DaliyUserJobControllerCount {
 	}
 	
 	
-static class SortMapper extends Mapper<Object, Text, IntWritable, Text>{
+	static class SortMapper extends Mapper<Object, Text, IntWritable, Text>{
 		
 		public void map(Object key,Text value,Context context) throws IOException, InterruptedException{
 			
