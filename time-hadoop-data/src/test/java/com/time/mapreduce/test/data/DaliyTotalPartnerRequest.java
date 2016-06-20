@@ -24,7 +24,8 @@ public class DaliyTotalPartnerRequest {
 				throws IOException, InterruptedException {
 			// 如果包含API调用，则纪录签到一次
 			Text word = new Text();
-			if(value.toString().contains("partner")){
+			if(value.toString().contains("/api/partner/")){
+				System.out.println("======" + value.toString());
 				word.set("partnerrequest");
 				context.write(word, one);
 			}
@@ -68,7 +69,7 @@ public class DaliyTotalPartnerRequest {
         String dst = "hdfs://10.0.58.21:9000/nginx/2016/06/17/*.log";
 
         //输出路径，必须是不存在的，空文件加也不行。
-        String dstOut = "hdfs://10.0.58.21:9000/result/outputreqpartner617";
+        String dstOut = "hdfs://10.0.58.21:9000/result/outputreqpartner617b";
 
         Configuration hadoopConfig = new Configuration();
         //hadoopConfig.

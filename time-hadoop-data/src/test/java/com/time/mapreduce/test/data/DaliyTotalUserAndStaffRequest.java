@@ -24,7 +24,7 @@ public class DaliyTotalUserAndStaffRequest {
 				throws IOException, InterruptedException {
 			// 如果包含API调用，则纪录签到一次
 			Text word = new Text();
-			if(!value.toString().contains("partner")){
+			if(!value.toString().contains("/api/partner/")){
 				word.set("notpartnerrequest");
 				context.write(word, one);
 			}
