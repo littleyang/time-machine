@@ -26,6 +26,29 @@ public class QueueBasicTest {
 			System.out.println(element);
 		}
 	}
+	
+	@Test
+	public void testPriorityQueueEntity(){
+		
+		PriorityQueue<FIFOEntry<String>> queues = new PriorityQueue<FIFOEntry<String>>(2);
+		
+		FIFOEntry<String> entityF = new FIFOEntry<String>("F");
+		
+		FIFOEntry<String> entityS = new FIFOEntry<String>("S");
+		
+		FIFOEntry<String> entityA = new FIFOEntry<String>("A");
+		
+		queues.add(entityF);
+		queues.add(entityS);
+		queues.add(entityA);
+		
+		Iterator<FIFOEntry<String>> it = queues.iterator();
+		
+		while(it.hasNext()){
+			FIFOEntry<String> element = (FIFOEntry<String>) it.next();
+			System.out.println(element);
+		}
+	}
 
 }
 
