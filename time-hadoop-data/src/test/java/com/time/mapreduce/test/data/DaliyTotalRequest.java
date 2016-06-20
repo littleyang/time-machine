@@ -62,10 +62,10 @@ public class DaliyTotalRequest {
 	
 	public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException{
 		 //输入路径
-        String dst = "hdfs://10.0.58.21:9000/nginx/2016/06/07/*.log";
+        String dst = "hdfs://10.0.58.21:9000/nginx/2016/06/16/*.log";
 
         //输出路径，必须是不存在的，空文件加也不行。
-        String dstOut = "hdfs://10.0.58.21:9000/result/outputreq607";
+        String dstOut = "hdfs://10.0.58.21:9000/result/outputreq617";
 
         Configuration hadoopConfig = new Configuration();
         //hadoopConfig.
