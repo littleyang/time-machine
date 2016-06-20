@@ -12,7 +12,7 @@ import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-public class DaliyTotalUserAndStaffRequest {
+public class DaliyTotalPartnerRequest {
 
 	// 首先实现是mapper类
 	static class ChechInMapper extends Mapper<Object, Text, Text, IntWritable> {
@@ -24,8 +24,8 @@ public class DaliyTotalUserAndStaffRequest {
 				throws IOException, InterruptedException {
 			// 如果包含API调用，则纪录签到一次
 			Text word = new Text();
-			if(!value.toString().contains("partner")){
-				word.set("notpartnerrequest");
+			if(value.toString().contains("partner")){
+				word.set("partnerrequest");
 				context.write(word, one);
 			}
 			
@@ -65,10 +65,10 @@ public class DaliyTotalUserAndStaffRequest {
 	
 	public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException{
 		 //输入路径
-        String dst = "hdfs://10.0.58.21:9000/nginx/2016/06/17/*.log";
+        String dst = "hdfs://10.0.58.21:9000/nginx/2016/06/16/*.log";
 
         //输出路径，必须是不存在的，空文件加也不行。
-        String dstOut = "hdfs://10.0.58.21:9000/result/outputreqnotpartner617";
+        String dstOut = "hdfs://10.0.58.21:9000/result/outputreq617";
 
         Configuration hadoopConfig = new Configuration();
         //hadoopConfig.
