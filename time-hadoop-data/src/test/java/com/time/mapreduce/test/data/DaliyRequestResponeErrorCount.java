@@ -25,7 +25,7 @@ public class DaliyRequestResponeErrorCount {
 			// 如果包含API调用，则纪录签到一次
 			Text word = new Text();
 			String values = value.toString();
-			if(values.contains("INFO - Traceback")){
+			if(values.contains("INFO")){
 				word.set("request");
 				context.write(word, one);
 			}
@@ -48,43 +48,35 @@ public class DaliyRequestResponeErrorCount {
 	}
 	
 	// 首先实现是mapper类
-		static class ChechInReponseMapper extends Mapper<Object, Text, Text, IntWritable> {
+	static class ChechInReponseErrorMapper extends Mapper<Object, Text, Text, IntWritable> {
 
-			//private final static IntWritable one = new IntWritable(1);
+			private final static IntWritable one = new IntWritable(1);
 			public void map(Object key, Text value, Context context)
 					throws IOException, InterruptedException {
 				// 如果包含API调用，则纪录签到一次
 				Text word = new Text();
-				IntWritable one = new IntWritable();
 				String values = value.toString();
-				if(values.contains("INFO")){
-					String timeAndDate = values.split(" - ")[0];
-					System.out.println(timeAndDate);
-					if(timeAndDate.length()>0&&timeAndDate.length()<25){
-						String time = timeAndDate.split(",")[1];
-						word.set("requestime");
-						one.set(Integer.parseInt(time));
-						context.write(word, one);
-					}
+				if(values.contains("INFO - Traceback")){
+					word.set("request");
+					context.write(word, one);
 				}
 			}
 		}
 
-		static class CheckInReponseReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
-			
-			private IntWritable result = new IntWritable();
+	static class CheckInReponseErrorReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
 
-			public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-				int sum = 0;
-				for (IntWritable val : values) {
-					sum += val.get();
-				}
-				result.set(sum);
-				context.write(key, result);
-				System.out.println("======" + "After reduce :" + new Text(key.toString()) + ", " + sum);
+		private IntWritable result = new IntWritable();
+
+		public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
+			int sum = 0;
+			for (IntWritable val : values) {
+				sum += val.get();
 			}
+			result.set(sum);
+			context.write(key, result);
+			System.out.println("======" + "After reduce :" + new Text(key.toString()) + ", " + sum);
 		}
-	
+	}
 	
 	
 	public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException{
@@ -92,9 +84,9 @@ public class DaliyRequestResponeErrorCount {
         String dst = "hdfs://10.0.58.21:9000/falcon/2016/06/20/*.log";
 
         //输出路径，必须是不存在的，空文件加也不行。
-        String dstOut = "hdfs://10.0.58.21:9000/result/outputreqtotalerror6203";
+        String dstOut = "hdfs://10.0.58.21:9000/result/outputreqtotalerror620";
         
-        String dstOutResponseTime = "hdfs://10.0.58.21:9000/result/outputdstOutResponseTime6173";
+        String dstOutResponseTime = "hdfs://10.0.58.21:9000/result/outputdstOutResponseError620";
 
         Configuration conf = new Configuration();
         //hadoopConfig.
@@ -111,22 +103,22 @@ public class DaliyRequestResponeErrorCount {
         totalRequetsCountJobCtrl.setJob(totalRequetsCountJob);
         
         
-//        Job totalRequetsResponeseTimeJob = Job.getInstance(conf, "TotalRequetsResponeseTime");
-//        totalRequetsResponeseTimeJob.setMapperClass(ChechInReponseMapper.class);
-//        totalRequetsResponeseTimeJob.setReducerClass(CheckInReponseReducer.class);
-//        totalRequetsResponeseTimeJob.setOutputKeyClass(Text.class);
-//        totalRequetsResponeseTimeJob.setOutputValueClass(IntWritable.class);
-//        FileInputFormat.addInputPath(totalRequetsResponeseTimeJob, new Path(dst));
-//        FileOutputFormat.setOutputPath(totalRequetsResponeseTimeJob, new Path(dstOutResponseTime));
-//        
-//        ControlledJob totalRequetsResponeseTimeCtrl=new  ControlledJob(conf);  
-//        totalRequetsResponeseTimeCtrl.setJob(totalRequetsResponeseTimeJob);
-//        
-//        totalRequetsResponeseTimeCtrl.addDependingJob(totalRequetsCountJobCtrl);
+        Job totalRequetsResponeseTimeJob = Job.getInstance(conf, "TotalRequetsResponeseTime");
+        totalRequetsResponeseTimeJob.setMapperClass(ChechInReponseErrorMapper.class);
+        totalRequetsResponeseTimeJob.setReducerClass(CheckInReponseErrorReducer.class);
+        totalRequetsResponeseTimeJob.setOutputKeyClass(Text.class);
+        totalRequetsResponeseTimeJob.setOutputValueClass(IntWritable.class);
+        FileInputFormat.addInputPath(totalRequetsResponeseTimeJob, new Path(dst));
+        FileOutputFormat.setOutputPath(totalRequetsResponeseTimeJob, new Path(dstOutResponseTime));
+        
+        ControlledJob totalRequetsResponeseTimeCtrl=new  ControlledJob(conf);  
+        totalRequetsResponeseTimeCtrl.setJob(totalRequetsResponeseTimeJob);
+        
+        totalRequetsResponeseTimeCtrl.addDependingJob(totalRequetsCountJobCtrl);
         
         JobControl jobCtrl=new JobControl("myctrl");
         jobCtrl.addJob(totalRequetsCountJobCtrl);
-        //jobCtrl.addJob(totalRequetsResponeseTimeCtrl);
+        jobCtrl.addJob(totalRequetsResponeseTimeCtrl);
         
         
         Thread  t=new Thread(jobCtrl);   
