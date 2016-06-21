@@ -14,7 +14,7 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.jobcontrol.ControlledJob;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-public class DaliyRequestResponeTime {
+public class DaliyRequestResponeErrorCount {
 
 	// 首先实现是mapper类
 	static class ChechInMapper extends Mapper<Object, Text, Text, IntWritable> {
@@ -25,7 +25,7 @@ public class DaliyRequestResponeTime {
 			// 如果包含API调用，则纪录签到一次
 			Text word = new Text();
 			String values = value.toString();
-			if(values.contains("INFO")){
+			if(values.contains("INFO - Traceback")){
 				word.set("request");
 				context.write(word, one);
 			}
@@ -43,7 +43,7 @@ public class DaliyRequestResponeTime {
 			}
 			result.set(sum);
 			context.write(key, result);
-			System.out.println("======" + "After reduce :" + new Text(key.toString()) + ", " + sum);
+			System.out.println("======" + "After INFO - Traceback reduce :" + new Text(key.toString()) + ", " + sum);
 		}
 	}
 	
@@ -92,7 +92,7 @@ public class DaliyRequestResponeTime {
         String dst = "hdfs://10.0.58.21:9000/falcon/2016/06/17/*.log";
 
         //输出路径，必须是不存在的，空文件加也不行。
-        String dstOut = "hdfs://10.0.58.21:9000/result/outputreqtotal6173";
+        String dstOut = "hdfs://10.0.58.21:9000/result/outputreqtotalerror6173";
         
         String dstOutResponseTime = "hdfs://10.0.58.21:9000/result/outputdstOutResponseTime6173";
 
@@ -111,22 +111,22 @@ public class DaliyRequestResponeTime {
         totalRequetsCountJobCtrl.setJob(totalRequetsCountJob);
         
         
-        Job totalRequetsResponeseTimeJob = Job.getInstance(conf, "TotalRequetsResponeseTime");
-        totalRequetsResponeseTimeJob.setMapperClass(ChechInReponseMapper.class);
-        totalRequetsResponeseTimeJob.setReducerClass(CheckInReponseReducer.class);
-        totalRequetsResponeseTimeJob.setOutputKeyClass(Text.class);
-        totalRequetsResponeseTimeJob.setOutputValueClass(IntWritable.class);
-        FileInputFormat.addInputPath(totalRequetsResponeseTimeJob, new Path(dst));
-        FileOutputFormat.setOutputPath(totalRequetsResponeseTimeJob, new Path(dstOutResponseTime));
-        
-        ControlledJob totalRequetsResponeseTimeCtrl=new  ControlledJob(conf);  
-        totalRequetsResponeseTimeCtrl.setJob(totalRequetsResponeseTimeJob);
-        
-        totalRequetsResponeseTimeCtrl.addDependingJob(totalRequetsCountJobCtrl);
+//        Job totalRequetsResponeseTimeJob = Job.getInstance(conf, "TotalRequetsResponeseTime");
+//        totalRequetsResponeseTimeJob.setMapperClass(ChechInReponseMapper.class);
+//        totalRequetsResponeseTimeJob.setReducerClass(CheckInReponseReducer.class);
+//        totalRequetsResponeseTimeJob.setOutputKeyClass(Text.class);
+//        totalRequetsResponeseTimeJob.setOutputValueClass(IntWritable.class);
+//        FileInputFormat.addInputPath(totalRequetsResponeseTimeJob, new Path(dst));
+//        FileOutputFormat.setOutputPath(totalRequetsResponeseTimeJob, new Path(dstOutResponseTime));
+//        
+//        ControlledJob totalRequetsResponeseTimeCtrl=new  ControlledJob(conf);  
+//        totalRequetsResponeseTimeCtrl.setJob(totalRequetsResponeseTimeJob);
+//        
+//        totalRequetsResponeseTimeCtrl.addDependingJob(totalRequetsCountJobCtrl);
         
         JobControl jobCtrl=new JobControl("myctrl");
         jobCtrl.addJob(totalRequetsCountJobCtrl);
-        jobCtrl.addJob(totalRequetsResponeseTimeCtrl);
+        //jobCtrl.addJob(totalRequetsResponeseTimeCtrl);
         
         
         Thread  t=new Thread(jobCtrl);   
