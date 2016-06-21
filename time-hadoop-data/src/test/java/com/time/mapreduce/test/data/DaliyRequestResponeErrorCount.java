@@ -89,10 +89,10 @@ public class DaliyRequestResponeErrorCount {
 	
 	public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException{
 		 //输入路径
-        String dst = "hdfs://10.0.58.21:9000/falcon/2016/06/17/*.log";
+        String dst = "hdfs://10.0.58.21:9000/falcon/2016/06/20/*.log";
 
         //输出路径，必须是不存在的，空文件加也不行。
-        String dstOut = "hdfs://10.0.58.21:9000/result/outputreqtotalerror6173";
+        String dstOut = "hdfs://10.0.58.21:9000/result/outputreqtotalerror6203";
         
         String dstOutResponseTime = "hdfs://10.0.58.21:9000/result/outputdstOutResponseTime6173";
 
