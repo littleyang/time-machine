@@ -39,41 +39,49 @@ public class WorkTe {
 		
 		
 		
-		//String string = "7510527901101true2016-05-12 11:17:49.02016-06-15 10:06:23.0";
-		String string = "3501010532661083true2016-05-12 11:17:49.02016-06-16 08:44:41.0";
+//		//String string = "7510527901101true2016-05-12 11:17:49.02016-06-15 10:06:23.0";
+//		String string = "3501010532661083true2016-05-12 11:17:49.02016-06-16 08:44:41.0";
+//		
+//		String temp = string.split("-")[0];
+//		
+//		String subTemp = "";
+//		
+//		System.out.println("temp : " + temp);
+//		
+//		if(temp.contains("true")||temp.contains("null")){
+//			subTemp = temp.substring(0, temp.length()-9);
+//		}
+//		
+//		if(temp.contains("false")){
+//			subTemp = temp.substring(0, temp.length()-10);
+//		}
+//		
+//		if(temp.startsWith("10")){
+//			String subTempString = "10" + subTemp.split("10", subTemp.length())[1];
+//			String finalSubString = subTemp.substring(subTempString.length()-1, subTemp.length());
+//			System.out.println("subTempString : " + finalSubString);
+//			String staffId = finalSubString.substring(0, 8);
+//			System.out.println("staffId : " + staffId);
+//			String jobId = finalSubString.substring(8, finalSubString.length());
+//			System.out.println("jobId : " + jobId);
+//		}else{
+//			String subTempString = subTemp.split("10", subTemp.length())[0];
+//			String finalSubString = subTemp.substring(subTempString.length()-1, subTemp.length());
+//			System.out.println("subTempString : " + finalSubString);
+//			String staffId = finalSubString.substring(0, 8);
+//			System.out.println("staffId : " + staffId);
+//			String jobId = finalSubString.substring(8, finalSubString.length());
+//			System.out.println("jobId : " + jobId);
+//		}	
+//		
+//		
 		
-		String temp = string.split("-")[0];
+		String str = "2016-06-21 07:59:53,128 - falcon - INFO - 182.202.63.87 request: [200 OK] GET, url: http://api.4009515151.com/api/lebang/staffs/me/badges, "
+				+ "account: 1053112, args: ImmutableMultiDict([]), form: ImmutableMultiDict([]), json: None";
 		
-		String subTemp = "";
+		System.out.println(str.split(" - ")[0].length());
 		
-		System.out.println("temp : " + temp);
-		
-		if(temp.contains("true")||temp.contains("null")){
-			subTemp = temp.substring(0, temp.length()-9);
-		}
-		
-		if(temp.contains("false")){
-			subTemp = temp.substring(0, temp.length()-10);
-		}
-		
-		if(temp.startsWith("10")){
-			String subTempString = "10" + subTemp.split("10", subTemp.length())[1];
-			String finalSubString = subTemp.substring(subTempString.length()-1, subTemp.length());
-			System.out.println("subTempString : " + finalSubString);
-			String staffId = finalSubString.substring(0, 8);
-			System.out.println("staffId : " + staffId);
-			String jobId = finalSubString.substring(8, finalSubString.length());
-			System.out.println("jobId : " + jobId);
-		}else{
-			String subTempString = subTemp.split("10", subTemp.length())[0];
-			String finalSubString = subTemp.substring(subTempString.length()-1, subTemp.length());
-			System.out.println("subTempString : " + finalSubString);
-			String staffId = finalSubString.substring(0, 8);
-			System.out.println("staffId : " + staffId);
-			String jobId = finalSubString.substring(8, finalSubString.length());
-			System.out.println("jobId : " + jobId);
-		}	
-		
+		System.out.println(str.split(" - ")[0].split(",")[1]);
 		
 	}
 
