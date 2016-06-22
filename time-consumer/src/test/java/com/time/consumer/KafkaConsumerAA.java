@@ -25,12 +25,19 @@ public class KafkaConsumerAA {
 	        consumer.subscribe(Arrays.asList("nginx"));
 	        while (true) {
 	            ConsumerRecords<String, String> records = consumer.poll(100);
-	            for (ConsumerRecord<String, String> record : records)
-	               System.out.printf("offset = %d, key = %s, value = %s \n",
-	                       record.offset(), record.key(), record.value());
-	               //if(record.value().contains("/api/lebang/staffs/me/work")){
-	               //	System.out.println("员工开始签到了 ………………………… " + record.value());
-	               //}
+	            for (ConsumerRecord<String, String> record : records){
+	               
+	               System.out.printf("offset = %d, key = %s, value = %s \n", 
+	            		   record.offset(), record.key(), record.value());
+	               
+//	               if(record.value().contains("/api/lebang/staffs/me/work")){
+//	            	   System.out.println("员工开始签到了 ………………………… " + record.value());
+//	               }
+	               
+	               if(record.value().contains("/api/partner/")){
+	               		System.out.println("员工开始签到了 ………………………… " + record.value());
+	               }
+	            }
 	        }
 	    }
 }
