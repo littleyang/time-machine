@@ -1,0 +1,39 @@
+sqoop job --create falcon_user_and_message_sync -- import  -m 1  --connect jdbc:mysql://10.0.72.51:9090/falcon --username wy_app --password V0tkEIve2 --table user_and_message --hive-import --create-hive-table --hive-database falcon  --outdir /data/sqoop --incremental lastmodified --check-column updated --last-value '2010-04-21 14:01:24' -- --default-character-set=utf8mb4
+
+
+sqoop job --create falcon_login_log_sync -- import  -m 1  --connect jdbc:mysql://10.0.72.51:9090/falcon --username wy_app --password V0tkEIve2 --table login_log --hive-import --create-hive-table --hive-database falcon  --outdir /data/sqoop --incremental append --check-column id --last-value '0' -- --default-character-set=utf8mb4
+
+
+sqoop job --create falcon_staff_and_job_sync -- import  -m 1  --connect jdbc:mysql://10.0.72.51:9090/falcon --username wy_app --password V0tkEIve2 --table staff_and_job --hive-import --create-hive-table --hive-database falcon  --outdir /data/sqoop --incremental lastmodified --check-column updated --last-value '2010-04-21 14:01:24' -- --default-character-set=utf8mb4
+
+
+sqoop job --create falcon_staff_and_job_sync -- import -m 1  --connect jdbc:mysql://10.0.72.51:9090/falcon --username wy_app --password V0tkEIve2  --table staff_and_job --fields-terminated-by "\t" --lines-terminated-by "\n" --hive-import --hive-database falcon --outdir /data/sqoop --incremental lastmodified --check-column updated --last-value '2010-05-12 10:01:19' -- --default-character-set=utf8mb4
+
+
+sqoop job --create falcon_job_sync -- import -m 1  --connect jdbc:mysql://10.0.72.51:9090/falcon --username wy_app --password V0tkEIve2  --table job --fields-terminated-by "\t" --lines-terminated-by "\n" --hive-import --hive-database falcon --outdir /data/sqoop --incremental append --check-column id --last-value '0' -- --default-character-set=utf8mb4
+
+
+sqoop job --create falcon_login_log_sync -- import -m 1  --connect jdbc:mysql://10.0.58.21:3306/task --username root --password vanke2016  --table login_log --hive-import --hive-database falcon --outdir /data/sqoop --incremental append --check-column id --last-value '0' -- --default-character-set=utf8mb4
+
+
+sqoop job --create falcon_task_log_sync -- import  -m 1  --connect jdbc:mysql://10.0.58.21:3306/task --username root --password vanke2016 --table task_log --fields-terminated-by "\t" --lines-terminated-by "\n" --hive-import --hive-database falcon  --outdir /data/sqoop --incremental append --check-column id --last-value '0' -- --default-character-set=utf8mb4
+
+
+sqoop job --create falcon_post_sync -- import -m 1  --connect jdbc:mysql://10.0.72.51:9090/falcon --username wy_app --password V0tkEIve2  --table post --fields-terminated-by "\t" --lines-terminated-by "\n" --hive-import --hive-database falcon --outdir /data/sqoop --incremental lastmodified --check-column updated --last-value '2010-05-12 10:01:19' -- --default-character-set=utf8mb4
+
+sqoop job --create falcon_comment_sync -- import -m 1  --connect jdbc:mysql://10.0.72.51:9090/falcon --username wy_app --password V0tkEIve2  --table comment --fields-terminated-by "\t" --lines-terminated-by "\n" --hive-import --hive-database falcon --outdir /data/sqoop --incremental append --check-column id --last-value '0' -- --default-character-set=utf8mb4
+
+sqoop job --create falcon_task_sync -- import -m 1  --connect jdbc:mysql://10.0.72.51:9090/falcon --username wy_app --password V0tkEIve2  --table task --fields-terminated-by "\t" --lines-terminated-by "\n" --hive-import --hive-database falcon --outdir /data/sqoop --incremental lastmodified --check-column updated --last-value '2010-05-12 10:01:19' -- --default-character-set=utf8mb4
+
+sqoop job --create falcon_user_sync -- import -m 1  --connect jdbc:mysql://10.0.72.51:9090/falcon --username wy_app --password V0tkEIve2  --table user --fields-terminated-by "\t" --lines-terminated-by "\n" --hive-import --hive-database falcon --outdir /data/sqoop --incremental lastmodified --check-column updated --last-value '2010-05-12 10:01:19' -- --default-character-set=utf8mb4
+
+sqoop job --create falcon_staff_sync -- import -m 1  --connect jdbc:mysql://10.0.72.51:9090/falcon --username wy_app --password V0tkEIve2  --table staff --fields-terminated-by "\t" --lines-terminated-by "\n" --hive-import --hive-database falcon --outdir /data/sqoop --incremental lastmodified --check-column updated --last-value '2010-05-12 10:01:19' -- --default-character-set=utf8mb4
+
+sqoop job --create falcon_clock_log_sync -- import -m 1  --connect jdbc:mysql://10.0.72.51:9090/falcon --username wy_app --password V0tkEIve2  --table clock_log --fields-terminated-by "\t" --lines-terminated-by "\n" --hive-import --hive-database falcon --outdir /data/sqoop --incremental append --check-column id --last-value '0' -- --default-character-set=utf8mb4
+
+sqoop job --create falcon_staff_message_sync -- import -m 1  --connect jdbc:mysql://10.0.72.51:9090/falcon --username wy_app --password V0tkEIve2  --table staff_message --fields-terminated-by "\t" --lines-terminated-by "\n" --hive-import --hive-database falcon --outdir /data/sqoop --incremental lastmodified --check-column updated --last-value '2016-06-29 11:38:54' -- --default-character-set=utf8mb4
+
+sqoop job --create falcon_login_log_sync -- import -m 1  --connect jdbc:mysql://10.0.72.51:9090/falcon --username wy_app --password V0tkEIve2  --table login_log --fields-terminated-by "\t" --lines-terminated-by "\n" --hive-import --hive-database falcon --outdir /data/sqoop --incremental append --check-column id --last-value '0' -- --default-character-set=utf8mb4
+
+sqoop job --create falcon_user_and_message_sync -- import -m 1  --connect jdbc:mysql://10.0.72.51:9090/falcon --username wy_app --password V0tkEIve2  --table user_and_message --fields-terminated-by "\t" --lines-terminated-by "\n" --hive-import --hive-database falcon --outdir /data/sqoop --incremental lastmodified --check-column updated --last-value '2010-06-29 11:38:54' -- --default-character-set=utf8mb4
+
