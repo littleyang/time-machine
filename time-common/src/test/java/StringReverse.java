@@ -5,11 +5,15 @@ public class StringReverse {
 		
 		String str = "hello";
 		StringBuilder temp = new StringBuilder("");
-		StringBuffer strb = new StringBuffer(str);
-		strb.reverse();
+		
 		for(int i=str.length()-1;i>=0;i--){
 			temp.append(str.charAt(i));
 		}
+		
+//		StringBuffer strb = new StringBuffer(str);
+//		strb.reverse();
+		
+		
 		System.out.println(temp.toString());
 	}
 
