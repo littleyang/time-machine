@@ -58,5 +58,36 @@ public class PowerOfTwo {
 		
 		return (Math.log10(n)/Math.log10(2))%1==0?true:false;
 	}
+	
+	
+	public  static boolean isPowerOfTwoRecursion(int n){
+		
+		if(n==0||n<0){
+			return false;
+		}
+		
+		if(n==1){
+			return true;
+		}else if(n%2==0){
+			return isPowerOfTwoRecursion(n/2);
+		}else{
+			return false;
+		}
+		
+	}
+	
+	public  static boolean isPowerOfTwoLoop(int n){
+		
+		if(n==0||n<0){
+			return false;
+		}
+		
+		while(n!=1){
+			if(n%2!=0) break;
+			n = n / 2;
+		}
+		return n==1;
+		
+	}
 
 }
