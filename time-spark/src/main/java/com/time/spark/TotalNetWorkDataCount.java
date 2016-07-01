@@ -27,6 +27,8 @@ public class TotalNetWorkDataCount{
 		
 		Map<String, Integer> topicMap = new HashMap<String, Integer>();
 		
+		//
+		//topicMap.put("falcon", 1);
 		topicMap.put("nginx", 1);
 		
 		JavaPairReceiverInputDStream<String, String> nginxStream = KafkaUtils.createStream(jssc, zkKeeperHost, groupId, topicMap);
