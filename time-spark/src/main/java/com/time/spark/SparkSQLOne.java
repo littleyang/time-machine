@@ -42,7 +42,7 @@ public class SparkSQLOne {
 		
 		//DataFrame df = sqlCtx.read().jdbc(url, "staff", props);
 		
-		DataFrame df = sqlCtx.read().jdbc(url, "staff", props);
+		//DataFrame df = sqlCtx.read().jdbc(url, "staff", props);
 		
 		//df.show();
 		
@@ -54,12 +54,20 @@ public class SparkSQLOne {
 		
 		//df.groupBy("name").count().show();
 		
-		df.registerTempTable("staff");
+		//df.registerTempTable("staff");
 		
 		
-		DataFrame dfStaff = sqlCtx.sql("select * from staff");
+		//DataFrame dfStaff = sqlCtx.sql("select * from staff");
 		
-		dfStaff.show();
+		//dfStaff.show();
+	    
+	    DataFrame df = sqlCtx.read().format("jdbc").option("url", url).option("user", user).option("dbtable", "staff").option("password", pwd).load();
+	    
+	    df.printSchema();
+	    
+	    df.registerTempTable("staff");
+	    
+	    df.show();
 		
 	}
 
