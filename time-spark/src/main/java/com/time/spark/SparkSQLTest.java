@@ -44,9 +44,13 @@ public class SparkSQLTest {
 		
 		//df.show();
 		
-		df.printSchema();
+		//df.printSchema();
 		
 		//df.select("name").show();
+		
+		//df.filter(df.col("name").equalTo("test")).show();
+		
+		df.groupBy("name").count().show();
 		
 		
 	}
