@@ -92,6 +92,10 @@ public class SparkSQLOne {
 	    df.filter(df.col("name").equalTo("hdhdhdh"))
     	.join(dfUser, dfUser.col("name").equalTo("wang"))
     	.show();
+	    
+//	    df.filter(df.col("name").equalTo("hdhdhdh"))
+//    	.join(dfUser, dfUser.col("name").equalTo("wang"))
+//    	.groupBy(df.col("name"));
 		
 	}
 
