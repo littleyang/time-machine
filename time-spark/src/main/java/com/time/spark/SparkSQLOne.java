@@ -65,12 +65,16 @@ public class SparkSQLOne {
 	    
 	    //df.printSchema();
 	    
-	    df.registerTempTable("staff");
+	    //df.registerTempTable("staff");
 	    
 	    //df.show();
 	    
-	    DataFrame dfStaff = sqlCtx.sql("select * from staff");
+	    //DataFrame dfStaff = sqlCtx.sql("select * from staff");
+	    
+	    DataFrame dfUser = sqlCtx.read().format("jdbc").option("url", url).option("user", user).option("dbtable", "users").option("password", pwd).load();
 		
+	    //dfUser.registerTempTable("users");
+	    
 	    // print all data
 	  	//dfStaff.show();
 	    
@@ -78,7 +82,16 @@ public class SparkSQLOne {
 	    //dfStaff.groupBy("name").count().show();
 	    
 	    // count data
-	    //System.out.println(dfStaff.count());    
+	    //System.out.println(dfStaff.count());  
+	    
+	    
+//	    df.filter(df.col("name").equalTo("hdhdhdh"))
+//	    	.join(dfUser, dfUser.col("name").equalTo("wang"))
+//	    	.groupBy(df.col("name")).count().show();
+	    
+	    df.filter(df.col("name").equalTo("hdhdhdh"))
+    	.join(dfUser, dfUser.col("name").equalTo("wang"))
+    	.show();
 		
 	}
 
