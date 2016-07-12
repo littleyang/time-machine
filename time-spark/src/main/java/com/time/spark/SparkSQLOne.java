@@ -63,11 +63,22 @@ public class SparkSQLOne {
 	    
 	    DataFrame df = sqlCtx.read().format("jdbc").option("url", url).option("user", user).option("dbtable", "staff").option("password", pwd).load();
 	    
-	    df.printSchema();
+	    //df.printSchema();
 	    
 	    df.registerTempTable("staff");
 	    
-	    df.show();
+	    //df.show();
+	    
+	    DataFrame dfStaff = sqlCtx.sql("select * from staff");
+		
+	    // print all data
+	  	//dfStaff.show();
+	    
+	    // group by data by column
+	    //dfStaff.groupBy("name").count().show();
+	    
+	    // count data
+	    //System.out.println(dfStaff.count());    
 		
 	}
 
