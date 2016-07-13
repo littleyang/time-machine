@@ -18,6 +18,14 @@ public class ThreeSum {
 		System.out.println(result.size());
 		
 		
+		for(ArrayList<Integer> list : result){
+			System.out.println("");
+			System.out.println("=========begin==========");
+			for(Integer values : list){
+				System.out.println(values);
+			}
+			System.out.println("=========end==========");
+		}
 	}
 
 	static private ArrayList<ArrayList<Integer>> getThreeSum(int[] arrays, int sum) {
