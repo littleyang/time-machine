@@ -17,6 +17,7 @@ public class ListTest {
 	public void listBasicTest(){
 		//ArrayList: 以数组的方式存储，元素是无序的，空间可以自动增长，初始化是10，每次自动增长50%,在get性能上优于LinkedList/Vector
 		//可以在初始化的时候指定其大小，可以使用iterator方式访问数组的元素
+		//ArrayList通过移位来实现扩容。在旧的容量之上左移一位来>>1实现。也就是约等于原来的50%
 		ArrayList<Integer> intLists = new ArrayList<Integer>(10);
 		intLists.add(1);
 		intLists.add(2);
