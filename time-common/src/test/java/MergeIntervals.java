@@ -79,7 +79,6 @@ public class MergeIntervals {
 		
 		return reuslts;
 	}
-
 }
 
 class Interval{
