@@ -1,3 +1,4 @@
+package com.time.study.leetcode;
 
 public class PowerOfTwo {
 	

@@ -1,3 +1,5 @@
+package com.time.study.leetcode;
+
 /**
  * Created by yangyang on 8/2/16.
  */
