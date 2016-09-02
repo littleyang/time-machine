@@ -1,3 +1,5 @@
+package com.time.study.leetcode;
+
 import java.util.HashMap;
 
 
