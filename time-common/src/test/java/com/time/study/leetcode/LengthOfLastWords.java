@@ -12,12 +12,20 @@ public class LengthOfLastWords {
     public static void main(String[] args){
 
         String words = "hello, world";
-        System.out.println(lengthOfLastWords(words));
+        //System.out.println(lengthOfLastWords(words));
+
+        System.out.println(lengthOfLastWords(""));
+
     }
 
     public static int lengthOfLastWords(String words){
 
+        if(words.equals("")||null==words){
+            return 0;
+        }
+
         String[] wordsArrays = words.split(" ");
+
         if(wordsArrays.length>0){
             return wordsArrays[wordsArrays.length-1].length();
         }else{
