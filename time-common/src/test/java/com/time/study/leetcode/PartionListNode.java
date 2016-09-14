@@ -30,7 +30,6 @@ public class PartionListNode {
 
         System.out.println(result.val);
 
-
     }
 
     public static ListNode partition(ListNode head, int x) {
