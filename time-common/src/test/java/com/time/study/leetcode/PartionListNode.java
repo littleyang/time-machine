@@ -24,7 +24,6 @@ public class PartionListNode {
         node4.next = node5;
         node5.next = node6;
 
-
         int x = 3;
 
         ListNode result = partition(node1,x);
@@ -58,6 +57,7 @@ public class PartionListNode {
         big.next = null;
         small.next = bigDummy.next;
         return smallDummy.next;
+
     }
 }
 
