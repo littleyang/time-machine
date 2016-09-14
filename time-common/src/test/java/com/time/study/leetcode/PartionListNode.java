@@ -40,24 +40,24 @@ public class PartionListNode {
             return null;
         }
 
-        ListNode leftDummy = new ListNode(0);
-        ListNode rightDummy = new ListNode(0);
-        ListNode left = leftDummy, right = rightDummy;
+        ListNode smallDummy = new ListNode(0);
+        ListNode bigDummy = new ListNode(0);
+        ListNode small = smallDummy, big = bigDummy;
 
         while (head != null) {
             if (head.val < x) {
-                left.next = head;
-                left = head;
+                small.next = head;
+                small = head;
             } else {
-                right.next = head;
-                right = head;
+                big.next = head;
+                big = head;
             }
             head = head.next;
         }
 
-        right.next = null;
-        left.next = rightDummy.next;
-        return leftDummy.next;
+        big.next = null;
+        small.next = bigDummy.next;
+        return smallDummy.next;
     }
 }
 
